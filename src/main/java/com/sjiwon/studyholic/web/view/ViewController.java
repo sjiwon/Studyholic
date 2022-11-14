@@ -64,6 +64,19 @@ public class ViewController {
         return "main/MyPage";
     }
 
+    @GetMapping("/study/{studyId}")
+    public String studyDetailPage(@PathVariable Long studyId, Model model) {
+        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId));
+        return "main/StudyDetailPage";
+    }
+
+    @GetMapping("/user/{userId}/study")
+    public String userParticipateStudyPage(@PathVariable Long userId, HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        delegateIllegalUrlRequest(userId, request, response);
+        model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userId));
+        return "main/ParticipateStudyDetailPage";
+    }
+
     private void delegateIllegalUrlRequest(Long userId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         if (!Objects.equals(currentUserId, userId)) {
@@ -72,11 +85,5 @@ public class ViewController {
             writer.println("<script>alert('올바르지 않은 요청입니다'); location.href = '/';</script>");
             writer.flush();
         }
-    }
-
-    @GetMapping("/study/{studyId}")
-    public String studyDetailPage(@PathVariable Long studyId, Model model) {
-        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId));
-        return "main/StudyDetailPage";
     }
 }
