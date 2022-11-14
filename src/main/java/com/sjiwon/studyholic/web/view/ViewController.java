@@ -3,7 +3,7 @@ package com.sjiwon.studyholic.web.view;
 import com.sjiwon.studyholic.domain.entity.study.service.StudyService;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.user.service.UserService;
-import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
+import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.web.view.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,13 +20,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
 
-import static com.sjiwon.studyholic.common.VariableFactory.*;
+import static com.sjiwon.studyholic.common.VariableFactory.SIZE_PER_PAGE;
+import static com.sjiwon.studyholic.common.VariableFactory.SORT_TO_KO;
 
 @Controller
 @RequiredArgsConstructor
 public class ViewController {
     private final UserService userService;
     private final StudyService studyService;
+    private final SessionRefreshService sessionRefreshService;
 
     @GetMapping({"", "/"})
     public String mainPage(
@@ -63,7 +65,8 @@ public class ViewController {
     }
 
     private void delegateIllegalUrlRequest(Long userId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (!Objects.equals(getUserSession(request).getId(), userId)) {
+        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
+        if (!Objects.equals(currentUserId, userId)) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter writer = response.getWriter();
             writer.println("<script>alert('올바르지 않은 요청입니다'); location.href = '/';</script>");
@@ -71,7 +74,9 @@ public class ViewController {
         }
     }
 
-    private UserSession getUserSession(HttpServletRequest request) {
-        return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
+    @GetMapping("/study/{studyId}")
+    public String studyDetailPage(@PathVariable Long studyId, Model model) {
+        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId));
+        return "main/StudyDetailPage";
     }
 }

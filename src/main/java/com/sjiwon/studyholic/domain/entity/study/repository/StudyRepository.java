@@ -5,4 +5,5 @@ import com.sjiwon.studyholic.domain.entity.study.repository.dsl.StudyQueryDslRep
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudyRepository extends JpaRepository<Study, Long>, StudyQueryDslRepository {
+    boolean existsByIdNotAndName(Long studyId, String name);
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.sjiwon.studyholic.common.VariableFactory.*;
 import static com.sjiwon.studyholic.domain.entity.study.QStudy.study;
@@ -23,6 +24,18 @@ import static com.sjiwon.studyholic.domain.entity.userstudy.QUserStudy.userStudy
 @RequiredArgsConstructor
 public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     private final JPAQueryFactory query;
+
+    @Override
+    public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
+        return Optional.ofNullable(
+                query.select(new QBasicStudy(
+                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        .from(study)
+                        .leftJoin(study.userStudyList, userStudy)
+                        .where(studyIdEq(studyId))
+                        .fetchFirst()
+        );
+    }
 
     @Override
     public Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort) {
@@ -102,11 +115,28 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
         return PageableExecutionUtils.getPage(content, pageRequest, countQuery::size);
     }
 
+    @Override
+    @Transactional
+    public Long deleteByStudyId(Long studyId) {
+        return query
+                .delete(study)
+                .where(studyIdEq(studyId))
+                .execute();
+    }
+
     private BooleanExpression keywordContains(String keyword) {
         if (Objects.isNull(keyword)) {
             return null;
         }
 
         return studyTag.tag.contains(keyword);
+    }
+
+    private BooleanExpression studyIdEq(Long studyId) {
+        if (Objects.isNull(studyId)) {
+            return null;
+        }
+
+        return study.id.eq(studyId);
     }
 }

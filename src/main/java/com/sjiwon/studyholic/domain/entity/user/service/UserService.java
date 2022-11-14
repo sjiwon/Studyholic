@@ -4,7 +4,7 @@ import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.entity.user.service.dto.response.MyPageInformation;
 import com.sjiwon.studyholic.domain.etc.file.FileUploadService;
-import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
+import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
-import static com.sjiwon.studyholic.common.VariableFactory.SESSION_KEY;
 import static com.sjiwon.studyholic.exception.StudyholicErrorCode.*;
 
 @Service
@@ -27,6 +26,7 @@ public class UserService {
 
     // service
     private final FileUploadService fileUploadService;
+    private final SessionRefreshService sessionRefreshService;
 
     @Transactional
     public Long saveUser(User user, @Nullable MultipartFile profile) {
@@ -53,7 +53,7 @@ public class UserService {
 
     @Transactional
     public void changeUserProfileImage(Long requestUserId, MultipartFile profile, HttpServletRequest request) {
-        Long currentUserId = getCurrentUserSession(request).getId();
+        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         isIllegalRequestByAnonymousUser(requestUserId, currentUserId);
 
         User user = userRepository.findById(requestUserId)
@@ -63,16 +63,12 @@ public class UserService {
 
     @Transactional
     public void changeUserProfileImageToDefault(Long requestUserId, HttpServletRequest request) {
-        Long currentUserId = getCurrentUserSession(request).getId();
+        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         isIllegalRequestByAnonymousUser(requestUserId, currentUserId);
 
         User user = userRepository.findById(requestUserId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         user.applyDefaultImage();
-    }
-
-    private UserSession getCurrentUserSession(HttpServletRequest request) {
-        return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
     }
 
     private void isIllegalRequestByAnonymousUser(Long requestUserId, Long currentUserId) {
