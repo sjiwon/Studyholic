@@ -15,6 +15,11 @@ public enum StudyholicErrorCode {
     ILLEGAL_REQUEST_BY_ANONYMOUS(HttpStatus.BAD_REQUEST, "타인의 정보에 접근할 수 없습니다"),
     SAME_USER_NICKNAME_AS_BEFORE(HttpStatus.CONFLICT, "이전과 동일한 닉네임은 사용 불가능합니다"),
 
+    // Study
+    STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "스터디 정보가 존재하지 않습니다"),
+    BAD_UPDATE_REQUEST_FROM_ANONYMOUS_USER(HttpStatus.BAD_REQUEST, "스터디 수정은 스터디 리더만 가능합니다"),
+    DUPLICATE_STUDY_NAME(HttpStatus.CONFLICT, "중복된 스터디 이름입니다"),
+
     ;
 
     private final HttpStatus status;
