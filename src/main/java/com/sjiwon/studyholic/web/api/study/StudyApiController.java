@@ -29,7 +29,7 @@ public class StudyApiController {
     @PatchMapping("/study/{studyId}")
     @ApiOperation(value = "스터디 정보 수정 API", notes = "스터디의 정보를 수정하는 API [스터디 팀명, 간단한 설명, 설명, 모집 마감일, 최대 모집 멤버]")
     public ResponseEntity<Void> changeStudyInformation(@PathVariable Long studyId, @RequestBody UpdateStudyInformationRequest updateRequest, HttpServletRequest request) {
-        studyService.changeInformation(request, studyId, updateRequest.getName(), updateRequest.getBriefDescription(), updateRequest.getDescription(), updateRequest.getRecruitDeadline(), updateRequest.getMaxMember());
+        studyService.changeInformation(request, studyId, updateRequest.toServiceDto());
         return ResponseEntity.noContent().build();
     }
 
