@@ -1,5 +1,8 @@
 package com.sjiwon.studyholic.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class VariableFactory {
     public static final String SESSION_KEY = "KGU_JSP_PROJECT";
 
@@ -11,4 +14,24 @@ public class VariableFactory {
     public static final String RANDOM_PASSWORD_SUBJECT = "[Studyholic] 임시 비밀번호 발급";
     public static final String AUTHENTICATION_EMAIL_BODY = "인증번호";
     public static final String RANDOM_PASSWORD_EMAIL_BODY = "임시 비밀번호";
+
+    public static final int SIZE_PER_PAGE = 6; // 데이터 페이징 기준
+    public static final int RANGE_PER_PAGE = 10; // 페이지 상에서 range 범위
+
+    public static final String REGISTER_DATE_KO = "등록 날짜";
+    public static final String REGISTER_DATE_SORT = "registerDate";
+    public static final String POPULARITY_KO = "참여 인원";
+    public static final String POPULARITY_SORT = "popularity";
+    public static final String RECRUIT_DEADLINE_KO = "모집 마감일";
+    public static final String RECRUIT_DEADLINE_SORT = "recruitDeadline";
+    public static final String MAX_MEMBER_KO = "모집 정원";
+    public static final String MAX_MEMBER_SORT = "maxMember";
+    public static final Map<String, String> SORT_TO_KO = new HashMap<>() {
+        {
+            put(REGISTER_DATE_SORT, REGISTER_DATE_KO);
+            put(POPULARITY_SORT, POPULARITY_KO);
+            put(RECRUIT_DEADLINE_SORT, RECRUIT_DEADLINE_KO);
+            put(MAX_MEMBER_SORT, MAX_MEMBER_KO);
+        }
+    };
 }
