@@ -131,6 +131,12 @@ public class StudyService {
         }
     }
 
+    public void hasDuplicateName(String name) {
+        if (studyRepository.existsByName(name)) {
+            throw StudyholicException.type(DUPLICATE_STUDY_NAME);
+        }
+    }
+
     /**
      * 메인 페이지 스터디 리스트
      */

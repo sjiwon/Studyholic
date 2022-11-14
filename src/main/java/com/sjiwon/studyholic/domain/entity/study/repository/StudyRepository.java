@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudyRepository extends JpaRepository<Study, Long>, StudyQueryDslRepository {
     boolean existsByIdNotAndName(Long studyId, String name);
+    boolean existsByName(String name);
 }
