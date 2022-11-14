@@ -13,6 +13,6 @@ public class UserStudyParticipateRequest {
     @ApiModelProperty(value = "스터디 ID(PK)", example = "1", required = true)
     private Long studyId;
 
-    @ApiModelProperty(value = "스터디에 참여하는 사용자 ID(PK)", example = "1", required = true)
+    @ApiModelProperty(value = "스터디에 참여 or 참여 취소하는 사용자 ID(PK)", example = "1", required = true)
     private Long userId;
 }
