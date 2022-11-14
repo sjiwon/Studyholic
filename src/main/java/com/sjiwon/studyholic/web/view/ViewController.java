@@ -11,4 +11,9 @@ public class ViewController {
     public String loginPage() {
         return "authenticate/LoginPage";
     }
+
+    @GetMapping("/signup")
+    public String signUpPage() {
+        return "authenticate/SignUpPage";
+    }
 }

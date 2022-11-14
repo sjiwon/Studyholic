@@ -5,7 +5,7 @@
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
     <link rel="stylesheet" href="<c:url value="/css/login.css"/>"/>
-    <script src="<c:url value="/js/Login.js"/>"></script>
+    <script src="<c:url value="/js/login/Login.js"/>"></script>
 </head>
 <style>
     .link-color-black{
