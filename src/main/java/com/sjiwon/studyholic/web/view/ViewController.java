@@ -86,4 +86,9 @@ public class ViewController {
             writer.flush();
         }
     }
+
+    @GetMapping("/study/post")
+    public String studyRegisterPage() {
+        return "main/StudyRegisterPage";
+    }
 }
