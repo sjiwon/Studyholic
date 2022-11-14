@@ -19,6 +19,7 @@ import java.util.Optional;
 import static com.sjiwon.studyholic.common.VariableFactory.*;
 import static com.sjiwon.studyholic.domain.entity.study.QStudy.study;
 import static com.sjiwon.studyholic.domain.entity.studytag.QStudyTag.studyTag;
+import static com.sjiwon.studyholic.domain.entity.user.QUser.user;
 import static com.sjiwon.studyholic.domain.entity.userstudy.QUserStudy.userStudy;
 
 @Transactional(readOnly = true)
@@ -139,6 +140,20 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     }
 
     @Override
+    public List<BasicStudy> getUserParticipateStudyInformation(Long userId) {
+        return query
+                .selectDistinct(new QBasicStudy(
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                .from(study)
+                .leftJoin(study.studyTagList, studyTag)
+                .leftJoin(study.userStudyList, userStudy)
+                .innerJoin(userStudy.user, user)
+                .where(userIdEq(userId))
+                .orderBy(study.registerDate.desc())
+                .fetch();
+    }
+
+    @Override
     @Transactional
     public Long deleteByStudyId(Long studyId) {
         return query
@@ -161,5 +176,13 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
         }
 
         return study.id.eq(studyId);
+    }
+
+    private BooleanExpression userIdEq(Long userId) {
+        if (Objects.isNull(userId)) {
+            return null;
+        }
+
+        return user.id.eq(userId);
     }
 }
