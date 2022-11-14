@@ -36,6 +36,15 @@ public class StudyTagQueryDslRepositoryImpl implements StudyTagQueryDslRepositor
                 .execute();
     }
 
+    @Override
+    public List<String> findTagListByStudyId(Long studyId) {
+        return query.select(studyTag.tag)
+                .from(studyTag)
+                .innerJoin(studyTag.study, study)
+                .where(studyIdEq(studyId))
+                .fetch();
+    }
+
     private BooleanExpression studyIdEq(Long studyId) {
         if (Objects.isNull(studyId)) {
             return null;

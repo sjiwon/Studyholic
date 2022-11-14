@@ -4,6 +4,7 @@ import com.sjiwon.studyholic.domain.entity.study.Study;
 import com.sjiwon.studyholic.domain.entity.study.repository.StudyRepository;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
+import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailInformation;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
 import com.sjiwon.studyholic.domain.entity.studytag.repository.StudyTagRepository;
@@ -109,7 +110,7 @@ public class StudyService {
     }
 
     /**
-     * View를 위한 Service Logic
+     * 메인 페이지 스터디 리스트
      */
     public Page<StudySimpleInformation> getMainPageStudyList(Pageable pageable, String sort, @Nullable String keyword) {
         Page<BasicStudy> pagingStudyList = isRequestContainsKeyword(keyword)
@@ -149,5 +150,18 @@ public class StudyService {
                 .map(userStudy -> new StudyLeaderDto(userStudy.getUser()))
                 .findFirst()
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+    }
+
+    /**
+     * 특정 스터디 상세 정보
+     */
+    public StudyDetailInformation getStudyDetailInformation(Long studyId) {
+        return new StudyDetailInformation(
+                studyRepository.getBasicStudyInformation(studyId)
+                        .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
+                userStudyRepository.findStudyLeaderIdByStudyId(studyId),
+                studyTagRepository.findTagListByStudyId(studyId),
+                userStudyRepository.findParticipateUserListByStudyId(studyId)
+        );
     }
 }
