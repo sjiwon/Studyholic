@@ -2,6 +2,7 @@ package com.sjiwon.studyholic.domain.entity.user.repository.dsl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.dto.BasicUser;
 import com.sjiwon.studyholic.domain.entity.user.repository.dto.QBasicUser;
 import lombok.RequiredArgsConstructor;
@@ -11,15 +12,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static com.sjiwon.studyholic.domain.entity.user.QUser.user;
+import static com.sjiwon.studyholic.domain.entity.userstudy.QUserStudy.userStudy;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
     private final JPAQueryFactory query;
 
-    /**
-     * 마이페이지 정보 조회 쿼리
-     */
+    @Override
+    public Optional<User> findAllByIdWithFetchUserStudy(Long userId) {
+        return Optional.ofNullable(
+                query.select(user)
+                        .from(user)
+                        .innerJoin(user.userStudyList, userStudy).fetchJoin()
+                        .where(userIdEq(userId))
+                        .fetchFirst()
+        );
+    }
+
     @Override
     public Optional<BasicUser> getBasicUserInformation(Long userId) {
         return Optional.ofNullable(

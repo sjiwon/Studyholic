@@ -1,11 +1,14 @@
 package com.sjiwon.studyholic.domain.entity.study.service;
 
+import com.sjiwon.studyholic.domain.entity.study.Study;
 import com.sjiwon.studyholic.domain.entity.study.repository.StudyRepository;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
 import com.sjiwon.studyholic.domain.entity.studytag.repository.StudyTagRepository;
+import com.sjiwon.studyholic.domain.entity.user.User;
+import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
 import com.sjiwon.studyholic.exception.StudyholicException;
@@ -30,6 +33,21 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final StudyTagRepository studyTagRepository;
     private final UserStudyRepository userStudyRepository;
+    private final UserRepository userRepository;
+
+    @Transactional
+    public Long createNewStudy(Long userId, Study study, List<String> tagList) {
+        User user = userRepository.findAllByIdWithFetchUserStudy(userId)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+
+        tagList.forEach(tag -> {
+            study.getStudyTagList().add(StudyTag.addTagInStudy(study, tag));
+        });
+        Study createStudy = studyRepository.save(study); // cascade StudyTag
+        userStudyRepository.save(UserStudy.addUserInStudy(user, createStudy, Boolean.TRUE));
+
+        return createStudy.getId();
+    }
 
     /**
      * View를 위한 Service Logic
