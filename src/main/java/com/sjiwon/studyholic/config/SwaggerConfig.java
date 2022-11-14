@@ -36,7 +36,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sjiwon.Studyholic.web.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.sjiwon.studyholic.web.api"))
                 .paths(PathSelectors.any())
                 .build();
     }
