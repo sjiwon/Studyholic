@@ -81,6 +81,27 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void changeUserNickname(Long userId, String updateNickname) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+        isSameNicknameAsBefore(user.getNickName(), updateNickname);
+        isDuplicateNickname(userId, updateNickname);
+        user.changeNickname(updateNickname);
+    }
+
+    private void isSameNicknameAsBefore(String beforeNickname, String afterNickname) {
+        if (Objects.equals(beforeNickname, afterNickname)) {
+            throw StudyholicException.type(SAME_USER_NICKNAME_AS_BEFORE);
+        }
+    }
+
+    private void isDuplicateNickname(Long userId, String nickname) {
+        if (userRepository.existsByIdNotAndNickName(userId, nickname)) {
+            throw StudyholicException.type(DUPLICATE_USER_NICKNAME);
+        }
+    }
+
     /**
      * View를 위한 Service Logic
      */

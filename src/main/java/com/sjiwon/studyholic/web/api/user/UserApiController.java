@@ -2,10 +2,7 @@ package com.sjiwon.studyholic.web.api.user;
 
 import com.sjiwon.studyholic.domain.entity.user.service.UserService;
 import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
-import com.sjiwon.studyholic.web.api.user.dto.request.ChangeProfileRequest;
-import com.sjiwon.studyholic.web.api.user.dto.request.UserDuplicateCheckRequest;
-import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequest;
-import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequestWithDefaultProfile;
+import com.sjiwon.studyholic.web.api.user.dto.request.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +48,14 @@ public class UserApiController {
     public ResponseEntity<Void> changeUserProfileImageToDefault(@RequestParam Long userId, HttpServletRequest request) {
         userService.changeUserProfileImageToDefault(userId, request);
         sessionRefreshService.refreshSession(userId, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/user/change-nickname")
+    @ApiOperation(value = "사용자 닉네임 변경 API", notes = "닉네임을 변경하기 위한 API")
+    public ResponseEntity<Void> changeUserNickname(@RequestBody ChangeNicknameRequest changeRequest, HttpServletRequest request) {
+        userService.changeUserNickname(changeRequest.getUserId(), changeRequest.getNickname());
+        sessionRefreshService.refreshSession(changeRequest.getUserId(), request);
         return ResponseEntity.noContent().build();
     }
 
