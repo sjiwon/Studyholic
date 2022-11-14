@@ -35,7 +35,7 @@
     </div>
 </main>
 <script>
-    $('#id, #password').on('keydown', function (event) {
+    $('#loginId, #loginPassword').on('keydown', function (event) {
         let key = event.key || event.keyCode;
 
         if (key === 'Enter' || key === 13) {
