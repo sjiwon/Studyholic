@@ -24,4 +24,11 @@ public class UserStudyApiController {
         userStudyService.participateStudy(participateRequest.getStudyId(), participateRequest.getUserId());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/user/cancel-study")
+    @ApiOperation(value = "스터디 참여 취소 API", notes = "사용자가 참여중인 스터디에서 참여를 취소하기 위한 API")
+    public ResponseEntity<Void> studyParticipateCancel(@RequestBody UserStudyParticipateRequest cancelRequest) {
+        userStudyService.participateCancel(cancelRequest.getStudyId(), cancelRequest.getUserId());
+        return ResponseEntity.noContent().build();
+    }
 }

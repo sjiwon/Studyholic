@@ -46,4 +46,9 @@ public class UserStudyService {
             throw StudyholicException.type(ALREADY_PARTICIPATE);
         }
     }
+
+    @Transactional
+    public void participateCancel(Long studyId, Long userId) {
+        userStudyRepository.deleteByStudyIdAndUserId(studyId, userId);
+    }
 }

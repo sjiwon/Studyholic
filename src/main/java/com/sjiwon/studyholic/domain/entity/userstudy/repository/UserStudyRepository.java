@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserStudyRepository extends JpaRepository<UserStudy, Long>, UserStudyQueryDslRepository {
     boolean existsByStudyIdAndUserIdAndTeamLeaderIsFalse(Long studyId, Long userId);
     boolean existsByStudyAndUser(Study study, User user);
+    void deleteByStudyIdAndUserId(Long studyId, Long userId);
 }
