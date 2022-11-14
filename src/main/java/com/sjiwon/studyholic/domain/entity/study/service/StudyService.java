@@ -45,9 +45,7 @@ public class StudyService {
         User user = userRepository.findAllByIdWithFetchUserStudy(userId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
 
-        tagList.forEach(tag -> {
-            study.getStudyTagList().add(StudyTag.addTagInStudy(study, tag));
-        });
+        tagList.forEach(tag -> study.getStudyTagList().add(StudyTag.addTagInStudy(study, tag)));
         Study createStudy = studyRepository.save(study); // cascade StudyTag
         userStudyRepository.save(UserStudy.addUserInStudy(user, createStudy, Boolean.TRUE));
 
@@ -94,6 +92,21 @@ public class StudyService {
 
     private UserSession getCurrentUserSession(HttpServletRequest request) {
         return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
+    }
+
+    @Transactional
+    public void deleteStudy(Long studyId, HttpServletRequest request) {
+        Long currentUserId = getCurrentUserSession(request).getId();
+        isStudyLeaderDeleteRequest(studyId, currentUserId); // 스터디 리더의 삭제 요청인지 검증
+        userStudyRepository.deleteInBatchByStudyId(studyId); // 1) delete UserStudy (batch)
+        studyTagRepository.deleteInBatchByStudyId(studyId); // 2) delete StudyTag (batch)
+        studyRepository.deleteByStudyId(studyId); // 3) delete Study
+    }
+
+    private void isStudyLeaderDeleteRequest(Long studyId, Long userId) {
+        if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userId)) {
+            throw StudyholicException.type(BAD_DELETE_REQUEST_FROM_ANONYMOUS_USER);
+        }
     }
 
     /**
