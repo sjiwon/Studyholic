@@ -19,6 +19,7 @@ public enum StudyholicErrorCode {
     STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "스터디 정보가 존재하지 않습니다"),
     BAD_UPDATE_REQUEST_FROM_ANONYMOUS_USER(HttpStatus.BAD_REQUEST, "스터디 수정은 스터디 리더만 가능합니다"),
     DUPLICATE_STUDY_NAME(HttpStatus.CONFLICT, "중복된 스터디 이름입니다"),
+    BAD_DELETE_REQUEST_FROM_ANONYMOUS_USER(HttpStatus.BAD_REQUEST, "스터디 삭제는 스터디 리더만 가능합니다"),
 
     ;
 
