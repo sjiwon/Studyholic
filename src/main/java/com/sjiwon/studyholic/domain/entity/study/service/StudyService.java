@@ -112,12 +112,9 @@ public class StudyService {
      * View를 위한 Service Logic
      */
     public Page<StudySimpleInformation> getMainPageStudyList(Pageable pageable, String sort, @Nullable String keyword) {
-        Page<BasicStudy> pagingStudyList;
-        if (Objects.isNull(keyword) || keyword.isBlank()) {
-            pagingStudyList = studyRepository.getMainPageStudyList(pageable, sort);
-        } else {
-            pagingStudyList = studyRepository.getMainPageStudyListWithKeyword(pageable, sort, keyword);
-        }
+        Page<BasicStudy> pagingStudyList = isRequestContainsKeyword(keyword)
+                ? studyRepository.getMainPageStudyListWithKeyword(pageable, sort, keyword)
+                : studyRepository.getMainPageStudyList(pageable, sort);
 
         List<StudyTag> studyTagList = studyTagRepository.findAllWithFetchStudy();
         List<UserStudy> userStudyList = userStudyRepository.findAllWithFetchUserAndStudy();
@@ -131,6 +128,10 @@ public class StudyService {
                 .collect(Collectors.toList());
 
         return PageableExecutionUtils.getPage(studySimpleInformationList, pageable, pagingStudyList::getTotalElements);
+    }
+
+    private boolean isRequestContainsKeyword(String keyword) {
+        return Objects.nonNull(keyword) && StringUtils.hasText(keyword);
     }
 
     private List<String> getStudyTagList(List<StudyTag> studyTagList, BasicStudy basicStudy) {
