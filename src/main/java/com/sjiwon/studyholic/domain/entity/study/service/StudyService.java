@@ -101,7 +101,7 @@ public class StudyService {
                 .stream()
                 .map(StudyTag::getTag)
                 .collect(Collectors.toList());
-        return new HashSet<>(originTagList).containsAll(tagList);
+        return new HashSet<>(tagList).containsAll(originTagList);
     }
 
     private void isStudyLeaderUpdateRequest(Long studyId, Long userId) {
