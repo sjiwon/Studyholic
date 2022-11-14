@@ -6,6 +6,7 @@ import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.request.UpdateStudyInformationRequestDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailInformation;
+import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailToEditInformation;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
 import com.sjiwon.studyholic.domain.entity.studytag.repository.StudyTagRepository;
@@ -196,6 +197,17 @@ public class StudyService {
                 userStudyRepository.findStudyLeaderIdByStudyId(studyId),
                 studyTagRepository.findTagListByStudyId(studyId),
                 userStudyRepository.findParticipateUserListByStudyId(studyId)
+        );
+    }
+
+    /**
+     * 스터디 수정 간 필요한 정보
+     */
+    public StudyDetailToEditInformation getStudyDefailtToEditInformation(Long studyId) {
+        return new StudyDetailToEditInformation(
+                studyRepository.getBasicStudyInformation(studyId)
+                        .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
+                studyTagRepository.findTagListByStudyId(studyId)
         );
     }
 }
