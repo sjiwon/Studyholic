@@ -102,11 +102,28 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
         return PageableExecutionUtils.getPage(content, pageRequest, countQuery::size);
     }
 
+    @Override
+    @Transactional
+    public Long deleteByStudyId(Long studyId) {
+        return query
+                .delete(study)
+                .where(studyIdEq(studyId))
+                .execute();
+    }
+
     private BooleanExpression keywordContains(String keyword) {
         if (Objects.isNull(keyword)) {
             return null;
         }
 
         return studyTag.tag.contains(keyword);
+    }
+
+    private BooleanExpression studyIdEq(Long studyId) {
+        if (Objects.isNull(studyId)) {
+            return null;
+        }
+
+        return study.id.eq(studyId);
     }
 }

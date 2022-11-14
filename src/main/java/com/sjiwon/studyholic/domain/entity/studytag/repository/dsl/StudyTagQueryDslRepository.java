@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface StudyTagQueryDslRepository {
     List<StudyTag> findAllWithFetchStudy();
+    Long deleteInBatchByStudyId(Long studyId);
 }

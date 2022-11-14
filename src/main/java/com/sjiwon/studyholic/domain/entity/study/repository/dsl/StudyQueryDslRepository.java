@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 public interface StudyQueryDslRepository {
     Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort);
     Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword);
+    Long deleteByStudyId(Long studyId);
 }

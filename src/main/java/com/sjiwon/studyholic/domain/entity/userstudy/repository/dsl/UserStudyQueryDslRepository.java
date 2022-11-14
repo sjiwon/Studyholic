@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface UserStudyQueryDslRepository {
     List<UserStudy> findAllWithFetchUserAndStudy();
+    Long deleteInBatchByStudyId(Long studyId);
 }
