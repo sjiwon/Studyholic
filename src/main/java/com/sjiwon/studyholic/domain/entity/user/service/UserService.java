@@ -2,6 +2,7 @@ package com.sjiwon.studyholic.domain.entity.user.service;
 
 import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
+import com.sjiwon.studyholic.domain.entity.user.service.dto.response.MyPageInformation;
 import com.sjiwon.studyholic.domain.etc.file.FileUploadService;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
 
-import static com.sjiwon.studyholic.exception.StudyholicErrorCode.DUPLICATE_USER_LOGIN_ID;
-import static com.sjiwon.studyholic.exception.StudyholicErrorCode.DUPLICATE_USER_NICKNAME;
+import static com.sjiwon.studyholic.exception.StudyholicErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +46,15 @@ public class UserService {
         if (userRepository.existsByLoginId(loginId)) {
             throw StudyholicException.type(DUPLICATE_USER_LOGIN_ID);
         }
+    }
+
+    /**
+     * View를 위한 Service Logic
+     */
+    public MyPageInformation getUserDetailInformation(Long userId) {
+        return new MyPageInformation(
+                userRepository.getBasicUserInformation(userId)
+                        .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND))
+        );
     }
 }
