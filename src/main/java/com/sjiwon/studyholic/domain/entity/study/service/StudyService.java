@@ -11,7 +11,7 @@ import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
-import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
+import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,17 +28,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.sjiwon.studyholic.common.VariableFactory.SESSION_KEY;
 import static com.sjiwon.studyholic.exception.StudyholicErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class StudyService {
+    // repository
     private final StudyRepository studyRepository;
     private final StudyTagRepository studyTagRepository;
     private final UserStudyRepository userStudyRepository;
     private final UserRepository userRepository;
+
+    // service
+    private final SessionRefreshService sessionRefreshService;
 
     @Transactional
     public Long createNewStudy(Long userId, Study study, List<String> tagList) {
@@ -54,7 +57,7 @@ public class StudyService {
 
     @Transactional
     public void changeInformation(HttpServletRequest request, Long studyId, String name, String briefDescription, String description, LocalDate recruitDeadline, Integer maxMember) {
-        Long currentUserId = getCurrentUserSession(request).getId();
+        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         isStudyLeaderUpdateRequest(studyId, currentUserId); // 스터디 리더의 업데이트 요청인지 검증
 
         Study study = studyRepository.findById(studyId)
@@ -90,13 +93,9 @@ public class StudyService {
         }
     }
 
-    private UserSession getCurrentUserSession(HttpServletRequest request) {
-        return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
-    }
-
     @Transactional
     public void deleteStudy(Long studyId, HttpServletRequest request) {
-        Long currentUserId = getCurrentUserSession(request).getId();
+        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         isStudyLeaderDeleteRequest(studyId, currentUserId); // 스터디 리더의 삭제 요청인지 검증
         userStudyRepository.deleteInBatchByStudyId(studyId); // 1) delete UserStudy (batch)
         studyTagRepository.deleteInBatchByStudyId(studyId); // 2) delete StudyTag (batch)

@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 import static com.sjiwon.studyholic.common.VariableFactory.SESSION_KEY;
+import static com.sjiwon.studyholic.exception.StudyholicErrorCode.UNAUTHENTICATED_USER;
 import static com.sjiwon.studyholic.exception.StudyholicErrorCode.USER_NOT_FOUND;
 
 @Service
@@ -26,5 +28,15 @@ public class SessionRefreshService {
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_KEY, UserSession.of(user));
+    }
+
+    public UserSession getCurrentUserSession(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (Objects.isNull(session) || Objects.isNull(session.getAttribute(SESSION_KEY))) {
+            throw StudyholicException.type(UNAUTHENTICATED_USER);
+        }
+
+        return (UserSession) session.getAttribute(SESSION_KEY);
     }
 }
