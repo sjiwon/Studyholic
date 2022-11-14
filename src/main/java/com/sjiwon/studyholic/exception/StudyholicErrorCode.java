@@ -21,6 +21,8 @@ public enum StudyholicErrorCode {
     BAD_UPDATE_REQUEST_FROM_ANONYMOUS_USER(HttpStatus.BAD_REQUEST, "스터디 수정은 스터디 리더만 가능합니다"),
     DUPLICATE_STUDY_NAME(HttpStatus.CONFLICT, "중복된 스터디 이름입니다"),
     BAD_DELETE_REQUEST_FROM_ANONYMOUS_USER(HttpStatus.BAD_REQUEST, "스터디 삭제는 스터디 리더만 가능합니다"),
+    ALREADY_FULL_STUDY(HttpStatus.CONFLICT, "모집 완료된 스터디입니다"),
+    ALREADY_PARTICIPATE(HttpStatus.CONFLICT, "이미 참여하고 있는 스터디입니다"),
 
     ;
 

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="<c:url value="/js/search/AboutStudy.js"/>"></script>
+<script src="<c:url value="/js/study/AboutStudy.js"/>"></script>
 <%
     List<StudySimpleInformation> studyList = (List<StudySimpleInformation>) request.getAttribute("studyList");
 %>
