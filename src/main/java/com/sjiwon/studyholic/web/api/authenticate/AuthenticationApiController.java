@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 import static com.sjiwon.studyholic.common.VariableFactory.SESSION_KEY;
 
@@ -36,6 +37,18 @@ public class AuthenticationApiController {
         session.setAttribute(SESSION_KEY, userSession);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "로그아웃 API", notes = "로그아웃을 진행하는 API")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (Objects.nonNull(session) && Objects.nonNull(session.getAttribute(SESSION_KEY))) {
+            session.invalidate();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/email/authenticate") // 이메일 인증 (회원가입[join] / 아이디 찾기[id] / 비밀번호 찾기[password])
