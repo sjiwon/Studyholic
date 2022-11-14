@@ -61,6 +61,16 @@ public class UserService {
         fileUploadService.uploadProfileImage(profile, user);
     }
 
+    @Transactional
+    public void changeUserProfileImageToDefault(Long requestUserId, HttpServletRequest request) {
+        Long currentUserId = getCurrentUserSession(request).getId();
+        isIllegalRequestByAnonymousUser(requestUserId, currentUserId);
+
+        User user = userRepository.findById(requestUserId)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+        user.applyDefaultImage();
+    }
+
     private UserSession getCurrentUserSession(HttpServletRequest request) {
         return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
     }

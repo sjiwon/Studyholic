@@ -46,6 +46,14 @@ public class UserApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/user/change-default-profile")
+    @ApiOperation(value = "사용자 프로필 이미지 변경 API - Version 2", notes = "사용자의 현재 프로필 이미지를 서버 기본 제공 이미지로 변경하는 API")
+    public ResponseEntity<Void> changeUserProfileImageToDefault(@RequestParam Long userId, HttpServletRequest request) {
+        userService.changeUserProfileImageToDefault(userId, request);
+        sessionRefreshService.refreshSession(userId, request);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/user/duplicate-check")
     @ApiOperation(value = "사용자 중복 체크 API", notes = "회원가입 간 데이터 중복 체크를 위한 API [닉네임, 아이디]")
     public ResponseEntity<Void> checkUserDuplicateResource(@RequestBody UserDuplicateCheckRequest checkRequest) {
