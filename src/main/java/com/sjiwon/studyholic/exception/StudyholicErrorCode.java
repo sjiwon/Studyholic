@@ -10,6 +10,8 @@ public enum StudyholicErrorCode {
     WRONG_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다"),
     DUPLICATE_USER_NICKNAME(HttpStatus.CONFLICT, "중복된 닉네임입니다"),
     DUPLICATE_USER_LOGIN_ID(HttpStatus.CONFLICT, "중복된 로그인 아이디입니다"),
+    DUPLICATE_USER_EMAIL(HttpStatus.CONFLICT, "중복된 이메일입니다"),
+    EMAIL_NEVER_AUTHENTICATED(HttpStatus.CONFLICT, "인증내역이 없는 이메일입니다"),
 
     ;
 
