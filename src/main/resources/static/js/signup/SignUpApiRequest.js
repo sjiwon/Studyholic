@@ -59,9 +59,9 @@ function idDuplicateCheckApi() {
 
     axios.post('/api/user/duplicate-check', data)
         .then(() => {
-            let use = confirm('[' + inputLoginId.val() + ']은 사용 가능합니다\n사용하시겠습니까?');
+            let use = confirm('[' + loginId.val() + ']은 사용 가능합니다\n사용하시겠습니까?');
             if (use) {
-                inputLoginId.css({
+                loginId.css({
                     "border-color": "#0D6EFD",
                     "border": "2px solid",
                     "color": "#0D6EFD",
