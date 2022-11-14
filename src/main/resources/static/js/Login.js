@@ -1,10 +1,10 @@
 function login() {
-    let id = $('#id');
-    let password = $('#password');
+    let loginId = $('#loginId');
+    let loginPassword = $('#loginPassword');
 
     let data = {
-        'loginId': id.val(),
-        'loginPassword': password.val()
+        'loginId': loginId.val(),
+        'loginPassword': loginPassword.val()
     }
 
     axios.post('/api/login', data)
@@ -17,11 +17,11 @@ function login() {
             let jsonData = error.response.data;
 
             if (errorStatus === 401) {
-                password.val('').focus();
+                loginPassword.val('').focus();
                 alert(jsonData['message']);
             } else if (errorStatus === 404) {
-                password.val('');
-                id.val('').focus();
+                loginPassword.val('');
+                loginId.val('').focus();
                 alert(jsonData['message']);
             }
         });
