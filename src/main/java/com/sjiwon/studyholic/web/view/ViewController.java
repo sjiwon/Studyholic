@@ -73,4 +73,10 @@ public class ViewController {
             writer.flush();
         }
     }
+
+    @GetMapping("/study/{studyId}")
+    public String studyDetailPage(@PathVariable Long studyId, Model model) {
+        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId));
+        return "main/StudyDetailPage";
+    }
 }
