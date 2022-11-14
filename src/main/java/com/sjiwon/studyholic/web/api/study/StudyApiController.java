@@ -1,6 +1,7 @@
 package com.sjiwon.studyholic.web.api.study;
 
 import com.sjiwon.studyholic.domain.entity.study.service.StudyService;
+import com.sjiwon.studyholic.web.api.study.dto.request.DuplicateNameCheckRequest;
 import com.sjiwon.studyholic.web.api.study.dto.request.StudyCreateRequest;
 import com.sjiwon.studyholic.web.api.study.dto.request.UpdateStudyInformationRequest;
 import io.swagger.annotations.Api;
@@ -38,5 +39,19 @@ public class StudyApiController {
     public ResponseEntity<Void> deleteStudy(@PathVariable Long studyId, HttpServletRequest request) {
         studyService.deleteStudy(studyId, request);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/study/duplicate-check")
+    @ApiOperation(value = "스터디 이름 중복 체크 API", notes = "스터디 등록 간 스터디 이름 중복 체크를 위한 API")
+    public ResponseEntity<Void> checkStudyDuplicateResource(@RequestBody DuplicateNameCheckRequest checkRequest) {
+        String resource = checkRequest.getResource();
+        String value = checkRequest.getValue();
+
+        if (resource.equals("name")) {
+            studyService.hasDuplicateName(value);
+            return ResponseEntity.noContent().build();
+        } else { // 잘못된 요청
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
