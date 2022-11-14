@@ -11,11 +11,11 @@ function studyNameDuplicateCheckApi() {
     }
 
     let data = {
-        'resource': 'name',
+        'studyId': null,
         'value': studyName.val()
     }
 
-    axios.post('/api/study/duplicate-check', data)
+    axios.post('/api/study/register/duplicate-check', data)
         .then(() => {
             let use = confirm('[' + studyName.val() + ']는 사용 가능합니다\n사용하시겠습니까?');
             if (use) {
