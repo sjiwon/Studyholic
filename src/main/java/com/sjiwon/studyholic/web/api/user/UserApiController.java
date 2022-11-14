@@ -2,14 +2,16 @@ package com.sjiwon.studyholic.web.api.user;
 
 import com.sjiwon.studyholic.domain.user.service.UserService;
 import com.sjiwon.studyholic.web.api.user.dto.request.UserDuplicateCheckRequest;
+import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequest;
+import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequestWithDefaultProfile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api")
@@ -17,6 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"사용자 API"})
 public class UserApiController {
     private final UserService userService;
+
+    @PostMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "회원가입 API - Version 1", notes = "회원가입을 위한 API (사용자가 업로드한 이미지로 프로필 적용)")
+    public ResponseEntity<Void> joinUser(@ModelAttribute UserJoinRequest request) {
+        Long joinUserId = userService.saveUser(request.toEntity(), request.getProfile());
+        return ResponseEntity.created(URI.create("/user/" + joinUserId)).build();
+    }
+
+    @PostMapping("/user/default-profile")
+    @ApiOperation(value = "회원가입 API - Version 2", notes = "회원가입을 위한 API (사용자 프로필 이미지 = 서버 기본 제공 이미지)")
+    public ResponseEntity<Void> joinUserWithDefaultProfile(@ModelAttribute UserJoinRequestWithDefaultProfile request) {
+        Long joinUserId = userService.saveUser(request.toEntity(), null);
+        return ResponseEntity.created(URI.create("/user/" + joinUserId)).build();
+    }
 
     @PostMapping("/user/duplicate-check")
     @ApiOperation(value = "사용자 중복 체크 API", notes = "회원가입 간 데이터 중복 체크를 위한 API [닉네임, 아이디]")
