@@ -1,6 +1,6 @@
 package com.sjiwon.studyholic.web.api.user;
 
-import com.sjiwon.studyholic.domain.user.service.UserService;
+import com.sjiwon.studyholic.domain.entity.user.service.UserService;
 import com.sjiwon.studyholic.web.api.user.dto.request.UserDuplicateCheckRequest;
 import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequest;
 import com.sjiwon.studyholic.web.api.user.dto.request.UserJoinRequestWithDefaultProfile;

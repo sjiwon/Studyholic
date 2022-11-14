@@ -1,8 +1,8 @@
 package com.sjiwon.studyholic.web.api.authenticate;
 
-import com.sjiwon.studyholic.domain.login.LoginService;
-import com.sjiwon.studyholic.domain.login.dto.response.UserSession;
-import com.sjiwon.studyholic.domain.mail.MailService;
+import com.sjiwon.studyholic.domain.etc.login.LoginService;
+import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
+import com.sjiwon.studyholic.domain.etc.mail.MailService;
 import com.sjiwon.studyholic.web.api.authenticate.dto.EmailAuthenticationRequest;
 import com.sjiwon.studyholic.web.api.authenticate.dto.LoginRequest;
 import io.swagger.annotations.Api;

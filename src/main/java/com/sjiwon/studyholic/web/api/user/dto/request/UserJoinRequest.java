@@ -1,6 +1,6 @@
 package com.sjiwon.studyholic.web.api.user.dto.request;
 
-import com.sjiwon.studyholic.domain.user.User;
+import com.sjiwon.studyholic.domain.entity.user.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
