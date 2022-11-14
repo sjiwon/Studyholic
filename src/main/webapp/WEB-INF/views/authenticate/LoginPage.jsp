@@ -20,13 +20,12 @@
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-        <input type="text" class="form-control" id="id" name="loginId" placeholder="ID" autocomplete="on" autofocus>
-        <label for="id">ID</label>
+        <input type="text" class="form-control" id="loginId" name="loginId" placeholder="ID" autocomplete="on" autofocus>
+        <label for="loginId">ID</label>
     </div>
     <div class="form-floating">
-        <input type="password" class="form-control" id="password" name="loginPassword" placeholder="Password"
-               autocomplete="on">
-        <label for="password">Password</label>
+        <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
+        <label for="loginPassword">Password</label>
     </div>
     <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">로그인</button>
     <div class="form-floating mt-3">
