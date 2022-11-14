@@ -10,4 +10,5 @@ public interface UserRepository extends JpaRepository<User, Long>, UserQueryDslR
     Optional<User> findByLoginId(String loginId);
     boolean existsByNickName(String nickName);
     boolean existsByLoginId(String loginId);
+    boolean existsByEmail(String Email);
 }
