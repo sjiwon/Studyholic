@@ -3,6 +3,7 @@ package com.sjiwon.studyholic.domain.entity.study.repository.dsl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sjiwon.studyholic.domain.entity.study.Study;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.QBasicStudy;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,17 @@ import static com.sjiwon.studyholic.domain.entity.userstudy.QUserStudy.userStudy
 @RequiredArgsConstructor
 public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     private final JPAQueryFactory query;
+
+    @Override
+    public Optional<Study> findByStudyIdWithFetchStudyTag(Long studyId) {
+        return Optional.ofNullable(
+                query.select(study)
+                        .from(study)
+                        .innerJoin(study.studyTagList).fetchJoin()
+                        .where(studyIdEq(studyId))
+                        .fetchFirst()
+        );
+    }
 
     @Override
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {

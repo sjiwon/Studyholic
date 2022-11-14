@@ -4,6 +4,7 @@ import com.sjiwon.studyholic.domain.entity.study.Study;
 import com.sjiwon.studyholic.domain.entity.study.repository.StudyRepository;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
+import com.sjiwon.studyholic.domain.entity.study.service.dto.request.UpdateStudyInformationRequestDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailInformation;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
@@ -21,10 +22,12 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -57,29 +60,48 @@ public class StudyService {
     }
 
     @Transactional
-    public void changeInformation(HttpServletRequest request, Long studyId, String name, String briefDescription, String description, LocalDate recruitDeadline, Integer maxMember) {
+    public void changeInformation(HttpServletRequest request, Long studyId, UpdateStudyInformationRequestDto updateRequest) {
         Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
         isStudyLeaderUpdateRequest(studyId, currentUserId); // 스터디 리더의 업데이트 요청인지 검증
 
-        Study study = studyRepository.findById(studyId)
+        Study study = studyRepository.findByStudyIdWithFetchStudyTag(studyId)
                 .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND));
 
-        if (StringUtils.hasText(name)) {
-            checkDuplicateStudyName(study.getId(), name);
-            study.changeName(name);
+        if (StringUtils.hasText(updateRequest.getName())) {
+            checkDuplicateStudyName(study.getId(), updateRequest.getName());
+            study.changeName(updateRequest.getName());
         }
-        if (StringUtils.hasText(briefDescription)) {
-            study.changeBriefDescription(briefDescription);
+        if (StringUtils.hasText(updateRequest.getBriefDescription())) {
+            study.changeBriefDescription(updateRequest.getBriefDescription());
         }
-        if (StringUtils.hasText(description)) {
-            study.changeDescription(description);
+        if (StringUtils.hasText(updateRequest.getDescription())) {
+            study.changeDescription(updateRequest.getDescription());
         }
-        if (Objects.nonNull(recruitDeadline)) {
-            study.changeRecruitDeadLine(recruitDeadline);
+        if (Objects.nonNull(updateRequest.getRecruitDeadline())) {
+            study.changeRecruitDeadLine(updateRequest.getRecruitDeadline());
         }
-        if (Objects.nonNull(maxMember)) {
-            study.changeMaxMember(maxMember);
+        if (Objects.nonNull(updateRequest.getMaxMember())) {
+            study.changeMaxMember(updateRequest.getMaxMember());
         }
+
+        List<String> tagList = updateRequest.getTagList();
+        if (!CollectionUtils.isEmpty(tagList) && !isTagListExactlySameAsBefore(study, tagList)) {
+            // 1) StudyTagRepository에서 studyId에 해당되는 모든 Instance -> BatchDelete
+            studyTagRepository.deleteInBatchByStudyId(studyId);
+
+            // 2) tagList에 존재하는 tag들을 다시 StudyTagRepository에 saveAll
+            List<StudyTag> studyTagListForBatchInsert = new ArrayList<>();
+            tagList.forEach(tag -> studyTagListForBatchInsert.add(StudyTag.addTagInStudy(study, tag)));
+            studyTagRepository.saveAll(studyTagListForBatchInsert);
+        }
+    }
+
+    private boolean isTagListExactlySameAsBefore(Study study, List<String> tagList) {
+        List<String> originTagList = study.getStudyTagList()
+                .stream()
+                .map(StudyTag::getTag)
+                .collect(Collectors.toList());
+        return new HashSet<>(originTagList).containsAll(tagList);
     }
 
     private void isStudyLeaderUpdateRequest(Long studyId, Long userId) {
