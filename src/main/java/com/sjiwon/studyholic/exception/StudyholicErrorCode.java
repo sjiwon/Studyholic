@@ -12,6 +12,7 @@ public enum StudyholicErrorCode {
     DUPLICATE_USER_LOGIN_ID(HttpStatus.CONFLICT, "중복된 로그인 아이디입니다"),
     DUPLICATE_USER_EMAIL(HttpStatus.CONFLICT, "중복된 이메일입니다"),
     EMAIL_NEVER_AUTHENTICATED(HttpStatus.CONFLICT, "인증내역이 없는 이메일입니다"),
+    ILLEGAL_REQUEST_BY_ANONYMOUS(HttpStatus.BAD_REQUEST, "타인의 정보에 접근할 수 없습니다"),
 
     ;
 
