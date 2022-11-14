@@ -32,4 +32,11 @@ public class StudyApiController {
         studyService.changeInformation(request, studyId, updateRequest.getName(), updateRequest.getBriefDescription(), updateRequest.getDescription(), updateRequest.getRecruitDeadline(), updateRequest.getMaxMember());
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/study/{studyId}")
+    @ApiOperation(value = "스터디 삭제 API", notes = "스터디를 삭제하는 API")
+    public ResponseEntity<Void> deleteStudy(@PathVariable Long studyId, HttpServletRequest request) {
+        studyService.deleteStudy(studyId, request);
+        return ResponseEntity.noContent().build();
+    }
 }
