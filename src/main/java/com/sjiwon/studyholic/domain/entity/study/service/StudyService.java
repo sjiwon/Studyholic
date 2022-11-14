@@ -131,8 +131,14 @@ public class StudyService {
         }
     }
 
-    public void hasDuplicateName(String name) {
+    public void hasDuplicateNameInRegisterProcess(String name) {
         if (studyRepository.existsByName(name)) {
+            throw StudyholicException.type(DUPLICATE_STUDY_NAME);
+        }
+    }
+
+    public void hasDuplicateNameInEditProcess(Long studyId, String name) {
+        if (studyRepository.existsByIdNotAndName(studyId, name)) {
             throw StudyholicException.type(DUPLICATE_STUDY_NAME);
         }
     }
