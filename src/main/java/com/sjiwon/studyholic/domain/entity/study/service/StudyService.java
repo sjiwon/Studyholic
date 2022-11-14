@@ -11,6 +11,7 @@ import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
+import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,12 +20,16 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.sjiwon.studyholic.exception.StudyholicErrorCode.USER_NOT_FOUND;
+import static com.sjiwon.studyholic.common.VariableFactory.SESSION_KEY;
+import static com.sjiwon.studyholic.exception.StudyholicErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +52,48 @@ public class StudyService {
         userStudyRepository.save(UserStudy.addUserInStudy(user, createStudy, Boolean.TRUE));
 
         return createStudy.getId();
+    }
+
+    @Transactional
+    public void changeInformation(HttpServletRequest request, Long studyId, String name, String briefDescription, String description, LocalDate recruitDeadline, Integer maxMember) {
+        Long currentUserId = getCurrentUserSession(request).getId();
+        isStudyLeaderUpdateRequest(studyId, currentUserId); // 스터디 리더의 업데이트 요청인지 검증
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND));
+
+        if (StringUtils.hasText(name)) {
+            checkDuplicateStudyName(study.getId(), name);
+            study.changeName(name);
+        }
+        if (StringUtils.hasText(briefDescription)) {
+            study.changeBriefDescription(briefDescription);
+        }
+        if (StringUtils.hasText(description)) {
+            study.changeDescription(description);
+        }
+        if (Objects.nonNull(recruitDeadline)) {
+            study.changeRecruitDeadLine(recruitDeadline);
+        }
+        if (Objects.nonNull(maxMember)) {
+            study.changeMaxMember(maxMember);
+        }
+    }
+
+    private void isStudyLeaderUpdateRequest(Long studyId, Long userId) {
+        if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userId)) {
+            throw StudyholicException.type(BAD_UPDATE_REQUEST_FROM_ANONYMOUS_USER);
+        }
+    }
+
+    private void checkDuplicateStudyName(Long studyId, String name) {
+        if (studyRepository.existsByIdNotAndName(studyId, name)) {
+            throw StudyholicException.type(DUPLICATE_STUDY_NAME);
+        }
+    }
+
+    private UserSession getCurrentUserSession(HttpServletRequest request) {
+        return (UserSession) request.getSession(false).getAttribute(SESSION_KEY);
     }
 
     /**
