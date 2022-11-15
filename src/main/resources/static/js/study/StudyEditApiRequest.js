@@ -1,4 +1,5 @@
-function studyNameDuplicateCheckApi() {
+// 1. 스터디 이름 중복 체크 API
+function studyNameDuplicateCheckInEdit(studyId) {
     let studyName = $('#studyName');
     let studyNameDuplicateCheckButton = $('#studyNameDuplicateCheckButton');
     let studyNameVerificationToken = $('#studyNameVerificationToken');
@@ -11,11 +12,11 @@ function studyNameDuplicateCheckApi() {
     }
 
     let data = {
-        'studyId': null,
-        'value': studyName.val()
+        'studyId': studyId,
+        'name': studyName.val()
     }
 
-    axios.post('/api/study/register/duplicate-check', data)
+    axios.post('/api/study/edit/duplicate-check', data)
         .then(() => {
             let use = confirm('[' + studyName.val() + ']는 사용 가능합니다\n사용하시겠습니까?');
             if (use) {

@@ -91,4 +91,10 @@ public class ViewController {
     public String studyRegisterPage() {
         return "main/StudyRegisterPage";
     }
+
+    @GetMapping("/study/edit/{studyId}")
+    public String studyEditPage(@PathVariable Long studyId, Model model) {
+        model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(studyId));
+        return "main/StudyEditPage";
+    }
 }

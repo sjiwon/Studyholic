@@ -41,17 +41,14 @@ public class StudyApiController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/study/duplicate-check")
-    @ApiOperation(value = "스터디 이름 중복 체크 API", notes = "스터디 등록 간 스터디 이름 중복 체크를 위한 API")
-    public ResponseEntity<Void> checkStudyDuplicateResource(@RequestBody DuplicateNameCheckRequest checkRequest) {
-        String resource = checkRequest.getResource();
-        String value = checkRequest.getValue();
-
-        if (resource.equals("name")) {
-            studyService.hasDuplicateName(value);
-            return ResponseEntity.noContent().build();
-        } else { // 잘못된 요청
-            return ResponseEntity.badRequest().build();
+    @PostMapping("/study/{type}/duplicate-check")
+    @ApiOperation(value = "스터디 이름 중복 체크 API", notes = "스터디 등록 간 스터디 이름 중복 체크를 위한 API [type = register / edit]")
+    public ResponseEntity<Void> checkStudyDuplicateResource(@PathVariable String type, @RequestBody DuplicateNameCheckRequest checkRequest) {
+        if (type.equals("register")) { // 스터디 등록 간 이름 중복 체크
+            studyService.hasDuplicateNameInRegisterProcess(checkRequest.getName());
+        } else { // 스터디 수정 간 이름 중복 체크
+            studyService.hasDuplicateNameInEditProcess(checkRequest.getStudyId(), checkRequest.getName());
         }
+        return ResponseEntity.noContent().build();
     }
 }

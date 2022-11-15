@@ -6,6 +6,7 @@ import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.request.UpdateStudyInformationRequestDto;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailInformation;
+import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudyDetailToEditInformation;
 import com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation;
 import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
 import com.sjiwon.studyholic.domain.entity.studytag.repository.StudyTagRepository;
@@ -131,8 +132,14 @@ public class StudyService {
         }
     }
 
-    public void hasDuplicateName(String name) {
+    public void hasDuplicateNameInRegisterProcess(String name) {
         if (studyRepository.existsByName(name)) {
+            throw StudyholicException.type(DUPLICATE_STUDY_NAME);
+        }
+    }
+
+    public void hasDuplicateNameInEditProcess(Long studyId, String name) {
+        if (studyRepository.existsByIdNotAndName(studyId, name)) {
             throw StudyholicException.type(DUPLICATE_STUDY_NAME);
         }
     }
@@ -190,6 +197,17 @@ public class StudyService {
                 userStudyRepository.findStudyLeaderIdByStudyId(studyId),
                 studyTagRepository.findTagListByStudyId(studyId),
                 userStudyRepository.findParticipateUserListByStudyId(studyId)
+        );
+    }
+
+    /**
+     * 스터디 수정 간 필요한 정보
+     */
+    public StudyDetailToEditInformation getStudyDefailtToEditInformation(Long studyId) {
+        return new StudyDetailToEditInformation(
+                studyRepository.getBasicStudyInformation(studyId)
+                        .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
+                studyTagRepository.findTagListByStudyId(studyId)
         );
     }
 }
