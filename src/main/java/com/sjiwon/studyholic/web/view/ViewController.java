@@ -107,4 +107,9 @@ public class ViewController {
     public String resetPasswordPage() {
         return "main/ResetPasswordPage";
     }
+
+    @GetMapping("/change-password")
+    public String changePasswordPage() {
+        return "main/ChangePasswordPage";
+    }
 }

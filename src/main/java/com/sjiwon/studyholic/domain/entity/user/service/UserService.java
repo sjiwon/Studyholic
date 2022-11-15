@@ -127,6 +127,20 @@ public class UserService {
         user.changePassword(randomPassword);
     }
 
+    @Transactional
+    public void changePassword(Long userId, String currentPassword, String changePassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+        isCorrectPassword(user, currentPassword);
+        user.changePassword(changePassword);
+    }
+
+    private void isCorrectPassword(User user, String originPassword) {
+        if (!Objects.equals(user.getLoginPassword(), originPassword)) {
+            throw StudyholicException.type(WRONG_PASSWORD_WITH_RESET_PASSWORD_VERIFICATION);
+        }
+    }
+
     /**
      * 마이페이지 정보
      */

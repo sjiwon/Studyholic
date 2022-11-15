@@ -12,7 +12,7 @@
 <jsp:include page="../fragment/AnonymousHeader.jsp"/>
 
 <div class="container">
-    <h1 style="text-align: center">비밀번호 찾기</h1>
+    <h1 style="text-align: center">비밀번호 임시 발급</h1>
 
     <div class="col-md-4 row mx-auto">
         <hr>
