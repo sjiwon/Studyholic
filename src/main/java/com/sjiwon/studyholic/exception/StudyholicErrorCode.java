@@ -15,6 +15,7 @@ public enum StudyholicErrorCode {
     ILLEGAL_REQUEST_BY_ANONYMOUS(HttpStatus.BAD_REQUEST, "타인의 정보에 접근할 수 없습니다"),
     SAME_USER_NICKNAME_AS_BEFORE(HttpStatus.CONFLICT, "이전과 동일한 닉네임은 사용 불가능합니다"),
     UNAUTHENTICATED_USER(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다"),
+    WRONG_PASSWORD_WITH_RESET_PASSWORD_VERIFICATION(HttpStatus.CONFLICT, "현재 비밀번호가 일치하지 않습니다"),
 
     // Study
     STUDY_NOT_FOUND(HttpStatus.NOT_FOUND, "스터디 정보가 존재하지 않습니다"),

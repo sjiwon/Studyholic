@@ -88,4 +88,11 @@ public class UserApiController {
         userService.applyRandomPassword(randomPasswordRequest.getName(), randomPasswordRequest.getLoginId(), randomPasswordRequest.getEmail());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/user/change-password")
+    @ApiOperation(value = "비밀번호 변경 API", notes = "사용자의 비밀번호를 변경하는 API")
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        userService.changePassword(changePasswordRequest.getUserId(), changePasswordRequest.getCurrentPassword(), changePasswordRequest.getChangePassword());
+        return ResponseEntity.noContent().build();
+    }
 }
