@@ -102,4 +102,9 @@ public class ViewController {
     public String findIdPage() {
         return "main/FindIdPage";
     }
+
+    @GetMapping("/reset-password")
+    public String resetPasswordPage() {
+        return "main/ResetPasswordPage";
+    }
 }
