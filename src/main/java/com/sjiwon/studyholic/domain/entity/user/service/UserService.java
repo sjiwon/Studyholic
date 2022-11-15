@@ -111,6 +111,12 @@ public class UserService {
         }
     }
 
+    public String findLoginId(String name, String email) {
+        return userRepository.findByNameAndEmail(name, email)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND))
+                .getLoginId();
+    }
+
     /**
      * 마이페이지 정보
      */

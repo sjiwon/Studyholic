@@ -97,4 +97,9 @@ public class ViewController {
         model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(studyId));
         return "main/StudyEditPage";
     }
+
+    @GetMapping("/find-id")
+    public String findIdPage() {
+        return "main/FindIdPage";
+    }
 }
