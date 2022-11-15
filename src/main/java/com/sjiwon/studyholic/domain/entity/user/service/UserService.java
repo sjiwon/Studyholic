@@ -12,6 +12,7 @@ import com.sjiwon.studyholic.domain.entity.user.service.dto.response.Participate
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
 import com.sjiwon.studyholic.domain.etc.file.FileUploadService;
+import com.sjiwon.studyholic.domain.etc.mail.MailService;
 import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class UserService {
     // service
     private final FileUploadService fileUploadService;
     private final SessionRefreshService sessionRefreshService;
+    private final MailService mailService;
 
     @Transactional
     public Long saveUser(User user, @Nullable MultipartFile profile) {
@@ -115,6 +117,14 @@ public class UserService {
         return userRepository.findByNameAndEmail(name, email)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND))
                 .getLoginId();
+    }
+
+    @Transactional
+    public void applyRandomPassword(String name, String loginId, String email) {
+        User user = userRepository.findByNameAndLoginIdAndEmail(name, loginId, email)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+        String randomPassword = mailService.sendEmailAuthenticationNonce("randomPassword", email);
+        user.changePassword(randomPassword);
     }
 
     /**

@@ -81,4 +81,11 @@ public class UserApiController {
     public ResponseEntity<String> findLoginId(@RequestBody FindIdRequest findIdRequest) {
         return ResponseEntity.ok(userService.findLoginId(findIdRequest.getName(), findIdRequest.getEmail()));
     }
+
+    @PostMapping("/user/random-password")
+    @ApiOperation(value = "임시 비밀번호 발급 API", notes = "Request Data에 대한 사용자 인증 후 해당 사용자에게 임시 비밀번호를 발급해주는 API")
+    public ResponseEntity<Void> applyRandomPassword(@RequestBody ApplyRandomPasswordRequest randomPasswordRequest) {
+        userService.applyRandomPassword(randomPasswordRequest.getName(), randomPasswordRequest.getLoginId(), randomPasswordRequest.getEmail());
+        return ResponseEntity.noContent().build();
+    }
 }
