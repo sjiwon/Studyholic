@@ -30,7 +30,7 @@
     <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">로그인</button>
     <div class="form-floating mt-3">
         <a class="link-color-black" href="/find-id">아이디 찾기</a> |
-        <a class="link-color-black" href="/find-password">비밀번호 찾기/재설정</a> |
+        <a class="link-color-black" href="/reset-password">비밀번호 임시 발급/초기화</a> |
         <a class="link-color-black" href="/signup">회원가입</a>
     </div>
 </main>
