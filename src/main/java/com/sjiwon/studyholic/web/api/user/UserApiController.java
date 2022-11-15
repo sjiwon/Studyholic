@@ -75,4 +75,10 @@ public class UserApiController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PostMapping("/user/find/login-id")
+    @ApiOperation(value = "아이디 찾기 API", notes = "[이름, 이메일]을 통해서 해당 사용자의 아이디를 찾아주는 API")
+    public ResponseEntity<String> findLoginId(@RequestBody FindIdRequest findIdRequest) {
+        return ResponseEntity.ok(userService.findLoginId(findIdRequest.getName(), findIdRequest.getEmail()));
+    }
 }
