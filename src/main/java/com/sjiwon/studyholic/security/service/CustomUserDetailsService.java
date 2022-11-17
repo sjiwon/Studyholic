@@ -2,8 +2,8 @@ package com.sjiwon.studyholic.security.service;
 
 import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
-import com.sjiwon.studyholic.security.principal.UserPrincipal;
 import com.sjiwon.studyholic.security.principal.UserAuthenticationDto;
+import com.sjiwon.studyholic.security.principal.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
