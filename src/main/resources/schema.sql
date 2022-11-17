@@ -14,6 +14,7 @@ CREATE TABLE users(
     join_date DATETIME NOT NULL COMMENT '회원가입 날짜',
     upload_name VARCHAR(100) NOT NULL COMMENT '업로드한 회원 사진명',
     storage_name VARCHAR(40) NOT NULL COMMENT '서버에 저장하는 회원 사진명',
+    role VARCHAR(20) NOT NULL COMMENT '사용자 권한',
     last_modified_date DATETIME NOT NULL COMMENT '마지막 회원정보 수정 날짜',
 
     PRIMARY KEY(id)

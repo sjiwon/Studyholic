@@ -1,16 +1,16 @@
-INSERT INTO users(name, nickname, login_id, login_password, birth, email, join_date, upload_name, storage_name, last_modified_date)
+INSERT INTO users(name, nickname, login_id, login_password, birth, email, join_date, upload_name, storage_name, role, last_modified_date)
 VALUES
-    ('관리자', '관리자', 'admin', '1234', '1999-01-01', 'test1@gmail.com', '2022-10-10 10:00:00', 'test.png', 'admin.png', now()),
-    ('홍길동1', 'User1', 'user1', '1234', '1999-01-01', 'test2@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동2', 'User2', 'user2', '1234', '1999-01-01', 'test3@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동3', 'User3', 'user3', '1234', '1999-01-01', 'test4@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동4', 'User4', 'user4', '1234', '1999-01-01', 'test5@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동5', 'User5', 'user5', '1234', '1999-01-01', 'test6@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동6', 'User6', 'user6', '1234', '1999-01-01', 'test7@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동7', 'User7', 'user7', '1234', '1999-01-01', 'test8@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동8', 'User8', 'user8', '1234', '1999-01-01', 'test9@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동9', 'User9', 'user9', '1234', '1999-01-01', 'test10@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now()),
-    ('홍길동10', 'User10', 'user10', '1234', '1999-01-01', 'test11@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', now());
+    ('관리자', '관리자', 'admin', '1234', '1999-01-01', 'test1@gmail.com', '2022-10-10 10:00:00', 'test.png', 'admin.png', 'ROLE_ADMIN', now()),
+    ('홍길동1', 'User1', 'user1', '1234', '1999-01-01', 'test2@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동2', 'User2', 'user2', '1234', '1999-01-01', 'test3@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동3', 'User3', 'user3', '1234', '1999-01-01', 'test4@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동4', 'User4', 'user4', '1234', '1999-01-01', 'test5@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동5', 'User5', 'user5', '1234', '1999-01-01', 'test6@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동6', 'User6', 'user6', '1234', '1999-01-01', 'test7@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동7', 'User7', 'user7', '1234', '1999-01-01', 'test8@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동8', 'User8', 'user8', '1234', '1999-01-01', 'test9@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동9', 'User9', 'user9', '1234', '1999-01-01', 'test10@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now()),
+    ('홍길동10', 'User10', 'user10', '1234', '1999-01-01', 'test11@gmail.com', '2022-10-10 10:00:00', 'default.png', 'default.png', 'ROLE_USER', now());
 
 INSERT INTO study(name, max_member, brief_description, description, recruit_deadline, register_date, last_modified_date)
 VALUES
