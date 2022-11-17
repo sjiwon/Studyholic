@@ -14,8 +14,8 @@ import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
-import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
+import com.sjiwon.studyholic.security.principal.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +44,6 @@ public class StudyService {
     private final UserStudyRepository userStudyRepository;
     private final UserRepository userRepository;
 
-    // service
-    private final SessionRefreshService sessionRefreshService;
-
     @Transactional
     public Long createNewStudy(Long userId, Study study, List<String> tagList) {
         User user = userRepository.findAllByIdWithFetchUserStudy(userId)
@@ -61,9 +57,8 @@ public class StudyService {
     }
 
     @Transactional
-    public void changeInformation(HttpServletRequest request, Long studyId, UpdateStudyInformationRequestDto updateRequest) {
-        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
-        isStudyLeaderUpdateRequest(studyId, currentUserId); // 스터디 리더의 업데이트 요청인지 검증
+    public void changeInformation(Long studyId, UpdateStudyInformationRequestDto updateRequest, UserPrincipal userPrincipal) {
+        isStudyLeaderUpdateRequest(studyId, userPrincipal); // 스터디 리더의 업데이트 요청인지 검증
 
         Study study = studyRepository.findByStudyIdWithFetchStudyTag(studyId)
                 .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND));
@@ -105,8 +100,10 @@ public class StudyService {
         return new HashSet<>(tagList).containsAll(originTagList);
     }
 
-    private void isStudyLeaderUpdateRequest(Long studyId, Long userId) {
-        if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userId)) {
+    private void isStudyLeaderUpdateRequest(Long studyId, UserPrincipal userPrincipal) {
+        if (Objects.isNull(userPrincipal)) {
+            throw StudyholicException.type(UNAUTHENTICATED_USER);
+        } else if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userPrincipal.getUser().getId())) {
             throw StudyholicException.type(BAD_UPDATE_REQUEST_FROM_ANONYMOUS_USER);
         }
     }
@@ -118,16 +115,17 @@ public class StudyService {
     }
 
     @Transactional
-    public void deleteStudy(Long studyId, HttpServletRequest request) {
-        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
-        isStudyLeaderDeleteRequest(studyId, currentUserId); // 스터디 리더의 삭제 요청인지 검증
+    public void deleteStudy(Long studyId, UserPrincipal userPrincipal) {
+        isStudyLeaderDeleteRequest(studyId, userPrincipal); // 스터디 리더의 삭제 요청인지 검증
         userStudyRepository.deleteInBatchByStudyId(studyId); // 1) delete UserStudy (batch)
         studyTagRepository.deleteInBatchByStudyId(studyId); // 2) delete StudyTag (batch)
         studyRepository.deleteByStudyId(studyId); // 3) delete Study
     }
 
-    private void isStudyLeaderDeleteRequest(Long studyId, Long userId) {
-        if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userId)) {
+    private void isStudyLeaderDeleteRequest(Long studyId, UserPrincipal userPrincipal) {
+        if (Objects.isNull(userPrincipal)) {
+            throw StudyholicException.type(UNAUTHENTICATED_USER);
+        } else if (userStudyRepository.existsByStudyIdAndUserIdAndTeamLeaderIsFalse(studyId, userPrincipal.getUser().getId())) {
             throw StudyholicException.type(BAD_DELETE_REQUEST_FROM_ANONYMOUS_USER);
         }
     }
