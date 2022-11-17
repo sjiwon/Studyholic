@@ -1,5 +1,6 @@
 package com.sjiwon.studyholic.security.provider;
 
+import com.sjiwon.studyholic.exception.StudyholicException;
 import com.sjiwon.studyholic.security.token.AjaxAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Objects;
+
+import static com.sjiwon.studyholic.exception.StudyholicErrorCode.WRONG_PASSWORD;
 
 @RequiredArgsConstructor
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
@@ -30,7 +33,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
     private void isCorrectPassword(String rawPassword, UserDetails userDetails) {
         if (Objects.isNull(userDetails) || !passwordEncoder.matches(rawPassword, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid Password");
+            throw new BadCredentialsException(WRONG_PASSWORD.getMessage());
         }
     }
 
