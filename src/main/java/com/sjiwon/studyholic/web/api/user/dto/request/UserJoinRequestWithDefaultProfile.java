@@ -1,6 +1,7 @@
 package com.sjiwon.studyholic.web.api.user.dto.request;
 
 import com.sjiwon.studyholic.domain.entity.user.User;
+import com.sjiwon.studyholic.domain.entity.user.enums.Role;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +21,6 @@ public class UserJoinRequestWithDefaultProfile {
     private String email;
 
     public User toEntity() {
-        return User.createUser(this.name, this.nickname, this.loginId, this.loginPassword, this.birth, this.email);
+        return User.createUser(this.name, this.nickname, this.loginId, this.loginPassword, this.birth, this.email, Role.USER);
     }
 }

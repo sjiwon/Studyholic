@@ -1,11 +1,10 @@
 package com.sjiwon.studyholic.domain.entity;
 
+import com.sjiwon.studyholic.domain.entity.user.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,5 +14,13 @@ public class AbstractUserPrincipal {
     private String name;
     private String loginId;
     private String password;
-    private List<String> roles;
+    private String role;
+
+    public AbstractUserPrincipal(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.loginId = user.getLoginId();
+        this.password = user.getLoginPassword();
+        this.role = user.getRole().getAuthority();
+    }
 }
