@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import static com.sjiwon.studyholic.exception.StudyholicErrorCode.USER_NOT_FOUND;
 
 @RequiredArgsConstructor
-public class AjaxUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
