@@ -2,7 +2,6 @@ package com.sjiwon.studyholic.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sjiwon.studyholic.exception.ErrorResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -29,8 +28,9 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
             errorResponse = ErrorResponse.of(WRONG_PASSWORD);
         }
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(errorResponse.getStatus());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
         objectMapper.writeValue(response.getWriter(), errorResponse);
     }
 }
