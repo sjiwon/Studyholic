@@ -2,6 +2,8 @@ package com.sjiwon.studyholic.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sjiwon.studyholic.exception.ErrorResponse;
+import com.sjiwon.studyholic.exception.StudyholicAuthenticationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -26,6 +28,8 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
             errorResponse = ErrorResponse.of(USER_NOT_FOUND);
         } else if (exception instanceof BadCredentialsException) {
             errorResponse = ErrorResponse.of(WRONG_PASSWORD);
+        } else if (exception instanceof StudyholicAuthenticationException) {
+            errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage());
         }
 
         response.setStatus(errorResponse.getStatus());

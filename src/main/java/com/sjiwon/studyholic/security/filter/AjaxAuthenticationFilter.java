@@ -1,7 +1,8 @@
 package com.sjiwon.studyholic.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sjiwon.studyholic.security.principal.UserPrincipal;
+import com.sjiwon.studyholic.exception.StudyholicAuthenticationException;
+import com.sjiwon.studyholic.security.principal.UserLoginRequest;
 import com.sjiwon.studyholic.security.token.AjaxAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,24 +26,24 @@ public class AjaxAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        isAjaxRequest(request);
-        UserPrincipal user = objectMapper.readValue(request.getReader(), UserPrincipal.class);
-        validateAjaxRequestBodyData(user);
+        isAjaxRequest(request, response);
+        UserLoginRequest user = objectMapper.readValue(request.getReader(), UserLoginRequest.class);
+        validateAjaxRequestBodyData(user, response);
 
         // Authentication By AjaxAuthenticationToken
-        AjaxAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(user.getUsername(), user.getPassword());
+        AjaxAuthenticationToken ajaxAuthenticationToken = new AjaxAuthenticationToken(user.getLoginId(), user.getLoginPassword());
         return this.getAuthenticationManager().authenticate(ajaxAuthenticationToken);
     }
 
-    private void isAjaxRequest(HttpServletRequest request) {
+    private void isAjaxRequest(HttpServletRequest request, HttpServletResponse response) {
         if (Objects.isNull(request.getHeader("Content-Type")) && !Objects.equals(request.getHeader("Content-Type"), "application/json")) {
-            throw new IllegalStateException("Authentication is not supported");
+            throw StudyholicAuthenticationException.type("인증방식이 올바르지 않습니다");
         }
     }
 
-    private void validateAjaxRequestBodyData(UserPrincipal user) {
-        if (!StringUtils.hasText(user.getUsername()) || !StringUtils.hasText(user.getPassword())) {
-            throw new IllegalArgumentException("Username or Password is not acceptable");
+    private void validateAjaxRequestBodyData(UserLoginRequest user, HttpServletResponse response) throws IOException {
+        if (!StringUtils.hasText(user.getLoginId()) || !StringUtils.hasText(user.getLoginPassword())) {
+            throw StudyholicAuthenticationException.type("아이디나 비밀번호를 정확하게 입력해주세요");
         }
     }
 }
