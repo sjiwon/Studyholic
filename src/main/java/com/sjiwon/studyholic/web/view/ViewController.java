@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,13 +78,11 @@ public class ViewController {
     }
 
     private void delegateIllegalUrlRequest(Long requestUserId, UserPrincipal userPrincipal, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter writer = response.getWriter();
+        Assert.notNull(userPrincipal, "ViewAuthenticationEntryPoint에 의해서 사전에 미리 Authenticated Validation이 완료");
 
-        if (Objects.isNull(userPrincipal)) {
-            writer.println("<script>alert('로그인이 필요합니다'); location.href = '/login';</script>");
-            writer.flush();
-        } else if (Objects.isNull(userPrincipal) || !Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
+        if (Objects.isNull(userPrincipal) || !Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter writer = response.getWriter();
             writer.println("<script>alert('잘못된 접근입니다'); location.href = '/';</script>");
             writer.flush();
         }
