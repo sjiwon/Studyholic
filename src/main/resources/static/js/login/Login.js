@@ -8,9 +8,9 @@ function login() {
     }
 
     axios.post('/api/login', data)
-        .then(() => {
+        .then((res) => {
             alert('로그인에 성공하였습니다');
-            location.replace("/");
+            location.replace(res['data']);
         })
         .catch(error => {
             let errorStatus = error.response.status;
