@@ -1,6 +1,5 @@
 package com.sjiwon.studyholic.web.api.authenticate;
 
-import com.sjiwon.studyholic.domain.etc.login.LoginService;
 import com.sjiwon.studyholic.domain.etc.mail.MailService;
 import com.sjiwon.studyholic.web.api.authenticate.dto.EmailAuthenticationRequest;
 import io.swagger.annotations.Api;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Api(tags = {"이메일 인증 API"})
 public class AuthenticationApiController {
-    private final LoginService loginService;
     private final MailService mailService;
 
     @PostMapping("/email/authenticate") // 이메일 인증 (회원가입[join] / 아이디 찾기[id] / 비밀번호 찾기[password])
