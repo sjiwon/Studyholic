@@ -1,6 +1,5 @@
 package com.sjiwon.studyholic.security.provider;
 
-import com.sjiwon.studyholic.exception.StudyholicException;
 import com.sjiwon.studyholic.security.token.AjaxAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,11 +21,10 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
+        String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
         isCorrectPassword(password, userDetails);
         return new AjaxAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }

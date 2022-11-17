@@ -1,9 +1,9 @@
 package com.sjiwon.studyholic.security.service;
 
-import com.sjiwon.studyholic.domain.entity.AbstractUserPrincipal;
 import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.security.principal.UserPrincipal;
+import com.sjiwon.studyholic.security.principal.UserAuthenticationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +16,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByLoginId(username)
                 .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND.getMessage()));
-        return new UserPrincipal(new AbstractUserPrincipal(user));
+        return new UserPrincipal(new UserAuthenticationDto(user));
     }
 }

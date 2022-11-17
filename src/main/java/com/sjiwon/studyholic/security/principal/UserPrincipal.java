@@ -1,7 +1,7 @@
 package com.sjiwon.studyholic.security.principal;
 
-import com.sjiwon.studyholic.domain.entity.AbstractUserPrincipal;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,30 +11,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
+@RequiredArgsConstructor
 public class UserPrincipal implements UserDetails {
     @Serial
     private static final long serialVersionUID = -135425841849865035L;
-    private AbstractUserPrincipal userPrincipal;
-
-    public UserPrincipal(AbstractUserPrincipal userPrincipal) {
-        this.userPrincipal = userPrincipal;
-    }
+    private final UserAuthenticationDto user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(userPrincipal.getRole()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return userPrincipal.getPassword();
+        return user.getLoginPassword();
     }
 
     @Override
     public String getUsername() {
-        return userPrincipal.getLoginId();
+        return user.getLoginId();
     }
 
     @Override
