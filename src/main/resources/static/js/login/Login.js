@@ -23,6 +23,9 @@ function login() {
                 loginPassword.val('');
                 loginId.val('').focus();
                 alert(jsonData['message']);
+            } else {
+                loginId.val('').focus();
+                alert(jsonData['message']);
             }
         });
 }
