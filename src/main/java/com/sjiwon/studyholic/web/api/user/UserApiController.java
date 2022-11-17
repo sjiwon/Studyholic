@@ -1,16 +1,16 @@
 package com.sjiwon.studyholic.web.api.user;
 
 import com.sjiwon.studyholic.domain.entity.user.service.UserService;
-import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
+import com.sjiwon.studyholic.security.principal.UserPrincipal;
 import com.sjiwon.studyholic.web.api.user.dto.request.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @RestController
@@ -19,7 +19,6 @@ import java.net.URI;
 @Api(tags = {"사용자 API"})
 public class UserApiController {
     private final UserService userService;
-    private final SessionRefreshService sessionRefreshService;
 
     @PostMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "회원가입 API - Version 1", notes = "회원가입을 위한 API (사용자가 업로드한 이미지로 프로필 적용)")
@@ -37,25 +36,22 @@ public class UserApiController {
 
     @PatchMapping(value = "/user/change-profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "사용자 프로필 이미지 변경 API - Version 1", notes = "사용자의 현재 프로필 이미지를 새로 업로드하는 이미지로 변경하는 API")
-    public ResponseEntity<Void> changeUserProfileImage(@ModelAttribute ChangeProfileRequest changeRequest, HttpServletRequest request) {
-        userService.changeUserProfileImage(changeRequest.getUserId(), changeRequest.getProfile(), request);
-        sessionRefreshService.refreshSession(changeRequest.getUserId(), request);
+    public ResponseEntity<Void> changeUserProfileImage(@ModelAttribute ChangeProfileRequest changeRequest, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.changeUserProfileImage(changeRequest.getUserId(), changeRequest.getProfile(), userPrincipal);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/user/change-default-profile")
     @ApiOperation(value = "사용자 프로필 이미지 변경 API - Version 2", notes = "사용자의 현재 프로필 이미지를 서버 기본 제공 이미지로 변경하는 API")
-    public ResponseEntity<Void> changeUserProfileImageToDefault(@RequestParam Long userId, HttpServletRequest request) {
-        userService.changeUserProfileImageToDefault(userId, request);
-        sessionRefreshService.refreshSession(userId, request);
+    public ResponseEntity<Void> changeUserProfileImageToDefault(@RequestParam Long userId, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.changeUserProfileImageToDefault(userId, userPrincipal);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/user/change-nickname")
     @ApiOperation(value = "사용자 닉네임 변경 API", notes = "닉네임을 변경하기 위한 API")
-    public ResponseEntity<Void> changeUserNickname(@RequestBody ChangeNicknameRequest changeRequest, HttpServletRequest request) {
-        userService.changeUserNickname(changeRequest.getUserId(), changeRequest.getNickname());
-        sessionRefreshService.refreshSession(changeRequest.getUserId(), request);
+    public ResponseEntity<Void> changeUserNickname(@RequestBody ChangeNicknameRequest changeRequest, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.changeUserNickname(changeRequest.getUserId(), changeRequest.getNickname(), userPrincipal);
         return ResponseEntity.noContent().build();
     }
 

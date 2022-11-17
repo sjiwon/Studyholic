@@ -1,5 +1,6 @@
 package com.sjiwon.studyholic.domain.entity.user;
 
+import com.sjiwon.studyholic.domain.entity.user.enums.Role;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -54,6 +55,10 @@ public class User {
     @Column(name = "storage_name", length = 40, nullable = false)
     private String storageName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
@@ -61,17 +66,22 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserStudy> userStudyList = new HashSet<>();
 
-    private User(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email) {
+    private User(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email, Role role) {
         this.name = name;
         this.nickName = nickName;
         this.loginId = loginId;
         this.loginPassword = loginPassword;
         this.birth = birth;
         this.email = email;
+        this.role = role;
     }
 
-    public static User createUser(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email) {
-        return new User(name,  nickName,  loginId,  loginPassword, birth, email);
+    public static User createUser(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email, Role role) {
+        return new User(name, nickName, loginId, loginPassword, birth, email, role);
+    }
+
+    public void encodePassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public void applyUploadImage(String uploadName, String storageName) {

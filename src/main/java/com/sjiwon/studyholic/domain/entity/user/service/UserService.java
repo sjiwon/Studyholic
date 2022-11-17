@@ -13,15 +13,15 @@ import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import com.sjiwon.studyholic.domain.entity.userstudy.repository.UserStudyRepository;
 import com.sjiwon.studyholic.domain.etc.file.FileUploadService;
 import com.sjiwon.studyholic.domain.etc.mail.MailService;
-import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
+import com.sjiwon.studyholic.security.principal.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,8 +40,8 @@ public class UserService {
 
     // service
     private final FileUploadService fileUploadService;
-    private final SessionRefreshService sessionRefreshService;
     private final MailService mailService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long saveUser(User user, @Nullable MultipartFile profile) {
@@ -50,6 +50,7 @@ public class UserService {
         } else {
             fileUploadService.uploadProfileImage(profile, user);
         }
+        user.encodePassword(passwordEncoder.encode(user.getLoginPassword())); // Encoding
 
         return userRepository.save(user).getId();
     }
@@ -67,9 +68,8 @@ public class UserService {
     }
 
     @Transactional
-    public void changeUserProfileImage(Long requestUserId, MultipartFile profile, HttpServletRequest request) {
-        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
-        isIllegalRequestByAnonymousUser(requestUserId, currentUserId);
+    public void changeUserProfileImage(Long requestUserId, MultipartFile profile, UserPrincipal userPrincipal) {
+        isIllegalRequestByAnonymousUser(requestUserId, userPrincipal); // 타인의 악의적인 API 요청 판별
 
         User user = userRepository.findById(requestUserId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
@@ -77,28 +77,31 @@ public class UserService {
     }
 
     @Transactional
-    public void changeUserProfileImageToDefault(Long requestUserId, HttpServletRequest request) {
-        Long currentUserId = sessionRefreshService.getCurrentUserSession(request).getId();
-        isIllegalRequestByAnonymousUser(requestUserId, currentUserId);
+    public void changeUserProfileImageToDefault(Long requestUserId, UserPrincipal userPrincipal) {
+        isIllegalRequestByAnonymousUser(requestUserId, userPrincipal); // 타인의 악의적인 API 요청 판별
 
         User user = userRepository.findById(requestUserId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         user.applyDefaultImage();
     }
 
-    private void isIllegalRequestByAnonymousUser(Long requestUserId, Long currentUserId) {
-        if (!Objects.equals(requestUserId, currentUserId)) {
-            throw StudyholicException.type(ILLEGAL_REQUEST_BY_ANONYMOUS);
-        }
-    }
-
     @Transactional
-    public void changeUserNickname(Long userId, String updateNickname) {
-        User user = userRepository.findById(userId)
+    public void changeUserNickname(Long requestUserId, String updateNickname, UserPrincipal userPrincipal) {
+        isIllegalRequestByAnonymousUser(requestUserId, userPrincipal); // 타인의 악의적인 API 요청 판별
+
+        User user = userRepository.findById(requestUserId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         isSameNicknameAsBefore(user.getNickName(), updateNickname);
-        isDuplicateNickname(userId, updateNickname);
+        isDuplicateNickname(requestUserId, updateNickname);
         user.changeNickname(updateNickname);
+    }
+
+    private void isIllegalRequestByAnonymousUser(Long requestUserId, UserPrincipal userPrincipal) {
+        if (Objects.isNull(userPrincipal)) {
+            throw StudyholicException.type(UNAUTHENTICATED_USER);
+        } else if (!Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
+            throw StudyholicException.type(ILLEGAL_API_REQUEST);
+        }
     }
 
     private void isSameNicknameAsBefore(String beforeNickname, String afterNickname) {
@@ -124,19 +127,19 @@ public class UserService {
         User user = userRepository.findByNameAndLoginIdAndEmail(name, loginId, email)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         String randomPassword = mailService.sendEmailAuthenticationNonce("randomPassword", email);
-        user.changePassword(randomPassword);
+        user.changePassword(passwordEncoder.encode(randomPassword));
     }
 
     @Transactional
     public void changePassword(Long userId, String currentPassword, String changePassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
-        isCorrectPassword(user, currentPassword);
-        user.changePassword(changePassword);
+        isCorrectPassword(user.getLoginPassword(), currentPassword);
+        user.changePassword(passwordEncoder.encode(changePassword));
     }
 
-    private void isCorrectPassword(User user, String originPassword) {
-        if (!Objects.equals(user.getLoginPassword(), originPassword)) {
+    private void isCorrectPassword(String originPassword, String requestPassword) {
+        if (!passwordEncoder.matches(requestPassword, originPassword)) {
             throw StudyholicException.type(WRONG_PASSWORD_WITH_RESET_PASSWORD_VERIFICATION);
         }
     }

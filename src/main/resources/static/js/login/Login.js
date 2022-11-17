@@ -8,9 +8,9 @@ function login() {
     }
 
     axios.post('/api/login', data)
-        .then(() => {
+        .then((res) => {
             alert('로그인에 성공하였습니다');
-            location.replace("/");
+            location.replace(res['data']);
         })
         .catch(error => {
             let errorStatus = error.response.status;
@@ -21,6 +21,9 @@ function login() {
                 alert(jsonData['message']);
             } else if (errorStatus === 404) {
                 loginPassword.val('');
+                loginId.val('').focus();
+                alert(jsonData['message']);
+            } else {
                 loginId.val('').focus();
                 alert(jsonData['message']);
             }
