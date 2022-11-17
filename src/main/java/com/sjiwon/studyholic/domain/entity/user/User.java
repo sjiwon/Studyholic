@@ -77,7 +77,11 @@ public class User {
     }
 
     public static User createUser(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email, Role role) {
-        return new User(name,  nickName,  loginId,  loginPassword, birth, email, role);
+        return new User(name, nickName, loginId, loginPassword, birth, email, role);
+    }
+
+    public void encodePassword(String loginPassword) {
+        this.loginPassword = loginPassword;
     }
 
     public void applyUploadImage(String uploadName, String storageName) {

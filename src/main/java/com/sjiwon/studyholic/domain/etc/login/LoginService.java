@@ -5,6 +5,7 @@ import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
 import com.sjiwon.studyholic.domain.etc.login.dto.response.UserSession;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +17,17 @@ import static com.sjiwon.studyholic.exception.StudyholicErrorCode.WRONG_PASSWORD
 @Transactional(readOnly = true)
 public class LoginService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserSession login(String loginId, String loginPassword) {
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
-        isCorrectPassword(user, loginPassword);
+        isCorrectPassword(user.getLoginPassword(), loginPassword);
         return UserSession.of(user);
     }
 
-    private void isCorrectPassword(User user, String loginPassword) {
-        if (!user.getLoginPassword().equals(loginPassword)) {
+    private void isCorrectPassword(String originPassword, String loginRequestPassword) {
+        if (!passwordEncoder.matches(loginRequestPassword, originPassword)) {
             throw StudyholicException.type(WRONG_PASSWORD);
         }
     }

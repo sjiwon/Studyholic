@@ -17,6 +17,7 @@ import com.sjiwon.studyholic.domain.etc.session.SessionRefreshService;
 import com.sjiwon.studyholic.exception.StudyholicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,6 +43,7 @@ public class UserService {
     private final FileUploadService fileUploadService;
     private final SessionRefreshService sessionRefreshService;
     private final MailService mailService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public Long saveUser(User user, @Nullable MultipartFile profile) {
@@ -50,6 +52,7 @@ public class UserService {
         } else {
             fileUploadService.uploadProfileImage(profile, user);
         }
+        user.encodePassword(passwordEncoder.encode(user.getLoginPassword())); // Encoding
 
         return userRepository.save(user).getId();
     }
@@ -124,19 +127,19 @@ public class UserService {
         User user = userRepository.findByNameAndLoginIdAndEmail(name, loginId, email)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
         String randomPassword = mailService.sendEmailAuthenticationNonce("randomPassword", email);
-        user.changePassword(randomPassword);
+        user.changePassword(passwordEncoder.encode(randomPassword));
     }
 
     @Transactional
     public void changePassword(Long userId, String currentPassword, String changePassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
-        isCorrectPassword(user, currentPassword);
-        user.changePassword(changePassword);
+        isCorrectPassword(user.getLoginPassword(), currentPassword);
+        user.changePassword(passwordEncoder.encode(changePassword));
     }
 
-    private void isCorrectPassword(User user, String originPassword) {
-        if (!Objects.equals(user.getLoginPassword(), originPassword)) {
+    private void isCorrectPassword(String originPassword, String requestPassword) {
+        if (!passwordEncoder.matches(requestPassword, originPassword)) {
             throw StudyholicException.type(WRONG_PASSWORD_WITH_RESET_PASSWORD_VERIFICATION);
         }
     }
