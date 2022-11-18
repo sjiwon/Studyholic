@@ -57,8 +57,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'javax.mail:javax.mail-api:1.6.2'
 
-    // Swagger
-    implementation 'io.springfox:springfox-boot-starter:3.0.0' // 접근 URL = localhost:8080/swagger-ui/index.html
+    // Swagger - 접근 URL = localhost:7777/swagger-ui/index.html
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
