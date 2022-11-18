@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VariableFactory {
-    public static final String SESSION_KEY = "KGU_JSP_PROJECT";
+    public static final String SESSION_KEY = "SPECIAL_SESSION";
 
     public static final String DEFAULT_IMAGE_NAME = "default.png";
 
