@@ -39,17 +39,6 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     }
 
     @Override
-    public Optional<Study> findByStudyIdWithFetchUserStudy(Long studyId) {
-        return Optional.ofNullable(
-                query.select(study)
-                        .from(study)
-                        .innerJoin(study.userStudyList).fetchJoin()
-                        .where(studyIdEq(studyId))
-                        .fetchFirst()
-        );
-    }
-
-    @Override
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
         return Optional.ofNullable(
                 query.select(new QBasicStudy(
