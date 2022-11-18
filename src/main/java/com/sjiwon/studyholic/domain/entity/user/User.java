@@ -12,7 +12,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.sjiwon.studyholic.common.VariableFactory.DEFAULT_IMAGE_NAME;
@@ -64,7 +66,7 @@ public class User {
     private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "user")
-    private Set<UserStudy> userStudyList = new HashSet<>();
+    private List<UserStudy> userStudyList = new ArrayList<>();
 
     private User(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email, Role role) {
         this.name = name;
