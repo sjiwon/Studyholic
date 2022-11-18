@@ -92,7 +92,6 @@
         <br><br>
 
         <button type="button" class="btn btn-primary btn-lg btn-block" onclick="editProcess('${studyDetailToEdit.studyId}')">스터디 수정</button>
-        <%--        TODO 스터디 수정 View--%>
         <br>
     </div>
 </div>
