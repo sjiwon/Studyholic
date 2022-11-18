@@ -42,29 +42,29 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                 .from(study)
                 .leftJoin(study.userStudyList, userStudy)
                 .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine)
-                .offset((long) pageRequest.getPageNumber() * pageRequest.getPageSize())
+                .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
 
         List<BasicStudy> content = switch (sort) {
             case REGISTER_DATE_SORT ->  // 등록 날짜
                     beforeOrderByQuery
-                            .orderBy(study.registerDate.desc(), study.userStudyList.size().desc())
+                            .orderBy(study.registerDate.desc(), userStudy.count().desc())
                             .fetch();
             case POPULARITY_SORT ->  // 참여 인원
                     beforeOrderByQuery
-                            .orderBy(study.userStudyList.size().desc(), study.recruitDeadLine.asc())
+                            .orderBy(userStudy.count().desc(), study.recruitDeadLine.asc())
                             .fetch();
             case RECRUIT_DEADLINE_SORT ->  // 모집 마감일
                     beforeOrderByQuery
-                            .orderBy(study.recruitDeadLine.asc(), study.userStudyList.size().desc())
+                            .orderBy(study.recruitDeadLine.asc(), userStudy.count().desc())
                             .fetch();
             default ->  // 모집 정원
                     beforeOrderByQuery
-                            .orderBy(study.maxMember.desc(), study.userStudyList.size().desc())
+                            .orderBy(study.maxMember.desc(), userStudy.count().desc())
                             .fetch();
         };
 
@@ -80,31 +80,31 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                 .from(study)
                 .leftJoin(study.studyTagList, studyTag)
                 .leftJoin(study.userStudyList, userStudy)
                 .where(keywordContains(keyword))
                 .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine)
-                .offset((long) pageRequest.getPageNumber() * pageRequest.getPageSize())
+                .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
 
         List<BasicStudy> content = switch (sort) {
             case REGISTER_DATE_SORT ->  // 등록 날짜
                     beforeOrderByQuery
-                            .orderBy(study.registerDate.desc())
+                            .orderBy(study.registerDate.desc(), userStudy.count().desc())
                             .fetch();
             case POPULARITY_SORT ->  // 참여 인원
                     beforeOrderByQuery
-                            .orderBy(study.userStudyList.size().desc())
+                            .orderBy(userStudy.count().desc(), study.recruitDeadLine.asc())
                             .fetch();
             case RECRUIT_DEADLINE_SORT ->  // 모집 마감일
                     beforeOrderByQuery
-                            .orderBy(study.recruitDeadLine.asc(), study.userStudyList.size().desc())
+                            .orderBy(study.recruitDeadLine.asc(), userStudy.count().desc())
                             .fetch();
             default ->  // 모집 정원
                     beforeOrderByQuery
-                            .orderBy(study.maxMember.desc(), study.userStudyList.size().desc())
+                            .orderBy(study.maxMember.desc(), userStudy.count().desc())
                             .fetch();
         };
 
