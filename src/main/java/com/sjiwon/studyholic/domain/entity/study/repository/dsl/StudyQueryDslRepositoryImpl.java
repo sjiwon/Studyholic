@@ -40,7 +40,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     @Override
     public Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
-                .select(new QBasicStudy(
+                .selectDistinct(new QBasicStudy(
                         study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                 .from(study)
                 .leftJoin(study.userStudyList, userStudy)
@@ -78,7 +78,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     @Override
     public Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
-                .select(new QBasicStudy(
+                .selectDistinct(new QBasicStudy(
                         study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                 .from(study)
                 .leftJoin(study.studyTagList, studyTag)
@@ -119,12 +119,12 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public List<BasicStudy> getUserParticipateStudyInformation(Long userId) {
         return query
                 .selectDistinct(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                 .from(study)
-                .leftJoin(study.studyTagList, studyTag)
                 .leftJoin(study.userStudyList, userStudy)
                 .innerJoin(userStudy.user, user)
                 .where(userIdEq(userId))
+                .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate)
                 .orderBy(study.registerDate.desc())
                 .fetch();
     }
