@@ -47,14 +47,14 @@
                                         <div>
                                             <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage(${study.studyId})">상세정보</button>
                                             <c:choose>
-                                                <c:when test="${study.studyLeaderId == sessionScope.KGU_JSP_PROJECT.id}">
+                                                <c:when test="${study.studyLeaderId == sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
                                                     <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="deleteStudy('${study.studyName}', '${study.studyId}', '${sessionScope.KGU_JSP_PROJECT.id}')">스터디 삭제
+                                                            onclick="deleteStudy('${study.studyName}', '${study.studyId}', '<sec:authentication property="principal.user.id"/>')">스터디 삭제
                                                     </button>
                                                 </c:when>
-                                                <c:when test="${study.studyLeaderId != sessionScope.KGU_JSP_PROJECT.id}">
+                                                <c:when test="${study.studyLeaderId != sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
                                                     <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="participateCancle('${study.studyName}', '${study.studyId}', '${sessionScope.KGU_JSP_PROJECT.id}')">참여취소
+                                                            onclick="participateCancle('${study.studyName}', '${study.studyId}', '<sec:authentication property="principal.user.id"/>')">참여취소
                                                     </button>
                                                 </c:when>
                                             </c:choose>

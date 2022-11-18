@@ -91,7 +91,7 @@
 
         <br><br>
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="registerProcess('${sessionScope.KGU_JSP_PROJECT.id}')">스터디 만들기</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="registerProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">스터디 만들기</button>
 
         <br>
     </div>

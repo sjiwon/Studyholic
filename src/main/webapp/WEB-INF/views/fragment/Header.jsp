@@ -25,17 +25,17 @@
                 </div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <img src="<c:out value="/images/user/${sessionScope.KGU_JSP_PROJECT.storageName}"/>" alt="test" width="50" height="50" style="margin: 5px; border-radius: 25%;"/>
-                <span style="text-align: center; margin: 10px;"><b><c:out value="${sessionScope.KGU_JSP_PROJECT.nickName}"/>님</b> 환영합니다</span>
+                <img src="<c:out value="/images/user/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.storageName}"/>" alt="test" width="50" height="50" style="margin: 5px; border-radius: 25%;"/>
+                <span style="text-align: center; margin: 10px;"><b><sec:authentication property="principal.user.nickname"/>님</b> 환영합니다</span>
 
                 <div class="dropdown text-end">
                     <button class="btn btn-secondary btn-rounded dropdown-toggle" data-bs-toggle="dropdown">
                         Menu
                     </button>
                     <ul class="dropdown-menu text-secondary">
-                        <li><a class="dropdown-item" href="<c:url value="/study/post"/>">스터디 만들기</a></li>
-                        <li><a class="dropdown-item" href="<c:url value="/user/${sessionScope.KGU_JSP_PROJECT.id}/study"/>">참여중인 스터디</a></li>
-                        <li><a class="dropdown-item" href="<c:url value="/user/${sessionScope.KGU_JSP_PROJECT.id}"/>">마이 페이지</a></li>
+                        <li><a class="dropdown-item" href="/study/post">스터디 만들기</a></li>
+                        <li><a class="dropdown-item" href="/user/<sec:authentication property="principal.user.id"/>/study">참여중인 스터디</a></li>
+                        <li><a class="dropdown-item" href="/user/<sec:authentication property="principal.user.id"/>">마이 페이지</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

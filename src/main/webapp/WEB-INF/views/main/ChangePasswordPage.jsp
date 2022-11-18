@@ -48,7 +48,7 @@
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button" onclick="changePassword('${sessionScope.KGU_JSP_PROJECT.id}')">비밀번호 변경</button>
+        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button" onclick="changePassword('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">비밀번호 변경</button>
     </div>
     <br>
 </div>

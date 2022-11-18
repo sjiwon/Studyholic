@@ -37,32 +37,32 @@
                 <small>최종 수정 날짜 | ${studyDetail.studyLastModifiedDate}</small>
             </div>
             <div style="text-align: right">
-                <c:if test="${sessionScope.KGU_JSP_PROJECT != null}">
+                <sec:authorize access="isAuthenticated()">
                     <c:choose>
-                        <c:when test="${sessionScope.KGU_JSP_PROJECT.id == studyDetail.studyLeaderId}">
+                        <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id == studyDetail.studyLeaderId}">
                             <button type="button" class="btn btn-secondary" style="margin: 5px;" onclick="moveToStudyEditPage(${studyDetail.studyId})">수정하기</button>
                             <button type="button" class="btn btn-danger" style="margin: 5px;"
-                                    onclick="deleteStudy('${studyDetail.studyName}', '${studyDetail.studyId}', '${sessionScope.KGU_JSP_PROJECT.id}')">삭제하기
+                                    onclick="deleteStudy('${studyDetail.studyName}', '${studyDetail.studyId}', '<sec:authentication property="principal.user.id"/>')">삭제하기
                             </button>
                         </c:when>
                         <c:when test="${
-                                sessionScope.KGU_JSP_PROJECT.id != studyDetail.studyLeaderId &&
-                                !studyDetail.participateUserList.stream().map(user -> user.userId).toList().contains(sessionScope.KGU_JSP_PROJECT.id)}"
+                                sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id != studyDetail.studyLeaderId &&
+                                !studyDetail.participateUserList.stream().map(user -> user.userId).toList().contains(sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id)}"
                         >
                             <button type="button" class="btn btn-primary" style="margin: 5px;"
-                                    onclick="participate('${studyDetail.studyName}', '${studyDetail.studyId}', '${sessionScope.KGU_JSP_PROJECT.id}')">참여하기
+                                    onclick="participate('${studyDetail.studyName}', '${studyDetail.studyId}', '<sec:authentication property="principal.user.id"/>')">참여하기
                             </button>
                         </c:when>
                         <c:when test="${
-                                sessionScope.KGU_JSP_PROJECT.id != studyDetail.studyLeaderId &&
-                                studyDetail.participateUserList.stream().map(user -> user.userId).toList().contains(sessionScope.KGU_JSP_PROJECT.id)}"
+                                sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id != studyDetail.studyLeaderId &&
+                                studyDetail.participateUserList.stream().map(user -> user.userId).toList().contains(sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id)}"
                         >
                             <button type="button" class="btn btn-danger" style="margin: 5px;"
-                                    onclick="participateCancle('${studyDetail.studyName}', '${studyDetail.studyId}', '${sessionScope.KGU_JSP_PROJECT.id}')">참여취소
+                                    onclick="participateCancle('${studyDetail.studyName}', '${studyDetail.studyId}', '<sec:authentication property="principal.user.id"/>')">참여취소
                             </button>
                         </c:when>
                     </c:choose>
-                </c:if>
+                </sec:authorize>
             </div>
             <hr>
             <br>
@@ -112,7 +112,7 @@
             </h2>
             <c:forEach var="user" items="${studyDetail.participateUserList}">
                 <c:if test="${user.teamLeader == true}">
-                    <a href="<c:url value="mailto:${user.userEmail}?cc=${sessionScope.KGU_JSP_PROJECT.email}"/>" target="_blank">
+                    <a href="<c:url value="mailto:${user.userEmail}?cc=${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.email}"/>" target="_blank">
                         <span style="font-size: 1.5rem;">${user.userEmail}</span>
                     </a>
                 </c:if>
