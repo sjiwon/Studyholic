@@ -25,7 +25,7 @@ public class UserStudyService {
 
     @Transactional
     public synchronized void participateStudy(Long studyId, Long userId) {
-        Study study = studyRepository.findByStudyIdWithFetchUserStudy(studyId)
+        Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND));
         canParticiateStudy(study);
         User user = userRepository.findById(userId)

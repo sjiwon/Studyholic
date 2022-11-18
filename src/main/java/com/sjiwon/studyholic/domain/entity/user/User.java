@@ -1,7 +1,6 @@
 package com.sjiwon.studyholic.domain.entity.user;
 
 import com.sjiwon.studyholic.domain.entity.user.enums.Role;
-import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.sjiwon.studyholic.common.VariableFactory.DEFAULT_IMAGE_NAME;
 
@@ -62,9 +59,6 @@ public class User {
     @LastModifiedDate
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
-
-    @OneToMany(mappedBy = "user")
-    private Set<UserStudy> userStudyList = new HashSet<>();
 
     private User(String name, String nickName, String loginId, String loginPassword, LocalDate birth, String email, Role role) {
         this.name = name;

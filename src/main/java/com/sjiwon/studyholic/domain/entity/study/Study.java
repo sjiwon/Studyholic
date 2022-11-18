@@ -12,8 +12,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,10 +50,10 @@ public class Study {
     private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "study") // QueryDSL
-    private Set<UserStudy> userStudyList = new HashSet<>();
+    private List<UserStudy> userStudyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "study", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true) // QueryDSL
-    private Set<StudyTag> studyTagList = new HashSet<>();
+    private List<StudyTag> studyTagList = new ArrayList<>();
 
     private Study(String name, Integer maxMember, String briefDescription, String description, LocalDate recruitDeadLine) {
         this.name = name;

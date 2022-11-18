@@ -60,10 +60,8 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
     }
 
     private BooleanExpression studyIdEq(Long studyId) {
-        if (Objects.isNull(studyId)) {
-            return null;
-        }
-
-        return study.id.eq(studyId);
+        return Objects.isNull(studyId)
+                ? null
+                : study.id.eq(studyId);
     }
 }
