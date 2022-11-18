@@ -5,8 +5,8 @@
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
-    <script src="<c:url value="/js/find/ResetPasswordInputTracking.js"/>"></script>
-    <script src="<c:url value="/js/find/ResetPasswordProcess.js"/>"></script>
+    <script src="<c:url value="/js/find/ChangePasswordInputTracking.js"/>"></script>
+    <script src="<c:url value="/js/find/ChangePasswordProcess.js"/>"></script>
 </head>
 <body>
 <jsp:include page="../fragment/Header.jsp"/>
