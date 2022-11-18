@@ -28,17 +28,6 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     private final JPAQueryFactory query;
 
     @Override
-    public Optional<Study> findByStudyIdWithFetchStudyTag(Long studyId) {
-        return Optional.ofNullable(
-                query.select(study)
-                        .from(study)
-                        .innerJoin(study.studyTagList).fetchJoin()
-                        .where(studyIdEq(studyId))
-                        .fetchFirst()
-        );
-    }
-
-    @Override
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
         return Optional.ofNullable(
                 query.select(new QBasicStudy(

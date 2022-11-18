@@ -20,12 +20,12 @@ public class UserStudy {
     @Column(name = "is_team_leader")
     private boolean teamLeader;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "study_id", referencedColumnName = "id", nullable = false)
     private Study study;
 
     private UserStudy(User user, Study study, boolean teamLeader) {

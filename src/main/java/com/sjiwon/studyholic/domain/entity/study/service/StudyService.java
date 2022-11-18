@@ -60,7 +60,7 @@ public class StudyService {
     public void changeInformation(Long studyId, UpdateStudyInformationRequestDto updateRequest, UserPrincipal userPrincipal) {
         isStudyLeaderUpdateRequest(studyId, userPrincipal); // 스터디 리더의 업데이트 요청인지 검증
 
-        Study study = studyRepository.findByStudyIdWithFetchStudyTag(studyId)
+        Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND));
 
         if (StringUtils.hasText(updateRequest.getName())) {

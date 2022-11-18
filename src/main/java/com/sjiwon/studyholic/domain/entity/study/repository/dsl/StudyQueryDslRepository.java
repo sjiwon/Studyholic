@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudyQueryDslRepository {
-    Optional<Study> findByStudyIdWithFetchStudyTag(Long studyId);
     Optional<BasicStudy> getBasicStudyInformation(Long studyId);
     Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort);
     Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword);
