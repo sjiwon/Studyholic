@@ -10,5 +10,4 @@ public interface UserStudyRepository extends JpaRepository<UserStudy, Long>, Use
     boolean existsByStudyIdAndUserIdAndTeamLeaderIsFalse(Long studyId, Long userId);
     boolean existsByStudyAndUser(Study study, User user);
     void deleteByStudyIdAndUserId(Long studyId, Long userId);
-    Long countByStudy(Study study);
 }

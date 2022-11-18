@@ -36,7 +36,7 @@ public class UserStudyService {
     }
 
     private void canParticiateStudy(Study study) {
-        if (Objects.equals(userStudyRepository.countByStudy(study).intValue(), study.getMaxMember())) {
+        if (Objects.equals(study.getUserStudyList().size(), study.getMaxMember())) {
             throw StudyholicException.type(ALREADY_FULL_STUDY);
         }
     }
