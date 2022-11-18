@@ -2,22 +2,13 @@
 <%@ page import="com.sjiwon.studyholic.domain.entity.study.service.dto.response.StudySimpleInformation" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="<c:url value="/js/study/AboutStudy.js"/>"></script>
+<link rel="stylesheet" href="<c:out value="/css/tag.css"/>"/>
+
 <%
     List<StudySimpleInformation> studyList = (List<StudySimpleInformation>) request.getAttribute("studyList");
 %>
-<style>
-    .tag {
-        border-radius: 10%;
-        background: beige;
-        font-size: 13px;
-        font-style: italic;
-        font-weight: bold;
-        margin: 2px;
-        padding: 2px;
-    }
-</style>
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

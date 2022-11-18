@@ -1,31 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
     <script src="<c:url value="/js/AboutStudy.js"/>"></script>
+    <link rel="stylesheet" href="<c:out value="/css/tag.css"/>"/>
 </head>
-<style>
-    .tag {
-        border-radius: 10%;
-        background: beige;
-        font-size: 13px;
-        font-style: italic;
-        font-weight: bold;
-        margin: 2px;
-        padding: 2px;
-    }
-</style>
 <body>
-<c:choose>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT == null}">
-        <jsp:include page="../fragment/AnonymousHeader.jsp"/>
-    </c:when>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT != null}">
-        <jsp:include page="../fragment/AuthenticateHeader.jsp"/>
-    </c:when>
-</c:choose>
+<jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container col-md-12">
     <h1 style="text-align: center">참여중인 스터디 목록</h1>

@@ -1,6 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="<c:url value="/js/login/Logout.js"/>"></script>
+
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -23,8 +25,12 @@
                     <li><a class="dropdown-item" href="<c:url value="/study/post"/>">스터디 만들기</a></li>
                     <li><a class="dropdown-item" href="<c:url value="/user/${sessionScope.KGU_JSP_PROJECT.id}/study"/>">참여중인 스터디</a></li>
                     <li><a class="dropdown-item" href="<c:url value="/user/${sessionScope.KGU_JSP_PROJECT.id}"/>">마이 페이지</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><button class="dropdown-item" type="button" onclick="logout()">로그아웃</button></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <button class="dropdown-item" type="button" onclick="logout()">로그아웃</button>
+                    </li>
                 </ul>
             </div>
         </div>
