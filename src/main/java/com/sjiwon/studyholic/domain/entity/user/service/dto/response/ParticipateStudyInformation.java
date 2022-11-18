@@ -38,9 +38,9 @@ public class ParticipateStudyInformation {
         this.registerDateFromCurrentDate = CommonDateTranslator.translateRegisterDateFromCurrentDate(study.getRegisterDate());
         this.studyRecruitDeadLine = CommonDateTranslator.translateLocalDateToString(study.getRecruitDeadLine());
         this.studyTagList = studyTagList;
-        this.studyLeaderId = studyLeader.getStudyLeaderId();
-        this.studyLeaderName = studyLeader.getStudyLeaderName();
-        this.studyLeaderNickname = studyLeader.getStudyLeaderNickname();
-        this.studyLeaderImage = studyLeader.getStudyLeaderImage();
+        this.studyLeaderId = studyLeader.getId();
+        this.studyLeaderName = studyLeader.getName();
+        this.studyLeaderNickname = studyLeader.getNickname();
+        this.studyLeaderImage = studyLeader.getStorageName();
     }
 }
