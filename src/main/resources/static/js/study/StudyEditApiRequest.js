@@ -36,5 +36,6 @@ function studyNameDuplicateCheckInEdit(studyId) {
         .catch((error) => {
             let jsonData = error.response.data;
             alert(jsonData['message']);
+            studyNameVerificationToken.val('fail');
         });
 }

@@ -12,7 +12,7 @@
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
     <script src="https://unpkg.com/@yaireo/tagify"></script>
     <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <script src="<c:url value="/js/study/StudyRegisterInputTracking.js"/>"></script>
+    <script src="<c:url value="/js/study/StudyEditInputTracking.js"/>"></script>
     <script src="<c:url value="/js/study/StudyEditApiRequest.js"/>"></script>
     <script src="<c:url value="/js/study/StudyEditIntegrateProcess.js"/>"></script>
 </head>
@@ -29,12 +29,12 @@
         </div>
         <div class="col-md-9 row">
             <div class="col-md-6" style="margin-bottom: 10px;">
-                <input id="studyName" type="text" class="form-control" name="studyName" onkeyup="trackingStudyName()" max="20" value="${studyDetailToEdit.studyName}"/>
+                <input id="studyName" type="text" class="form-control" name="studyName" onkeyup="trackingStudyName('${studyDetailToEdit.studyName}')" max="20" value="${studyDetailToEdit.studyName}"/>
             </div>
             <div class="col-md-2">
-                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button" onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')">중복 체크</button>
+                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button" onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')" disabled>중복 체크</button>
             </div>
-            <input type="hidden" id="studyNameVerificationToken" value="fail"/>
+            <input type="hidden" id="studyNameVerificationToken" value="success"/>
         </div>
 
         <br><br>
@@ -43,9 +43,9 @@
             <h4>스터디 간단 설명</h4>
         </div>
         <div class="col-md-6">
-            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" onkeyup="trackingStudyBriefDescription()"
+            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" onkeyup="trackingStudyBriefDescription('${studyDetailToEdit.studyBriefDescription}')"
                    maxlength="50" value="${studyDetailToEdit.studyBriefDescription}"/>
-            <input type="hidden" id="studyBriefDescriptionVerificationToken" value="fail"/> <%--스터디 간단 설명 기입 여부 체크--%>
+            <input type="hidden" id="studyBriefDescriptionVerificationToken" value="success"/> <%--스터디 간단 설명 기입 여부 체크--%>
         </div>
 
         <br><br>
