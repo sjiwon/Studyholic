@@ -5,9 +5,9 @@
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
-    <script src="<c:url value="/js/find/FindInformationInputTracking.js"/>"></script>
-    <script src="<c:url value="/js/find/FindInformationEmailAuthenticationApiRequest.js"/>"></script>
-    <script src="<c:url value="/js/find/FindPasswordProcess.js"/>"></script>
+    <script src="<c:url value="/js/find/FindInfoInputTracking.js"/>"></script>
+    <script src="<c:url value="/js/find/ResetPasswordApiRequest.js"/>"></script>
+    <script src="<c:url value="/js/find/ResetPasswordProcess.js"/>"></script>
 </head>
 <body>
 <jsp:include page="../fragment/Header.jsp"/>
@@ -32,7 +32,7 @@
         <div class="col-md-8">
             <label for="loginId" class="form-label">아이디</label>
             <input type="text" class="form-control" id="loginId" onkeyup="trackingIdInFindProcess()" required>
-            <input type="hidden" value="fail" id="loginIdToken"/> <%-- 이름 기입 여부 체크 --%>
+            <input type="hidden" value="fail" id="loginIdToken"/> <%-- 아이디 기입 여부 체크 --%>
         </div>
     </div>
     <br>
@@ -44,7 +44,7 @@
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerification('password')">이메일 인증</button>
+            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationInResetPasswordProcess()">이메일 인증</button>
         </div>
     </div>
     <br>
@@ -65,7 +65,7 @@
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button id="findPasswordButton" disabled class="btn btn-primary btn-lg btn-block" type="button" onclick="userVericiationAndApplyRandomPassword()">사용자 인증 후 임시 비밀번호 발급</button>
+        <button id="ResetPasswordButton" disabled class="btn btn-primary btn-lg btn-block" type="button" onclick="userVericiationAndApplyRandomPassword()">사용자 인증 후 임시 비밀번호 발급</button>
     </div>
     <br>
 </div>
