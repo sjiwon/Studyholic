@@ -33,7 +33,6 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                 query.select(new QBasicStudy(
                                 study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
                         .from(study)
-                        .leftJoin(study.userStudyList, userStudy)
                         .where(studyIdEq(studyId))
                         .fetchFirst()
         );
