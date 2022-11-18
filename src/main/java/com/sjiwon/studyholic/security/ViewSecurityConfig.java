@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Order(2)
 public class ViewSecurityConfig {
-    private static final String[] VIEW_WHITELIST = {"/", "/login", "/signup", "/find-id", "/reset-password"};
+    private static final String[] VIEW_WHITELIST = {"/", "/login", "/signup", "/find-id", "/reset-password", "/favicon.ico"};
 
     @Bean
     AuthenticationEntryPoint viewAuthenticationEntryPoint() {
