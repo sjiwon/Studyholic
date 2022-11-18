@@ -32,7 +32,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Order(1)
 public class ApiSecurityConfig {
     private static final String[] AUTHENTICATION_POST_API_WHITELIST = {
-            "/api/login", "/api/email/authenticate", "/api/email/authenticate"
+            "/api/login", "/api/email/authenticate"
     };
     private static final String[] USER_POST_API_WHITELIST = {
             "/api/user", "/api/user/default-profile", "/api/user/duplicate-check", "/api/user/find/login-id", "/api/user/random-password"

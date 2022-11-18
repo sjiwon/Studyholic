@@ -5,8 +5,8 @@
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
-    <script src="<c:url value="/js/find/FindInformationInputTracking.js"/>"></script>
-    <script src="<c:url value="/js/find/FindInformationEmailAuthenticationApiRequest.js"/>"></script>
+    <script src="<c:url value="/js/find/FindInfoInputTracking.js"/>"></script>
+    <script src="<c:url value="/js/find/FindIdApiRequest.js"/>"></script>
     <script src="<c:url value="/js/find/FindIdProcess.js"/>"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerification('id')">이메일 인증</button>
+            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationInFindIdProcess()">이메일 인증</button>
         </div>
     </div>
     <br>
