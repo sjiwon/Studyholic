@@ -22,9 +22,9 @@ public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
     @Override
     public Optional<User> findAllByIdWithFetchUserStudy(Long userId) {
         return Optional.ofNullable(
-                query.select(user)
+                query.selectDistinct(user)
                         .from(user)
-                        .innerJoin(user.userStudyList, userStudy).fetchJoin()
+                        .leftJoin(user.userStudyList, userStudy)
                         .where(userIdEq(userId))
                         .fetchFirst()
         );
