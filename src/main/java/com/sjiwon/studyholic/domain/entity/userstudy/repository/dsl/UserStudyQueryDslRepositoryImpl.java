@@ -46,7 +46,7 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
-                .where(studyIdEq(studyId))
+                .where(studyIdEq(studyId), isStudyLeader())
                 .fetchFirst();
     }
 
@@ -72,5 +72,9 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
         return Objects.isNull(studyId)
                 ? null
                 : study.id.eq(studyId);
+    }
+
+    private BooleanExpression isStudyLeader() {
+        return userStudy.teamLeader.eq(Boolean.TRUE);
     }
 }
