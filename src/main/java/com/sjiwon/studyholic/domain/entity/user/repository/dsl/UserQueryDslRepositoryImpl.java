@@ -41,10 +41,8 @@ public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
     }
 
     private BooleanExpression userIdEq(Long userId) {
-        if (Objects.isNull(userId)) {
-            return null;
-        }
-
-        return user.id.eq(userId);
+        return Objects.isNull(userId)
+                ? null
+                : user.id.eq(userId);
     }
 }

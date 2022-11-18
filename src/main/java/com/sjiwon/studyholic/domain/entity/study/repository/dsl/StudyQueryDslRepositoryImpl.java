@@ -163,26 +163,20 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     }
 
     private BooleanExpression keywordContains(String keyword) {
-        if (Objects.isNull(keyword)) {
-            return null;
-        }
-
-        return studyTag.tag.contains(keyword);
+        return Objects.isNull(keyword)
+                ? null
+                : studyTag.tag.contains(keyword);
     }
 
     private BooleanExpression studyIdEq(Long studyId) {
-        if (Objects.isNull(studyId)) {
-            return null;
-        }
-
-        return study.id.eq(studyId);
+        return Objects.isNull(studyId)
+                ? null
+                : study.id.eq(studyId);
     }
 
     private BooleanExpression userIdEq(Long userId) {
-        if (Objects.isNull(userId)) {
-            return null;
-        }
-
-        return user.id.eq(userId);
+        return Objects.isNull(userId)
+                ? null
+                : user.id.eq(userId);
     }
 }
