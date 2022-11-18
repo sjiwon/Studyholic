@@ -30,9 +30,11 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
         return Optional.ofNullable(
                 query.select(new QBasicStudy(
-                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
                         .from(study)
+                        .innerJoin(study.userStudyList, userStudy)
                         .where(studyIdEq(studyId))
+                        .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate)
                         .fetchFirst()
         );
     }
