@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Studyholic</title>
@@ -16,14 +17,7 @@
     <script src="<c:url value="/js/study/StudyRegisterIntegrateProcess.js"/>"></script>
 </head>
 <body>
-<c:choose>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT == null}">
-        <jsp:include page="../fragment/AnonymousHeader.jsp"/>
-    </c:when>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT != null}">
-        <jsp:include page="../fragment/AuthenticateHeader.jsp"/>
-    </c:when>
-</c:choose>
+<jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container">
     <h1 style="text-align: center">스터디 만들기</h1>
@@ -97,7 +91,7 @@
 
         <br><br>
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="registerProcess('${sessionScope.KGU_JSP_PROJECT.id}')">스터디 만들기</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="registerProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">스터디 만들기</button>
 
         <br>
     </div>

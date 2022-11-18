@@ -1,6 +1,7 @@
-<%@ page import="java.util.UUID" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.UUID" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Studyholic</title>
@@ -8,14 +9,7 @@
     <script src="<c:url value="/js/user/EditUser.js"/>"></script>
 </head>
 <body>
-<c:choose>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT == null}">
-        <jsp:include page="../fragment/AnonymousHeader.jsp"/>
-    </c:when>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT != null}">
-        <jsp:include page="../fragment/AuthenticateHeader.jsp"/>
-    </c:when>
-</c:choose>
+<jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container col-md-6">
     <h1 style="text-align: center">마이페이지</h1>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Studyholic</title>
@@ -8,14 +9,7 @@
     <script src="<c:url value="/js/find/ResetPasswordProcess.js"/>"></script>
 </head>
 <body>
-<c:choose>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT == null}">
-        <jsp:include page="../fragment/AnonymousHeader.jsp"/>
-    </c:when>
-    <c:when test="${sessionScope.KGU_JSP_PROJECT != null}">
-        <jsp:include page="../fragment/AuthenticateHeader.jsp"/>
-    </c:when>
-</c:choose>
+<jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container">
     <h1 style="text-align: center">비밀번호 재설정</h1>
@@ -54,7 +48,7 @@
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button" onclick="changePassword('${sessionScope.KGU_JSP_PROJECT.id}')">비밀번호 변경</button>
+        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button" onclick="changePassword('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">비밀번호 변경</button>
     </div>
     <br>
 </div>
