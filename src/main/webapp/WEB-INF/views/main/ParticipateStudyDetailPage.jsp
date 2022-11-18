@@ -5,7 +5,7 @@
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
-    <script src="<c:url value="/js/AboutStudy.js"/>"></script>
+    <script src="<c:url value="/js/study/AboutStudy.js"/>"></script>
     <link rel="stylesheet" href="<c:out value="/css/tag.css"/>"/>
 </head>
 <body>
@@ -45,7 +45,7 @@
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage(${study.studyId})">상세정보</button>
+                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.studyId}')">상세정보</button>
                                             <c:choose>
                                                 <c:when test="${study.studyLeaderId == sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
                                                     <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
