@@ -30,11 +30,9 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
         return Optional.ofNullable(
                 query.select(new QBasicStudy(
-                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
+                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
                         .from(study)
-                        .innerJoin(study.userStudyList, userStudy)
                         .where(studyIdEq(studyId))
-                        .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate)
                         .fetchFirst()
         );
     }
@@ -43,29 +41,27 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
                 .from(study)
-                .leftJoin(study.userStudyList, userStudy)
-                .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine)
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
 
         List<BasicStudy> content = switch (sort) {
             case REGISTER_DATE_SORT ->  // 등록 날짜
                     beforeOrderByQuery
-                            .orderBy(study.registerDate.desc(), userStudy.count().desc())
+                            .orderBy(study.registerDate.desc())
                             .fetch();
             case POPULARITY_SORT ->  // 참여 인원
                     beforeOrderByQuery
-                            .orderBy(userStudy.count().desc(), study.recruitDeadLine.asc())
+                            .orderBy(study.userStudyList.size().desc())
                             .fetch();
             case RECRUIT_DEADLINE_SORT ->  // 모집 마감일
                     beforeOrderByQuery
-                            .orderBy(study.recruitDeadLine.asc(), userStudy.count().desc())
+                            .orderBy(study.recruitDeadLine.asc())
                             .fetch();
             default ->  // 모집 정원
                     beforeOrderByQuery
-                            .orderBy(study.maxMember.desc(), userStudy.count().desc())
+                            .orderBy(study.maxMember.desc())
                             .fetch();
         };
 
@@ -80,38 +76,38 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     @Override
     public Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
-                .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
+                .selectDistinct(new QBasicStudy(
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
                 .from(study)
-                .leftJoin(study.studyTagList, studyTag)
-                .leftJoin(study.userStudyList, userStudy)
+                .innerJoin(study.studyTagList, studyTag)
                 .where(keywordContains(keyword))
-                .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine)
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
 
         List<BasicStudy> content = switch (sort) {
             case REGISTER_DATE_SORT ->  // 등록 날짜
                     beforeOrderByQuery
-                            .orderBy(study.registerDate.desc(), userStudy.count().desc())
+                            .orderBy(study.registerDate.desc())
                             .fetch();
             case POPULARITY_SORT ->  // 참여 인원
                     beforeOrderByQuery
-                            .orderBy(userStudy.count().desc(), study.recruitDeadLine.asc())
+                            .orderBy(study.userStudyList.size().desc())
                             .fetch();
             case RECRUIT_DEADLINE_SORT ->  // 모집 마감일
                     beforeOrderByQuery
-                            .orderBy(study.recruitDeadLine.asc(), userStudy.count().desc())
+                            .orderBy(study.recruitDeadLine.asc())
                             .fetch();
             default ->  // 모집 정원
                     beforeOrderByQuery
-                            .orderBy(study.maxMember.desc(), userStudy.count().desc())
+                            .orderBy(study.maxMember.desc())
                             .fetch();
         };
 
         List<Long> countQuery = query
                 .select(study.id)
                 .from(study)
+                .innerJoin(study.studyTagList, studyTag)
+                .where(keywordContains(keyword))
                 .fetch();
 
         return PageableExecutionUtils.getPage(content, pageRequest, countQuery::size);
@@ -121,12 +117,11 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public List<BasicStudy> getUserParticipateStudyInformation(Long userId) {
         return query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, userStudy.count().intValue()))
+                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
                 .from(study)
-                .leftJoin(study.userStudyList, userStudy)
+                .innerJoin(study.userStudyList, userStudy)
                 .innerJoin(userStudy.user, user)
                 .where(userIdEq(userId))
-                .groupBy(study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate)
                 .orderBy(study.registerDate.desc())
                 .fetch();
     }
