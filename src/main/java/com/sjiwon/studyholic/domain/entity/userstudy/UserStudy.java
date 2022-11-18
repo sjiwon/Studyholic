@@ -34,7 +34,6 @@ public class UserStudy {
         this.teamLeader = teamLeader;
 
         study.getUserStudyList().add(this);
-        user.getUserStudyList().add(this);
     }
 
     public static UserStudy addUserInStudy(User user, Study study, boolean teamLeader) {
