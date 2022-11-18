@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 })
 public class ApiExceptionHandler {
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> catchAnotherArtException(StudyholicException ex) {
+    public ResponseEntity<ErrorResponse> catchStudyholicException(StudyholicException ex) {
         StudyholicErrorCode errorCode = ex.getErrorCode();
         return ResponseEntity
                 .status(errorCode.getStatus())
