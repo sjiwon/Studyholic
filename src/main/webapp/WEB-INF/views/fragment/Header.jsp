@@ -25,8 +25,8 @@
                 </div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <img src="<c:out value="/images/user/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.storageName}"/>" alt="test" width="50" height="50" style="margin: 5px; border-radius: 25%;"/>
-                <span style="text-align: center; margin: 10px;"><b><sec:authentication property="principal.user.nickname"/>님</b> 환영합니다</span>
+                <img src="<c:out value="/images/user/${sessionScope.SPECIAL_SESSION.storageName}"/>" alt="test" width="50" height="50" style="margin: 5px; border-radius: 25%;"/>
+                <span style="text-align: center; margin: 10px;"><b><c:out value="${sessionScope.SPECIAL_SESSION.nickname}"/>님</b> 환영합니다</span>
 
                 <div class="dropdown text-end">
                     <button class="btn btn-secondary btn-rounded dropdown-toggle" data-bs-toggle="dropdown">
