@@ -41,7 +41,8 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
 
     @Override
     public Long findStudyLeaderIdByStudyId(Long studyId) {
-        return query.select(user.id)
+        return query
+                .select(user.id)
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
@@ -51,7 +52,15 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
 
     @Override
     public List<ParticipateUser> findParticipateUserListByStudyId(Long studyId) {
-        return query.select(new QParticipateUser(user.id, user.name, user.nickName, user.email, user.storageName, userStudy.teamLeader))
+        return query
+                .select(new QParticipateUser(
+                        user.id,
+                        user.name,
+                        user.nickName,
+                        user.email,
+                        user.storageName,
+                        userStudy.teamLeader)
+                )
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)

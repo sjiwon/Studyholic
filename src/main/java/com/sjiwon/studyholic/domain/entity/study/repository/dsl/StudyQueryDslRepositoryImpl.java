@@ -29,8 +29,18 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     @Override
     public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
         return Optional.ofNullable(
-                query.select(new QBasicStudy(
-                                study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                query
+                        .select(new QBasicStudy(
+                                study.id,
+                                study.name,
+                                study.briefDescription,
+                                study.description,
+                                study.maxMember,
+                                study.registerDate,
+                                study.recruitDeadLine,
+                                study.lastModifiedDate,
+                                study.userStudyList.size()
+                        ))
                         .from(study)
                         .where(studyIdEq(studyId))
                         .fetchFirst()
@@ -41,7 +51,16 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id,
+                        study.name,
+                        study.briefDescription,
+                        study.description,
+                        study.maxMember,
+                        study.registerDate,
+                        study.recruitDeadLine,
+                        study.lastModifiedDate,
+                        study.userStudyList.size()
+                ))
                 .from(study)
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
@@ -77,7 +96,16 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword) {
         JPAQuery<BasicStudy> beforeOrderByQuery = query
                 .selectDistinct(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id,
+                        study.name,
+                        study.briefDescription,
+                        study.description,
+                        study.maxMember,
+                        study.registerDate,
+                        study.recruitDeadLine,
+                        study.lastModifiedDate,
+                        study.userStudyList.size()
+                ))
                 .from(study)
                 .innerJoin(study.studyTagList, studyTag)
                 .where(keywordContains(keyword))
@@ -117,7 +145,16 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     public List<BasicStudy> getUserParticipateStudyInformation(Long userId) {
         return query
                 .select(new QBasicStudy(
-                        study.id, study.name, study.briefDescription, study.description, study.maxMember, study.registerDate, study.recruitDeadLine, study.lastModifiedDate, study.userStudyList.size()))
+                        study.id,
+                        study.name,
+                        study.briefDescription,
+                        study.description,
+                        study.maxMember,
+                        study.registerDate,
+                        study.recruitDeadLine,
+                        study.lastModifiedDate,
+                        study.userStudyList.size())
+                )
                 .from(study)
                 .innerJoin(study.userStudyList, userStudy)
                 .innerJoin(userStudy.user, user)
