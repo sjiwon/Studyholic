@@ -22,7 +22,7 @@
     <div class="col-md-4 row mx-auto">
         <div class="col-md-12">
             <label for="currentPassword" class="form-label">현재 비밀번호</label>
-            <input type="password" class="form-control" id="currentPassword" style="border-radius: 15px;" required>
+            <input type="password" class="form-control custom-input" id="currentPassword" style="border-radius: 15px;" required>
         </div>
     </div>
     <br>
@@ -30,7 +30,7 @@
     <div class="col-md-4 row mx-auto">
         <div class="col-md-12">
             <label for="changePassword" class="form-label">변경할 비밀번호</label>
-            <input type="password" class="form-control" id="changePassword" onkeyup="trackingChangePassword()" style="border-radius: 15px;" required>
+            <input type="password" class="form-control custom-input" id="changePassword" onkeyup="trackingChangePassword()" style="border-radius: 15px;" required>
             <span id="explainPasswordRegExp" style="font-size: 13px; display: none; margin-top: 10px;"></span> <%-- 비밀번호 정규식 만족 여부 텍스트 --%>
         </div>
     </div>
@@ -39,7 +39,7 @@
     <div class="col-md-4 row mx-auto">
         <div class="col-md-12">
             <label for="checkChangePassword" class="form-label">변경할 비밀번호 확인</label>
-            <input type="password" class="form-control" id="checkChangePassword" onkeyup="trackingChangePasswordCheck()" style="border-radius: 15px;" required>
+            <input type="password" class="form-control custom-input" id="checkChangePassword" onkeyup="trackingChangePasswordCheck()" style="border-radius: 15px;" required>
             <span id="explainPasswordCheck" style="font-size: 13px; display: none; margin-top: 10px;"></span> <%-- 비밀번호 일치 여부 텍스트 --%>
         </div>
     </div>
