@@ -8,20 +8,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ParticipateUser {
-    private Long userId;
-    private String userName;
-    private String userNickname;
-    private String userEmail;
-    private String userProfileImage;
+    private Long id;
+    private String name;
+    private String nickname;
+    private String email;
+    private String profileImage;
     private boolean teamLeader;
 
     @QueryProjection
-    public ParticipateUser(Long userId, String userName, String userNickname, String userEmail, String userProfileImage, boolean teamLeader) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userNickname = userNickname;
-        this.userEmail = userEmail;
-        this.userProfileImage = userProfileImage;
+    public ParticipateUser(Long id, String name, String nickname, String email, String profileImage, boolean teamLeader) {
+        this.id = id;
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.profileImage = profileImage;
         this.teamLeader = teamLeader;
     }
 }

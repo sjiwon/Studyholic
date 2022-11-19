@@ -13,11 +13,11 @@
 
 <div class="container col-md-6">
     <h1 style="text-align: center">마이페이지</h1>
-    <input type="hidden" id="userId" value="${userDetail.userId}"/>
+    <input type="hidden" id="userId" value="${userDetail.basicUser.id}"/>
     <hr>
     <div class="col-md-12">
         <div class="col-md-6">
-            <img src="<c:out value="/images/user/${userDetail.userProfileImage}"/>" alt="test" width="130" height="130" style="border-radius: 25%; margin: 3px;"/>
+            <img src="<c:out value="/images/user/${userDetail.basicUser.profileImage}"/>" alt="test" width="130" height="130" style="border-radius: 25%; margin: 3px;"/>
             <button class="btn btn-secondary btn-sm" type="button" onclick="editProfileToDefaultImage()">기본 이미지로 변경</button>
         </div><br>
         <div class="col-md-12 row">
@@ -35,14 +35,14 @@
                 <div class="col-md-12 row">
                     <div class="col-md-12">
                         <label for="name" class="form-label">이름</label>
-                        <input class="form-control" type="text" id="name" value="${userDetail.userName}" readonly>
+                        <input class="form-control" type="text" id="name" value="${userDetail.basicUser.name}" readonly>
                     </div>
                 </div><br>
 
                 <div class="col-md-12 row">
                     <label for="nickname" class="form-label">닉네임</label>
                     <div class="col-md-10" style="margin-bottom: 5px;">
-                        <input class="form-control" type="text" id="nickname" value="${userDetail.userNickname}" readonly>
+                        <input class="form-control" type="text" id="nickname" value="${userDetail.basicUser.nickname}" readonly>
                     </div>
                     <div class="col-md-2">
                         <button id="nicknameEditButton" class="btn btn-danger btn-sm" type="button" onclick="editNicknameButtonEnable()">수정</button>
@@ -52,7 +52,7 @@
                 <div class="col-md-12 row">
                     <div class="col-md-12">
                         <label for="loginId" class="form-label">아이디</label>
-                        <input class="form-control" type="text" id="loginId" value="${userDetail.userLoginId}" readonly>
+                        <input class="form-control" type="text" id="loginId" value="${userDetail.basicUser.loginId}" readonly>
                     </div>
                 </div><br>
 
@@ -69,24 +69,24 @@
                 <div class="col-md-12 row">
                     <div class="col-md-12">
                         <label for="birth" class="form-label">생년월일</label>
-                        <input class="form-control" type="text" id="birth" value="${userDetail.userBirth}" readonly>
+                        <input class="form-control" type="text" id="birth" value="${userDetail.basicUser.birth}" readonly>
                     </div>
                 </div><br>
 
                 <div class="col-md-12 row">
                     <div class="col-md-12">
                         <label for="email" class="form-label">이메일</label>
-                        <input class="form-control" type="text" id="email" value="${userDetail.userEmail}" readonly>
+                        <input class="form-control" type="text" id="email" value="${userDetail.basicUser.email}" readonly>
                     </div>
                 </div><br>
 
                 <hr>
 
                 <div style="margin-bottom: 10px; text-align: right">
-                    가입 날짜 | <small>${userDetail.userJoinDate}</small>
+                    가입 날짜 | <small>${userDetail.basicUser.joinDate}</small>
                 </div>
                 <div style="margin-bottom: 10px; text-align: right">
-                    최종 수정 날짜 | <small>${userDetail.userLastModifiedDate}</small>
+                    최종 수정 날짜 | <small>${userDetail.basicUser.lastModifiedDate}</small>
                 </div>
             </div>
         </div>

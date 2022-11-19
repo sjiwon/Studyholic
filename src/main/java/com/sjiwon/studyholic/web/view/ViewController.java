@@ -78,7 +78,7 @@ public class ViewController {
     }
 
     private void delegateIllegalUrlRequest(Long requestUserId, UserPrincipal userPrincipal, HttpServletResponse response) throws IOException {
-        Assert.notNull(userPrincipal, "ViewAuthenticationEntryPoint에 의해서 사전에 미리 Authenticated Validation이 완료");
+        Assert.notNull(userPrincipal, "인증이 되지 않았다면 ViewAuthenticationEntryPoint에 의해서 Request 제한");
 
         if (Objects.isNull(userPrincipal) || !Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
             response.setContentType("text/html; charset=UTF-8");

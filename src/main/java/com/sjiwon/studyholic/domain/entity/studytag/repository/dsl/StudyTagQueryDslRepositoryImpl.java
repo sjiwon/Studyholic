@@ -38,7 +38,8 @@ public class StudyTagQueryDslRepositoryImpl implements StudyTagQueryDslRepositor
 
     @Override
     public List<String> findTagListByStudyId(Long studyId) {
-        return query.select(studyTag.tag)
+        return query
+                .select(studyTag.tag)
                 .from(studyTag)
                 .innerJoin(studyTag.study, study)
                 .where(studyIdEq(studyId))

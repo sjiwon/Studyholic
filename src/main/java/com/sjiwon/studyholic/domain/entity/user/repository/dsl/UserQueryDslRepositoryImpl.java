@@ -20,7 +20,19 @@ public class UserQueryDslRepositoryImpl implements UserQueryDslRepository {
     @Override
     public Optional<BasicUser> getBasicUserInformation(Long userId) {
         return Optional.ofNullable(
-                query.select(new QBasicUser(user.id, user.name, user.nickName, user.loginId, user.loginPassword, user.email, user.birth, user.joinDate, user.storageName, user.lastModifiedDate))
+                query
+                        .select(new QBasicUser(
+                                user.id,
+                                user.name,
+                                user.nickName,
+                                user.loginId,
+                                user.loginPassword,
+                                user.email,
+                                user.birth,
+                                user.joinDate,
+                                user.storageName,
+                                user.lastModifiedDate)
+                        )
                         .from(user)
                         .where(userIdEq(userId))
                         .fetchFirst()

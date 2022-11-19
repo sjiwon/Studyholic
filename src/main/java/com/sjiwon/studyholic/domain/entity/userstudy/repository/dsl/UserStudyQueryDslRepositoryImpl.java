@@ -41,17 +41,26 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
 
     @Override
     public Long findStudyLeaderIdByStudyId(Long studyId) {
-        return query.select(user.id)
+        return query
+                .select(user.id)
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
-                .where(studyIdEq(studyId))
+                .where(studyIdEq(studyId), isStudyLeader())
                 .fetchFirst();
     }
 
     @Override
     public List<ParticipateUser> findParticipateUserListByStudyId(Long studyId) {
-        return query.select(new QParticipateUser(user.id, user.name, user.nickName, user.email, user.storageName, userStudy.teamLeader))
+        return query
+                .select(new QParticipateUser(
+                        user.id,
+                        user.name,
+                        user.nickName,
+                        user.email,
+                        user.storageName,
+                        userStudy.teamLeader)
+                )
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
@@ -63,5 +72,9 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
         return Objects.isNull(studyId)
                 ? null
                 : study.id.eq(studyId);
+    }
+
+    private BooleanExpression isStudyLeader() {
+        return userStudy.teamLeader.eq(Boolean.TRUE);
     }
 }
