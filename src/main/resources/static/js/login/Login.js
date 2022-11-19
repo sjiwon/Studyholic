@@ -11,9 +11,8 @@ function login() {
     let loginPassword = $('#loginPassword');
     if (validationInput(loginId, loginPassword) === false) {
         ToastResponse.fire({
-            color: '#FF0000',
             text: '아이디나 비밀번호를 다시 확인해주세요',
-            icon: 'error'
+            icon: 'warning'
         }).then(() => {
             if (loginId.val().trim() === '' && loginPassword.val().trim() === '') {
                 loginId.focus();
