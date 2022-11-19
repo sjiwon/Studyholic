@@ -5,13 +5,9 @@ function findIdProcess() {
     });
 
     let name = $('#name');
-    let nameToken = $('#nameToken');
-    if (validationName(name, nameToken) === false) {
+    if (validationName(name) === false) {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이름을 다시 확인해주세요',
+            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             name.focus();
@@ -20,27 +16,21 @@ function findIdProcess() {
     }
 
     let email = $('#email');
-    let emailVerificationToken = $('#emailVerificationToken');
-    if (validationEmail(email, emailVerificationToken) === 'fail1') {
+    let emailAuthenticationToken = $('#emailAuthenticationToken');
+    if (validationEmail(email, emailAuthenticationToken) === 'fail1') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이메일을 다시 확인해주세요',
+            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             email.focus();
         })
         return false;
-    } else if (validationEmail(email, emailVerificationToken) === 'fail2') {
+    } else if (validationEmail(email, emailAuthenticationToken) === 'fail2') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이메일 인증을 진행해주세요',
+            html: '<b>이메일 인증을 진행해주세요</b>',
             icon: 'warning'
         }).then(() => {
-            emailVerificationToken.focus();
+            emailAuthenticationToken.focus();
         })
         return false;
     }
@@ -61,11 +51,7 @@ function findIdProcess() {
         })
         .catch(error => {
             let jsonData = error.response.data;
-
             ToastResponse.fire({
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
                 color: '#FF0000',
                 text: jsonData['message'],
                 icon: 'error'
@@ -75,18 +61,16 @@ function findIdProcess() {
         });
 }
 
-function validationName(name, nameToken) {
-    if (nameToken.val() === 'fail') {
+function validationName(name) {
+    if (name.val().trim() === '') {
         return false;
     }
 }
 
 function validationEmail(email, emailToken) {
-    if (emailToken.val() === 'fail') {
-        if (email.val().trim() === '') {
-            return 'fail1';
-        } else {
-            return 'fail2';
-        }
+    if (email.val().trim() === '') {
+        return "fail1";
+    } else if (emailToken.val() === 'fail') {
+        return "fail2";
     }
 }

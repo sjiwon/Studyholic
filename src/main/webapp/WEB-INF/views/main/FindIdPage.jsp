@@ -5,9 +5,9 @@
 <head>
     <title>Studyholic</title>
     <%@ include file="../util/resources.jsp" %>
-    <script src="<c:url value="/js/find/FindInfoInputTracking.js"/>"></script>
     <script src="<c:url value="/js/find/FindIdApiRequest.js"/>"></script>
     <script src="<c:url value="/js/find/FindIdProcess.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/css/input.css"/>"/>
 </head>
 <body>
 <jsp:include page="../fragment/Header.jsp"/>
@@ -20,10 +20,9 @@
     </div>
 
     <div class="col-md-4 row mx-auto">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" onkeyup="trackingNameInFindProcess()" required>
-            <input type="hidden" value="fail" id="nameToken"/> <%-- 이름 기입 여부 체크 --%>
+            <input type="text" class="form-control custom-input" id="name" style="border-radius: 15px;" required>
         </div>
     </div>
     <br>
@@ -31,18 +30,17 @@
     <div class="col-md-4 row mx-auto">
         <label for="email" class="form-label">이메일</label>
         <div class="col-md-8" style="margin-bottom: 10px;">
-            <input type="text" class="form-control" id="email" required>
+            <input type="text" class="form-control custom-input" id="email" style="border-radius: 15px;" required>
         </div>
         <br>
         <div class="col-md-4">
             <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationInFindIdProcess()">이메일 인증</button>
         </div>
     </div>
-    <br>
 
     <div class="col-md-4 row mx-auto">
-        <div class="col-md-10">
-            <input type="text" class="form-control" id="checkEmail" placeholder="인증 번호를 입력해주세요" disabled required/>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="checkEmail" placeholder="인증 번호를 입력해주세요" style="border-radius: 15px; display: none" required/>
 
             <div style="margin-top: 5px;">
                 <span id="explainEmailCheck" style="font-size: 13px; display: none;">
@@ -51,7 +49,7 @@
                 </span>
             </div>
         </div>
-        <input type="hidden" value="fail" id="emailVerificationToken"/> <%-- 이메일 인증 완료 여부 체크 --%>
+        <input type="hidden" value="fail" id="emailAuthenticationToken"/> <%-- 이메일 인증 완료 여부 체크 --%>
     </div>
     <br>
 
