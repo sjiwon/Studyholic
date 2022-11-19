@@ -1,17 +1,13 @@
-function changePassword(userId) {
+function changePasswordProcess(userId) {
     const ToastResponse = Swal.mixin({
         focusConfirm: false,
         returnFocus: false
     });
 
     let currentPassword = $('#currentPassword');
-    let currentPasswordToken = $('#currentPasswordToken');
-    if (validationCurrentPassword(currentPassword, currentPasswordToken) === false) {
+    if (validationCurrentPassword(currentPassword) === false) {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '현재 비밀번호를 다시 확인해주세요',
+            html: '<b>현재 비밀번호를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             currentPassword.focus();
@@ -20,13 +16,18 @@ function changePassword(userId) {
     }
 
     let changePassword = $('#changePassword');
-    let changePasswordToken = $('#changePasswordToken');
-    if (validationChangePassword(changePassword, changePasswordToken) === false) {
+    if (validationChangePassword(changePassword) === 'fail1') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '변경할 비밀번호를 다시 확인해주세요',
+            html: '<b>변경할 비밀번호를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            icon: 'warning'
+        }).then(() => {
+            $('#checkChangePassword').val('');
+            changePassword.focus();
+        })
+        return false;
+    } else if (validationChangePassword(changePassword) === 'fail2') {
+        ToastResponse.fire({
+            html: '<b>변경할 비밀번호를 다시 확인해주세요</b><br><small>- 영문, 숫자, 특수문자를 하나 이상 포함하고 8자 이상</small>',
             icon: 'warning'
         }).then(() => {
             $('#checkChangePassword').val('');
@@ -36,26 +37,17 @@ function changePassword(userId) {
     }
 
     let checkChangePassword = $('#checkChangePassword');
-    let checkChangePasswordVerificationToken = $('#checkChangePasswordVerificationToken');
-    if (validationChangePasswordVerification(checkChangePassword, checkChangePasswordVerificationToken) === false) {
+    if (validationChangePasswordVerification(changePassword, checkChangePassword) === 'fail1') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '변경할 비밀번호 확인란을 다시 확인해주세요',
+            html: '<b>변경할 비밀번호 확인란을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             checkChangePassword.focus();
         })
         return false;
-    }
-
-    if (validateionChangePasswordAndVericifactionInput(changePassword, checkChangePassword) === false) {
+    } else if (validationChangePasswordVerification(changePassword, checkChangePassword) === 'fail2') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '변경할 비밀번호와 확인란이 일치하지 않습니다',
+            html: '<b>변경할 비밀번호 확인란을 다시 확인해주세요</b><br><small>- 변경할 비밀번호와 확인란이 일치하지 않습니다</small>',
             icon: 'warning'
         }).then(() => {
             checkChangePassword.focus();
@@ -94,11 +86,7 @@ function changePassword(userId) {
                         })
                         .catch(error => {
                             let jsonData = error.response.data;
-
                             ToastResponse.fire({
-                                showConfirmButton: false,
-                                timer: 1000,
-                                timerProgressBar: true,
                                 color: '#FF0000',
                                 text: jsonData['message'],
                                 icon: 'error'
@@ -107,11 +95,7 @@ function changePassword(userId) {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
-
                     ToastResponse.fire({
-                        showConfirmButton: false,
-                        timer: 1000,
-                        timerProgressBar: true,
                         color: '#FF0000',
                         text: jsonData['message'],
                         icon: 'error'
@@ -121,26 +105,30 @@ function changePassword(userId) {
     })
 }
 
-function validationCurrentPassword(password, passwordToken) {
-    if (passwordToken.val() === 'fail') {
+function validationCurrentPassword(currentPassword) {
+    if (currentPassword.val() === '') {
         return false;
     }
 }
 
-function validationChangePassword(password, passwordToken) {
-    if (passwordToken.val() === 'fail') {
-        return false;
+function validationChangePassword(changePassword) {
+    let changePasswordInput = changePassword.val();
+    let reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/; // regExp
+
+    if (changePasswordInput === '') {
+        return "fail1";
+    } else if (!reg.test(changePasswordInput)) {
+        return "fail2";
     }
 }
 
-function validationChangePasswordVerification(password, passwordToken) {
-    if (passwordToken.val() === 'fail') {
-        return false;
-    }
-}
+function validationChangePasswordVerification(changePassword, changePasswordCheck) {
+    let changePasswordInput = changePassword.val();
+    let changePasswordCheckInput = changePasswordCheck.val();
 
-function validateionChangePasswordAndVericifactionInput(password, checkPassword) {
-    if (password.val() !== checkPassword.val()) {
-        return false;
+    if (changePasswordCheckInput === '') {
+        return "fail1";
+    } else if (changePasswordInput !== changePasswordCheckInput) {
+        return "fail2";
     }
 }
