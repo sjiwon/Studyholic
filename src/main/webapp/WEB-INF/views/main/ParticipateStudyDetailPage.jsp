@@ -23,19 +23,19 @@
                         <div class="col">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 style="text-align: center">${study.studyName}</h3>
+                                    <h3 style="text-align: center">${study.basicStudy.name}</h3>
                                 </div>
 
                                 <div class="card-body">
-                                    <p class="card-text" style="font-size: 20px; font-weight: bold;">${study.studyBriefDescription}</p>
+                                    <p class="card-text" style="font-size: 20px; font-weight: bold;">${study.basicStudy.briefDescription}</p>
                                     <p class="card-text">스터디 리더 |
                                         <span>
-                                            <img src="<c:out value="/images/user/${study.studyLeaderImage}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
-                                            <b style="text-align: center; margin: 3px;">${study.studyLeaderNickname}</b>
+                                            <img src="<c:out value="/images/user/${study.studyLeader.storageName}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
+                                            <b style="text-align: center; margin: 3px;">${study.studyLeader.nickname}</b>
                                         </span>
                                     </p>
-                                    <p class="card-text">모집 현황 | ${study.studyCurrentMemberCount} / ${study.studyMaxMemberCount}</p>
-                                    <p class="card-text">모집 마감일 | ${study.studyRecruitDeadLine}</p>
+                                    <p class="card-text">모집 현황 | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}</p>
+                                    <p class="card-text">모집 마감일 | ${study.basicStudy.recruitDeadline}</p>
 
                                     <c:forEach var="tag" items="${study.studyTagList}">
                                         <span class="tag" style="font-weight: bold"># ${tag}</span>
@@ -45,21 +45,21 @@
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.studyId}')">상세정보</button>
+                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.basicStudy.id}')">상세정보</button>
                                             <c:choose>
-                                                <c:when test="${study.studyLeaderId == sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
+                                                <c:when test="${study.studyLeader.id == sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
                                                     <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="deleteStudy('${study.studyName}', '${study.studyId}', '<sec:authentication property="principal.user.id"/>')">스터디 삭제
+                                                            onclick="deleteStudy('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">스터디 삭제
                                                     </button>
                                                 </c:when>
-                                                <c:when test="${study.studyLeaderId != sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
+                                                <c:when test="${study.studyLeader.id != sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
                                                     <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="participateCancle('${study.studyName}', '${study.studyId}', '<sec:authentication property="principal.user.id"/>')">참여취소
+                                                            onclick="participateCancle('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">참여취소
                                                     </button>
                                                 </c:when>
                                             </c:choose>
                                         </div>
-                                        <small class="text-muted">등록 | ${study.registerDateFromCurrentDate}</small>
+                                        <small class="text-muted">등록 | ${study.basicStudy.registerDateFromCurrentDate}</small>
                                     </div>
                                 </div>
                             </div>
