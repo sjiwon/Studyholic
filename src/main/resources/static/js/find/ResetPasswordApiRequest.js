@@ -1,60 +1,102 @@
 // 1. 비밀빈호 리셋 이메일 인증 버튼 활성화
 function enableEmailVerificationInResetPasswordProcess() {
+    const ToastResponse = Swal.mixin({
+        focusConfirm: false,
+        returnFocus: false
+    });
+
     let name = $('#name');
     let loginId = $('#loginId');
     let email = $('#email');
     let emailVerificationButton = $('#emailVerificationButton');
 
     if (name.val().trim() === '') {
-        alert('이름을 먼저 입력해주세요');
-        name.val('');
-        name.focus();
+        ToastResponse.fire({
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            text: '이름을 다시 확인해주세요',
+            icon: 'warning'
+        }).then(() => {
+            name.focus();
+        })
         return false;
     }
 
     if (loginId.val().trim() === '') {
-        alert('아이디를 먼저 입력해주세요');
-        loginId.val('');
-        loginId.focus();
+        ToastResponse.fire({
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            text: '아이디를 다시 확인해주세요',
+            icon: 'warning'
+        }).then(() => {
+            loginId.focus();
+        })
         return false;
     }
 
     if (email.val().trim() === '') {
-        alert('이메일을 입력해주세요');
-        email.val('');
-        email.focus();
+        ToastResponse.fire({
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            text: '이메일을 입력해주세요',
+            icon: 'warning'
+        }).then(() => {
+            email.focus();
+        })
         return false;
     }
 
-    let use = confirm('[' + email.val() + ']이 본인 소유의 이메일이 맞습니까?');
-    if (use) {
-        let data = {
-            'resource': 'password',
-            'email': email.val()
-        };
+    const ToastApi = Swal.mixin({
+        confirmButtonText: '네',
+        showCancelButton: true,
+        cancelButtonText: '아니요',
+        focusConfirm: false
+    });
 
-        axios.post('/api/email/authenticate', data)
-            .then(response => {
-                $('#checkEmail').prop('disabled', false);
-                $('#explainEmailCheck').show();
+    ToastApi.fire({
+        html: '<b>' + email.val() + '</b>이 본인 소유의 이메일이 맞습니까?',
+        icon: 'question'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                'resource': 'password',
+                'email': email.val()
+            };
 
-                email.attr("readonly", true);
-                email.css({
-                    "border-color": "#0D6EFD",
-                    "border": "2px solid",
-                    "color": "#0D6EFD",
-                    "font-size": "15px"
+            axios.post('/api/email/authenticate', data)
+                .then(response => {
+                    $('#checkEmail').prop('disabled', false);
+                    $('#explainEmailCheck').show();
+
+                    email.attr("readonly", true);
+                    email.css({
+                        "border-color": "#0D6EFD",
+                        "border": "2px solid",
+                        "color": "#0D6EFD",
+                        "font-size": "15px"
+                    })
+
+                    const emailCode = response['data'];
+                    emailVerificationButton.attr("disabled", true);
+                    checkEmailConfirm(emailCode);
                 })
+                .catch(error => {
+                    let jsonData = error.response.data;
 
-                const emailCode = response['data'];
-                emailVerificationButton.attr("disabled", true);
-                checkEmailConfirm(emailCode);
-            })
-            .catch(error => {
-                let jsonData = error.response.data;
-                alert(jsonData['message']);
-            });
-    }
+                    ToastResponse.fire({
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        color: '#FF0000',
+                        text: jsonData['message'],
+                        icon: 'error'
+                    })
+                });
+        }
+    })
 }
 
 // 2. 이메일 인증 프로세스
