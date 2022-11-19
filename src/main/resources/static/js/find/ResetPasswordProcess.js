@@ -46,31 +46,45 @@ function userVericiationAndApplyRandomPassword() {
         return false;
     }
 
-    let data = {
-        'name': name.val(),
-        'loginId': loginId.val(),
-        'email': email.val()
-    }
+    const ToastApi = Swal.mixin({
+        confirmButtonText: '네',
+        showCancelButton: true,
+        cancelButtonText: '아니요',
+        focusConfirm: false
+    });
 
-    axios.post('/api/user/random-password', data)
-        .then(() => {
-            ToastResponse.fire({
-                html: '메일로 임시 비밀번호가 발송되었습니다<br>임시 비밀번호로 로그인 후 비밀번호 재설정을 진행하세요',
-                icon: 'success'
-            }).then(() => {
-                location.href = '/login';
-            })
-        })
-        .catch(error => {
-            let jsonData = error.response.data;
-            ToastResponse.fire({
-                color: '#FF0000',
-                text: jsonData['message'],
-                icon: 'error'
-            }).then(() => {
-                location.replace('/reset-password');
-            });
-        });
+    ToastApi.fire({
+        text: '비밀번호를 초기화 하시겠습니까?',
+        icon: 'question'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                'name': name.val(),
+                'loginId': loginId.val(),
+                'email': email.val()
+            }
+
+            axios.post('/api/user/random-password', data)
+                .then(() => {
+                    ToastResponse.fire({
+                        html: '메일로 임시 비밀번호가 발송되었습니다<br>임시 비밀번호로 로그인 후 비밀번호 재설정을 진행하세요',
+                        icon: 'success'
+                    }).then(() => {
+                        location.href = '/login';
+                    })
+                })
+                .catch(error => {
+                    let jsonData = error.response.data;
+                    ToastResponse.fire({
+                        color: '#FF0000',
+                        text: jsonData['message'],
+                        icon: 'error'
+                    }).then(() => {
+                        location.replace('/reset-password');
+                    });
+                });
+        }
+    });
 }
 
 function validationName(name) {
