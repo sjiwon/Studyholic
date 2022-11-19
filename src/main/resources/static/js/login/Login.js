@@ -1,8 +1,5 @@
 function login() {
     const ToastResponse = Swal.mixin({
-        showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
         focusConfirm: false,
         returnFocus: false
     });
@@ -11,7 +8,7 @@ function login() {
     let loginPassword = $('#loginPassword');
     if (validationInput(loginId, loginPassword) === false) {
         ToastResponse.fire({
-            text: '아이디나 비밀번호를 다시 확인해주세요',
+            html: '<b>아이디나 비밀번호를 다시 확인해주세요</b><br><small>- 빈 값이 존재합니다</small>',
             icon: 'warning'
         }).then(() => {
             if (loginId.val().trim() === '' && loginPassword.val().trim() === '') {
@@ -33,6 +30,9 @@ function login() {
     axios.post('/api/login', data)
         .then((res) => {
             ToastResponse.fire({
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
                 text: '로그인에 성공하였습니다',
                 icon: 'success'
             }).then(() => {
