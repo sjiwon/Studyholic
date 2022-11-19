@@ -5,13 +5,9 @@ function userVericiationAndApplyRandomPassword() {
     });
 
     let name = $('#name');
-    let nameToken = $('#nameToken');
-    if (validationName(name, nameToken) === false) {
+    if (validationName(name) === false) {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이름을 다시 확인해주세요',
+            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             name.focus();
@@ -20,13 +16,9 @@ function userVericiationAndApplyRandomPassword() {
     }
 
     let loginId = $('#loginId');
-    let loginIdToken = $('#loginIdToken');
-    if (validationLoginId(loginId, loginIdToken) === false) {
+    if (validationLoginId(loginId) === false) {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '아이디를 다시 확인해주세요',
+            html: '<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             loginId.focus();
@@ -35,27 +27,21 @@ function userVericiationAndApplyRandomPassword() {
     }
 
     let email = $('#email');
-    let emailVerificationToken = $('#emailVerificationToken');
-    if (validationEmail(email, emailVerificationToken) === 'fail1') {
+    let emailAuthenticationToken = $('#emailAuthenticationToken');
+    if (validationEmail(email, emailAuthenticationToken) === 'fail1') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이메일을 다시 확인해주세요',
+            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             email.focus();
         })
         return false;
-    } else if (validationEmail(email, emailVerificationToken) === 'fail2') {
+    } else if (validationEmail(email, emailAuthenticationToken) === 'fail2') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이메일 인증을 진행해주세요',
+            html: '<b>이메일 인증을 진행해주세요</b>',
             icon: 'warning'
         }).then(() => {
-            emailVerificationToken.focus();
+            emailAuthenticationToken.focus();
         })
         return false;
     }
@@ -77,38 +63,32 @@ function userVericiationAndApplyRandomPassword() {
         })
         .catch(error => {
             let jsonData = error.response.data;
-
             ToastResponse.fire({
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
                 color: '#FF0000',
                 text: jsonData['message'],
                 icon: 'error'
             }).then(() => {
-                location.replace('/find-password');
+                location.replace('/reset-password');
             });
         });
 }
 
-function validationName(name, nameToken) {
-    if (nameToken.val() === 'fail') {
+function validationName(name) {
+    if (name.val().trim() === '') {
         return false;
     }
 }
 
-function validationLoginId(loginId, loginIdToken) {
-    if (loginIdToken.val() === 'fail') {
+function validationLoginId(loginId) {
+    if (loginId.val().trim() === '') {
         return false;
     }
 }
 
 function validationEmail(email, emailToken) {
-    if (emailToken.val() === 'fail') {
-        if (email.val().trim() === '') {
-            return 'fail1';
-        } else {
-            return 'fail2';
-        }
+    if (email.val().trim() === '') {
+        return "fail1";
+    } else if (emailToken.val() === 'fail') {
+        return "fail2";
     }
 }

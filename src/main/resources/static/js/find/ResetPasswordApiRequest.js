@@ -12,10 +12,7 @@ function enableEmailVerificationInResetPasswordProcess() {
 
     if (name.val().trim() === '') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이름을 다시 확인해주세요',
+            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             name.focus();
@@ -25,10 +22,7 @@ function enableEmailVerificationInResetPasswordProcess() {
 
     if (loginId.val().trim() === '') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '아이디를 다시 확인해주세요',
+            html: '<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             loginId.focus();
@@ -38,10 +32,7 @@ function enableEmailVerificationInResetPasswordProcess() {
 
     if (email.val().trim() === '') {
         ToastResponse.fire({
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            text: '이메일을 입력해주세요',
+            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
             email.focus();
@@ -68,16 +59,9 @@ function enableEmailVerificationInResetPasswordProcess() {
 
             axios.post('/api/email/authenticate', data)
                 .then(response => {
-                    $('#checkEmail').prop('disabled', false);
+                    $('#checkEmail').css("display", "block");
                     $('#explainEmailCheck').show();
-
                     email.attr("readonly", true);
-                    email.css({
-                        "border-color": "#0D6EFD",
-                        "border": "2px solid",
-                        "color": "#0D6EFD",
-                        "font-size": "15px"
-                    })
 
                     const emailCode = response['data'];
                     emailVerificationButton.attr("disabled", true);
@@ -85,11 +69,7 @@ function enableEmailVerificationInResetPasswordProcess() {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
-
                     ToastResponse.fire({
-                        showConfirmButton: false,
-                        timer: 1000,
-                        timerProgressBar: true,
                         color: '#FF0000',
                         text: jsonData['message'],
                         icon: 'error'
@@ -105,7 +85,6 @@ function checkEmailConfirm(emailCode) {
     let explainEmailCheck = $('#explainEmailCheck');
 
     checkEmail.on('keyup', () => {
-        let emailVerificationToken = $('#emailVerificationToken');
         let ResetPasswordButton = $('#ResetPasswordButton');
 
         if (checkEmail.val() !== emailCode) {
@@ -122,7 +101,7 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "13px"
             })
 
-            emailVerificationToken.val('fail');
+            $('#emailAuthenticationToken').val('fail');
             ResetPasswordButton.attr("disabled", true);
         } else {
             checkEmail.css({
@@ -138,7 +117,7 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "13px"
             })
 
-            emailVerificationToken.val('success');
+            $('#emailAuthenticationToken').val('success');
             ResetPasswordButton.attr("disabled", false);
         }
     })
