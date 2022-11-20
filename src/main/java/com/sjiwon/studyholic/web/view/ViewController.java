@@ -93,7 +93,7 @@ public class ViewController {
         return "main/StudyRegisterPage";
     }
 
-    @GetMapping("/study/edit/{studyId}")
+    @GetMapping("/study/{studyId}/edit")
     public String studyEditPage(@PathVariable Long studyId, Model model) {
         model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(studyId));
         return "main/StudyEditPage";
