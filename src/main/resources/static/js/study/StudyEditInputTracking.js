@@ -12,15 +12,3 @@ function trackingStudyName(originStudyName) {
         studyNameVerificationToken.val('fail');
     }
 }
-
-// 2. 스터디 간단 설명 Tracking
-function trackingStudyBriefDescription(originBriefDescription) {
-    let studyBriefDescription = $('#studyBriefDescription');
-    let studyBriefDescriptionVerificationToken = $('#studyBriefDescriptionVerificationToken');
-
-    if (originBriefDescription === studyBriefDescription.val() || studyBriefDescription.val().trim() !== '') {
-        studyBriefDescriptionVerificationToken.val('success');
-    } else {
-        studyBriefDescriptionVerificationToken.val('fail');
-    }
-}

@@ -15,6 +15,7 @@
     <script src="<c:url value="/js/study/StudyRegisterInputTracking.js"/>"></script>
     <script src="<c:url value="/js/study/StudyRegisterApiRequest.js"/>"></script>
     <script src="<c:url value="/js/study/StudyRegisterIntegrateProcess.js"/>"></script>
+    <link rel="stylesheet" href=<c:url value="/css/input.css"/>
 </head>
 <body>
 <jsp:include page="../fragment/Header.jsp"/>
@@ -29,7 +30,8 @@
         </div>
         <div class="col-md-9 row">
             <div class="col-md-6" style="margin-bottom: 10px;">
-                <input id="studyName" type="text" class="form-control" name="studyName" onkeyup="trackingStudyName()" max="20" placeholder="20자까지 입력 가능합니다..." required/>
+                <input id="studyName" type="text" class="form-control custom-input" name="studyName" onkeyup="trackingStudyName()" style="border-radius: 15px;"
+                       max="20" placeholder="20자까지 입력 가능합니다..." required/>
             </div>
             <br>
             <div class="col-md-4">
@@ -44,7 +46,7 @@
             <h4>스터디 간단 설명</h4>
         </div>
         <div class="col-md-6">
-            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" onkeyup="trackingStudyBriefDescription()"
+            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" style="border-radius: 15px;"
                    maxlength="50" placeholder="50자까지 입력 가능합니다..." required/>
             <input type="hidden" id="studyBriefDescriptionVerificationToken" value="fail"/> <%--스터디 간단 설명 기입 여부 체크--%>
         </div>
@@ -68,7 +70,7 @@
             <h4>스터디 최대 인원수</h4>
         </div>
         <div class="col-md-3">
-            <input id="studyMaxMember" type="number" class="form-control" name="studyMaxMember" min="2" max="10" required/>
+            <input id="studyMaxMember" type="number" class="form-control" name="studyMaxMember" min="2" max="10" style="border-radius: 15px;" required/>
         </div>
 
         <br><br>
@@ -77,7 +79,7 @@
             <h4>스터디 모집 마감일</h4>
         </div>
         <div class="col-md-3">
-            <input id="studyRecruitDeadline" type="date" class="form-control" name="studyRecruitDeadline" required/>
+            <input id="studyRecruitDeadline" type="date" class="form-control" name="studyRecruitDeadline" style="border-radius: 15px;" required/>
         </div>
 
         <br><br>
@@ -93,7 +95,7 @@
 
         <button type="button" class="btn btn-primary btn-lg btn-block" onclick="registerProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">스터디 만들기</button>
 
-        <br>
+<%--        <br>--%>
     </div>
 </div>
 

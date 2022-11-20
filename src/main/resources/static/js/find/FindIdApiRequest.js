@@ -1,52 +1,71 @@
 // 1. 아이디 인증 이메일 인증 버튼 활성화
 function enableEmailVerificationInFindIdProcess() {
+    const ToastResponse = Swal.mixin({
+        focusConfirm: false,
+        returnFocus: false
+    });
+
     let name = $('#name');
     let email = $('#email');
     let emailVerificationButton = $('#emailVerificationButton');
 
     if (name.val().trim() === '') {
-        alert('이름을 먼저 입력해주세요');
-        name.val('');
-        name.focus();
+        ToastResponse.fire({
+            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            icon: 'warning'
+        }).then(() => {
+            name.focus();
+        })
         return false;
     }
 
     if (email.val().trim() === '') {
-        alert('이메일을 입력해주세요');
-        email.val('');
-        email.focus();
+        ToastResponse.fire({
+            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            icon: 'warning'
+        }).then(() => {
+            email.focus();
+        })
         return false;
     }
 
-    let use = confirm('[' + email.val() + ']이 본인 소유의 이메일이 맞습니까?');
-    if (use) {
-        let data = {
-            'resource': 'id',
-            'email': email.val()
-        };
+    const ToastApi = Swal.mixin({
+        confirmButtonText: '네',
+        showCancelButton: true,
+        cancelButtonText: '아니요',
+        focusConfirm: false
+    });
 
-        axios.post('/api/email/authenticate', data)
-            .then(response => {
-                $('#checkEmail').prop('disabled', false);
-                $('#explainEmailCheck').show();
+    ToastApi.fire({
+        html: '<b>' + email.val() + '</b>이 본인 소유의 이메일이 맞습니까?',
+        icon: 'question'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let data = {
+                'resource': 'id',
+                'email': email.val()
+            };
 
-                email.attr("readonly", true);
-                email.css({
-                    "border-color": "#0D6EFD",
-                    "border": "2px solid",
-                    "color": "#0D6EFD",
-                    "font-size": "15px"
+            axios.post('/api/email/authenticate', data)
+                .then(response => {
+                    $('#checkEmail').css("display", "block");
+                    $('#explainEmailCheck').show();
+                    email.attr("readonly", true);
+
+                    const emailCode = response['data'];
+                    emailVerificationButton.attr("disabled", true);
+                    checkEmailConfirm(emailCode);
                 })
-
-                const emailCode = response['data'];
-                emailVerificationButton.attr("disabled", true);
-                checkEmailConfirm(emailCode);
-            })
-            .catch(error => {
-                let jsonData = error.response.data;
-                alert(jsonData['message']);
-            });
-    }
+                .catch(error => {
+                    let jsonData = error.response.data;
+                    ToastResponse.fire({
+                        color: '#FF0000',
+                        text: jsonData['message'],
+                        icon: 'error'
+                    })
+                });
+        }
+    })
 }
 
 // 2. 이메일 인증 프로세스
@@ -55,7 +74,6 @@ function checkEmailConfirm(emailCode) {
     let explainEmailCheck = $('#explainEmailCheck');
 
     checkEmail.on('keyup', () => {
-        let emailVerificationToken = $('#emailVerificationToken');
         let findIdButton = $('#findIdButton');
 
         if (checkEmail.val() !== emailCode) {
@@ -72,7 +90,7 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "13px"
             })
 
-            emailVerificationToken.val('fail');
+            $('#emailAuthenticationToken').val('fail');
             findIdButton.attr("disabled", true);
         } else {
             checkEmail.css({
@@ -88,7 +106,7 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "13px"
             })
 
-            emailVerificationToken.val('success');
+            $('#emailAuthenticationToken').val('success');
             findIdButton.attr("disabled", false);
         }
     })
