@@ -1,17 +1,7 @@
 // 1. 스터디 이름 Tracking
 function trackingStudyName() {
-    let studyName = $('#studyName');
-    let studyNameDuplicateCheckButton = $('#studyNameDuplicateCheckButton');
-    let studyNameVerificationToken = $('#studyNameVerificationToken');
-
-    studyName.css({
-        "border-color": "",
-        "border": "",
-        "color": "",
-        "font-size": ""
-    });
-    studyNameDuplicateCheckButton.attr("disabled", false);
-    studyNameVerificationToken.val('fail');
+    $('#studyNameDuplicateCheckButton').attr("disabled", false);
+    $('#studyNameVerificationToken').val('fail');
 }
 
 // 2. 스터디 간단 설명 Tracking
