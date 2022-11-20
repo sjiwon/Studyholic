@@ -49,8 +49,6 @@ function changePasswordProcess(userId) {
         ToastResponse.fire({
             html: '<b>변경할 비밀번호 확인란을 다시 확인해주세요</b><br><small>- 변경할 비밀번호와 확인란이 일치하지 않습니다</small>',
             icon: 'warning'
-        }).then(() => {
-            checkChangePassword.focus();
         })
         return false;
     }

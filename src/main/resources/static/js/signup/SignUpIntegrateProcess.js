@@ -23,15 +23,13 @@ function signUpProcess() {
             html: '<b>닉네임을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
-            name.focus();
+            nickname.focus();
         })
         return false;
     } else if (validationNickname(nickname, nicknameVerificationToken) === 'fail2') {
         ToastResponse.fire({
             html: '<b>닉네임 중복 체크를 진행해주세요</b>',
             icon: 'warning'
-        }).then(() => {
-            name.focus();
         })
         return false;
     }
@@ -43,15 +41,13 @@ function signUpProcess() {
             html: '<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
-            name.focus();
+            loginId.focus();
         })
         return false;
     } else if (validationLoginId(loginId, idVerificationToken) === 'fail2') {
         ToastResponse.fire({
             html: '<b>아이디 중복 체크를 진행해주세요</b>',
             icon: 'warning'
-        }).then(() => {
-            name.focus();
         })
         return false;
     }
@@ -63,7 +59,7 @@ function signUpProcess() {
             html: '<b>비밀번호를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
-            name.focus();
+            loginPassword.focus();
         })
         return false;
     } else if (validationPassword(loginPassword, checkPassword) === 'fail2') {
@@ -71,15 +67,13 @@ function signUpProcess() {
             html: '<b>비밀번호 확인란을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
-            name.focus();
+            checkPassword.focus();
         })
         return false;
     } else if (validationPassword(loginPassword, checkPassword) === 'fail3') {
         ToastResponse.fire({
             html: '<b>비밀번호와 확인란이 일치하지 않습니다</b>',
             icon: 'warning'
-        }).then(() => {
-            name.focus();
         })
         return false;
     }
@@ -91,15 +85,13 @@ function signUpProcess() {
             html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
         }).then(() => {
-            name.focus();
+            email.focus();
         })
         return false;
     } else if (validationEmail(email, emailAuthenticationToken) === 'fail2') {
         ToastResponse.fire({
             html: '<b>이메일 인증을 진행해주세요</b>',
             icon: 'warning'
-        }).then(() => {
-            name.focus();
         })
         return false;
     }
@@ -109,8 +101,6 @@ function signUpProcess() {
         ToastResponse.fire({
             html: '<b>생년월일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
             icon: 'warning'
-        }).then(() => {
-            name.focus();
         })
         return false;
     }

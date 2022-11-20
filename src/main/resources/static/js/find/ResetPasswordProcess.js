@@ -40,8 +40,6 @@ function userVericiationAndApplyRandomPassword() {
         ToastResponse.fire({
             html: '<b>이메일 인증을 진행해주세요</b>',
             icon: 'warning'
-        }).then(() => {
-            emailAuthenticationToken.focus();
         })
         return false;
     }
