@@ -15,6 +15,7 @@
     <script src="<c:url value="/js/study/StudyEditInputTracking.js"/>"></script>
     <script src="<c:url value="/js/study/StudyEditApiRequest.js"/>"></script>
     <script src="<c:url value="/js/study/StudyEditIntegrateProcess.js"/>"></script>
+    <link rel="stylesheet" href="<c:url value="/css/input.css"/>"/>
 </head>
 <body>
 <jsp:include page="../fragment/Header.jsp"/>
@@ -29,10 +30,12 @@
         </div>
         <div class="col-md-9 row">
             <div class="col-md-6" style="margin-bottom: 10px;">
-                <input id="studyName" type="text" class="form-control" name="studyName" onkeyup="trackingStudyName('${studyDetailToEdit.studyName}')" max="20" value="${studyDetailToEdit.studyName}"/>
+                <input id="studyName" type="text" class="form-control custom-input" name="studyName" style="border-radius: 15px;"
+                       onkeyup="trackingStudyName('${studyDetailToEdit.studyName}')" max="20" value="${studyDetailToEdit.studyName}"/>
             </div>
             <div class="col-md-2">
-                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button" onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')" disabled>중복 체크</button>
+                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button"
+                        onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')" disabled>중복 체크</button>
             </div>
             <input type="hidden" id="studyNameVerificationToken" value="success"/>
         </div>
@@ -43,9 +46,8 @@
             <h4>스터디 간단 설명</h4>
         </div>
         <div class="col-md-6">
-            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" onkeyup="trackingStudyBriefDescription('${studyDetailToEdit.studyBriefDescription}')"
+            <input id="studyBriefDescription" type="text" class="form-control custom-input" name="studyBriefDescription" style="border-radius: 15px;"
                    maxlength="50" value="${studyDetailToEdit.studyBriefDescription}"/>
-            <input type="hidden" id="studyBriefDescriptionVerificationToken" value="success"/> <%--스터디 간단 설명 기입 여부 체크--%>
         </div>
 
         <br><br>
@@ -68,7 +70,8 @@
             <h4>스터디 최대 인원수</h4>
         </div>
         <div class="col-md-3">
-            <input id="studyMaxMember" type="number" class="form-control" name="studyMaxMember" min="2" max="10" value="${studyDetailToEdit.studyMaxMemberCount}"/>
+            <input id="studyMaxMember" type="number" class="form-control custom-input" name="studyMaxMember" style="border-radius: 15px;"
+                   min="2" max="10" value="${studyDetailToEdit.studyMaxMemberCount}"/>
         </div>
 
         <br><br>
@@ -95,6 +98,7 @@
         <br>
     </div>
 </div>
+<jsp:include page="../fragment/Footer.jsp"/>
 </body>
 <script>
     // Toast UI Editor
