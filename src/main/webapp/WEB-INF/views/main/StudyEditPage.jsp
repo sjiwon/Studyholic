@@ -114,9 +114,9 @@
         toolbarItems: [
             ['heading', 'bold', 'italic', 'strike'],
             ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['ul', 'ol', 'task'],
             ['table', 'link'],
-            ['code', 'codeblock'],
+            ['code'],
         ],
         plugins: [colorSyntax],
     });
