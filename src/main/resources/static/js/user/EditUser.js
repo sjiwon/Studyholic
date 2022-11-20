@@ -138,7 +138,7 @@ function editNicknameProcess() {
     }
 
     ToastApi.fire({
-        html: '해당 닉네임으로 변경하시겠습니까? : <b style="font-size: 20px;">' + nickname.val() + '</b>',
+        html: '해당 닉네임으로 변경하시겠습니까?<br><b style="font-size: 20px;">-> ' + nickname.val() + '</b>',
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {

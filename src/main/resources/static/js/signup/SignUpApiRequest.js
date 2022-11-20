@@ -27,7 +27,7 @@ function nicknameDuplicateCheckApi() {
     }
 
     ToastApi.fire({
-        html: '해당 닉네임을 사용하시겠습니까? : <b style="font-size: 20px;">' + nickname.val() + '</b>',
+        html: '해당 닉네임을 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + nickname.val() + '</b>',
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -53,7 +53,6 @@ function nicknameDuplicateCheckApi() {
                         text: jsonData['message'],
                         icon: 'error'
                     }).then(() => {
-                        nickname.val('');
                         nicknameVerificationToken.val('fail');
                         nickname.focus();
                     })
@@ -91,7 +90,7 @@ function idDuplicateCheckApi() {
     }
 
     ToastApi.fire({
-        html: '해당 아이디를 사용하시겠습니까? : <b style="font-size: 20px;">' + loginId.val() + '</b>',
+        html: '해당 아이디를 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + loginId.val() + '</b>',
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -118,7 +117,6 @@ function idDuplicateCheckApi() {
                         icon: 'error'
                     }).then(() => {
                         idVerificationToken.val('fail');
-                        loginId.val('');
                         loginId.focus();
                     })
                 });
