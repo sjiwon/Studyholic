@@ -50,5 +50,6 @@
     </div>
     <br>
 </div>
+<jsp:include page="../fragment/Footer.jsp"/>
 </body>
 </html>
