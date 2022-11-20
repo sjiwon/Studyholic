@@ -64,17 +64,25 @@ function signUpProcess() {
         return false;
     } else if (validationPassword(loginPassword, checkPassword) === 'fail2') {
         ToastResponse.fire({
-            html: '<b>비밀번호 확인란을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: '<b>비밀번호를 다시 확인해주세요</b><br><small>- 영문, 숫자, 특수문자를 하나 이상 포함하고 8자 이상</small>',
             icon: 'warning'
         }).then(() => {
-            checkPassword.focus();
+            loginPassword.focus();
         })
         return false;
     } else if (validationPassword(loginPassword, checkPassword) === 'fail3') {
         ToastResponse.fire({
+            html: '<b>비밀번호 확인란을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            icon: 'warning'
+        }).then(() => {
+            checkPassword.focus();
+        });
+        return false;
+    } else if (validationPassword(loginPassword, checkPassword) === 'fail4') {
+        ToastResponse.fire({
             html: '<b>비밀번호와 확인란이 일치하지 않습니다</b>',
             icon: 'warning'
-        })
+        });
         return false;
     }
 
@@ -201,12 +209,16 @@ function validationLoginId(loginId, loginIdToken) {
 }
 
 function validationPassword(password, checkPassword) {
+    let reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/; // regExp
+
     if (password.val().trim() === '') {
         return "fail1";
-    } else if (checkPassword.val().trim() === '') {
+    } else if (!reg.test(password.val())) {
         return "fail2";
-    } else if (password.val() !== checkPassword.val()) {
+    } else if (checkPassword.val().trim() === '') {
         return "fail3";
+    } else if (password.val() !== checkPassword.val()) {
+        return "fail4";
     }
 }
 
