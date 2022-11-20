@@ -179,13 +179,13 @@ function signUpProcess() {
 }
 
 function validationName(name) {
-    if (nameToken.val().trim() === '') {
+    if (name.val().trim() === '') {
         return false;
     }
 }
 
 function validationNickname(nickname, nicknameToken) {
-    if (nickname.val.trim() == '') {
+    if (nickname.val().trim() == '') {
         return "fail1";
     } else if (nicknameToken.val() === 'fail') {
         return "fail2";
@@ -193,7 +193,7 @@ function validationNickname(nickname, nicknameToken) {
 }
 
 function validationLoginId(loginId, loginIdToken) {
-    if (loginId.val.trim() == '') {
+    if (loginId.val().trim() == '') {
         return "fail1";
     } else if (loginIdToken.val() === 'fail') {
         return "fail2";
@@ -211,7 +211,7 @@ function validationPassword(password, checkPassword) {
 }
 
 function validationEmail(email, emailToken) {
-    if (email.val.trim() == '') {
+    if (email.val().trim() == '') {
         return "fail1";
     } else if (emailToken.val() === 'fail') {
         return "fail2";
