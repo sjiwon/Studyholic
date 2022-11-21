@@ -7,6 +7,7 @@ import com.sjiwon.studyholic.domain.entity.studytag.StudyTag;
 import com.sjiwon.studyholic.domain.entity.studytag.repository.StudyTagRepository;
 import com.sjiwon.studyholic.domain.entity.user.User;
 import com.sjiwon.studyholic.domain.entity.user.repository.UserRepository;
+import com.sjiwon.studyholic.domain.entity.user.repository.dto.BasicUser;
 import com.sjiwon.studyholic.domain.entity.user.service.dto.response.MyPageInformation;
 import com.sjiwon.studyholic.domain.entity.user.service.dto.response.ParticipateStudyInformation;
 import com.sjiwon.studyholic.domain.entity.userstudy.UserStudy;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -147,17 +149,16 @@ public class UserService {
     /**
      * 마이페이지 정보
      */
-    public MyPageInformation getUserDetailInformation(Long userId) {
-        return new MyPageInformation(
-                userRepository.getBasicUserInformation(userId)
-                        .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND))
-        );
+    public MyPageInformation getUserDetailInformation(Long userId, Locale locale) {
+        BasicUser user = userRepository.getBasicUserInformation(userId)
+                .orElseThrow(() -> StudyholicException.type(USER_NOT_FOUND));
+        return new MyPageInformation(user, locale);
     }
 
     /**
      * 참여중인 스터디 정보
      */
-    public List<ParticipateStudyInformation> getUserParticipateStudyInformation(Long userId) {
+    public List<ParticipateStudyInformation> getUserParticipateStudyInformation(Long userId, Locale locale) {
         List<BasicStudy> basicStudyInformations = studyRepository.getUserParticipateStudyInformation(userId);
         List<StudyTag> studyTagList = studyTagRepository.findAllWithFetchStudy();
         List<UserStudy> userStudyList = userStudyRepository.findAllWithFetchUserAndStudy();
@@ -166,7 +167,8 @@ public class UserService {
                 .map(basicStudyInformation -> new ParticipateStudyInformation(
                         basicStudyInformation,
                         getStudyTagList(studyTagList, basicStudyInformation),
-                        getStudyLeaderInformation(userStudyList, basicStudyInformation.getId())
+                        getStudyLeaderInformation(userStudyList, basicStudyInformation.getId()),
+                        locale
                 ))
                 .collect(Collectors.toList());
     }

@@ -4,6 +4,8 @@ import com.sjiwon.studyholic.common.CommonDateTranslator;
 import com.sjiwon.studyholic.domain.entity.user.repository.dto.BasicUser;
 import lombok.Getter;
 
+import java.util.Locale;
+
 @Getter
 public class BasicUserDto {
     private final Long id;
@@ -16,15 +18,15 @@ public class BasicUserDto {
     private final String profileImage;
     private final String lastModifiedDate;
 
-    public BasicUserDto(BasicUser user) {
+    public BasicUserDto(BasicUser user, Locale locale) {
         this.id = user.getId();
         this.name = user.getName();
         this.nickname = user.getNickname();
         this.loginId = user.getLoginId();
-        this.birth = CommonDateTranslator.translateLocalDateToString(user.getBirth());
+        this.birth = CommonDateTranslator.translateLocalDateToString(user.getBirth(), locale);
         this.email = user.getEmail();
-        this.joinDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(user.getJoinDate());
+        this.joinDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(user.getJoinDate(), locale);
         this.profileImage = user.getProfileImage();
-        this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(user.getLastModifiedDate());
+        this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(user.getLastModifiedDate(), locale);
     }
 }

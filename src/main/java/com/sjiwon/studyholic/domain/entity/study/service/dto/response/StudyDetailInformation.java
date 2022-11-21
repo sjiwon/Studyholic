@@ -6,6 +6,7 @@ import com.sjiwon.studyholic.domain.entity.userstudy.repository.dto.ParticipateU
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 public class StudyDetailInformation {
@@ -14,8 +15,8 @@ public class StudyDetailInformation {
     private final List<String> studyTagList;
     private final List<ParticipateUser> participateUserList;
 
-    public StudyDetailInformation(BasicStudy study, Long studyLeaderId, List<String> studyTagList, List<ParticipateUser> participateUserList) {
-        this.basicStudy = new BasicStudyDto(study);
+    public StudyDetailInformation(BasicStudy study, Long studyLeaderId, List<String> studyTagList, List<ParticipateUser> participateUserList, Locale locale) {
+        this.basicStudy = new BasicStudyDto(study, locale);
         this.studyLeaderId = studyLeaderId;
         this.studyTagList = studyTagList;
         this.participateUserList = participateUserList;

@@ -48,4 +48,21 @@ public class VariableFactory {
     };
     public static final String LOCALE_KOREA = "ko";
     public static final String LOCALE_AMERICA = "en";
+
+    public static final Map<Integer, String> MONTH_TO_STRING = new HashMap<>(){
+        {
+            put(1, "January");
+            put(2, "February");
+            put(3, "March");
+            put(4, "April");
+            put(5, "May");
+            put(6, "June");
+            put(7, "July");
+            put(8, "August");
+            put(9, "September");
+            put(10, "October");
+            put(11, "November");
+            put(12, "December");
+        }
+    };
 }

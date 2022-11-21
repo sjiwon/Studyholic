@@ -38,7 +38,7 @@ public class ViewController {
             Locale locale,
             Model model
     ) {
-        Page<StudySimpleInformation> studyList = studyService.getMainPageStudyList(PageRequest.of(page - 1, SIZE_PER_PAGE), sort, keyword);
+        Page<StudySimpleInformation> studyList = studyService.getMainPageStudyList(PageRequest.of(page - 1, SIZE_PER_PAGE), sort, keyword, locale);
 
         if (locale.getLanguage().equalsIgnoreCase(LOCALE_KOREA)) { // locale: ko
             model.addAttribute("searchType", SORT_TO_KO.get(sort));
@@ -71,13 +71,13 @@ public class ViewController {
             Model model
     ) throws IOException {
         delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
-        model.addAttribute("userDetail", userService.getUserDetailInformation(userId));
+        model.addAttribute("userDetail", userService.getUserDetailInformation(userId, locale));
         return "main/MyPage";
     }
 
     @GetMapping("/study/{studyId}")
-    public String studyDetailPage(@PathVariable Long studyId, Model model) {
-        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId));
+    public String studyDetailPage(@PathVariable Long studyId, Locale locale, Model model) {
+        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId, locale));
         return "main/StudyDetailPage";
     }
 
@@ -90,7 +90,7 @@ public class ViewController {
             Model model
     ) throws IOException {
         delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
-        model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userId));
+        model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userId, locale));
         return "main/ParticipateStudyDetailPage";
     }
 
