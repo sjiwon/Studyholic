@@ -46,4 +46,6 @@ public class VariableFactory {
             put(MAX_MEMBER_SORT, MAX_MEMBER_ENG);
         }
     };
+    public static final String LOCALE_KOREA = "ko";
+    public static final String LOCALE_AMERICA = "en";
 }

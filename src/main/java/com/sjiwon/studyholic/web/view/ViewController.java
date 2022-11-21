@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 import java.util.Objects;
 
-import static com.sjiwon.studyholic.common.VariableFactory.SIZE_PER_PAGE;
-import static com.sjiwon.studyholic.common.VariableFactory.SORT_TO_KO;
+import static com.sjiwon.studyholic.common.VariableFactory.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,11 +35,16 @@ public class ViewController {
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "registerDate") String sort,
             @RequestParam(required = false) String keyword,
+            Locale locale,
             Model model
     ) {
         Page<StudySimpleInformation> studyList = studyService.getMainPageStudyList(PageRequest.of(page - 1, SIZE_PER_PAGE), sort, keyword);
 
-        model.addAttribute("searchType", SORT_TO_KO.get(sort));
+        if (locale.getLanguage().equalsIgnoreCase(LOCALE_KOREA)) { // locale: ko
+            model.addAttribute("searchType", SORT_TO_KO.get(sort));
+        } else { // locale: other
+            model.addAttribute("searchType", SORT_TO_ENG.get(sort));
+        }
         model.addAttribute("keyword", keyword);
         model.addAttribute("studyList", studyList.getContent());
         model.addAttribute("pagination", new Pagination(studyList.getTotalElements(), studyList.getTotalPages(), page));
