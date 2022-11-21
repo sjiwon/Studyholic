@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
 <head>
-    <title>Studyholic</title>
+    <title><spring:message code="title"/></title>
     <%@ include file="../util/resources.jsp" %>
     <link rel="stylesheet" href="<c:url value="/css/login.css"/>"/>
     <script src="<c:url value="/js/login/Login.js"/>"></script>
@@ -28,11 +30,11 @@
         <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
         <label for="loginPassword">Password</label>
     </div>
-    <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">로그인</button>
+    <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()"><spring:message code="login.page.login"/></button>
     <div class="form-floating mt-3">
-        <a class="link-color-black" href="/find-id">아이디 찾기</a> |
-        <a class="link-color-black" href="/reset-password">비밀번호 임시 발급/초기화</a> |
-        <a class="link-color-black" href="/signup">회원가입</a>
+        <a class="link-color-black" href="/find-id"><spring:message code="login.page.find.id"/></a> |
+        <a class="link-color-black" href="/reset-password"><spring:message code="login.page.reset.password"/></a> |
+        <a class="link-color-black" href="/signup"><spring:message code="login.page.signup"/></a>
     </div>
 </main>
 <script>

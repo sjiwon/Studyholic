@@ -5,10 +5,12 @@ function nicknameDuplicateCheckApi() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -17,8 +19,12 @@ function nicknameDuplicateCheckApi() {
     let nicknameVerificationToken = $('#nicknameVerificationToken');
 
     if (nickname.val().trim() === '') {
+        let nicknameValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>닉네임을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your nickname again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>닉네임을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: nicknameValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             nickname.focus();
@@ -26,8 +32,12 @@ function nicknameDuplicateCheckApi() {
         return false;
     }
 
+    let question = (navigator.language === 'ko')
+        ? ('해당 닉네임을 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + nickname.val() + '</b>')
+        : ('Would you like to use that nickname?<br><b style="font-size: 20px;">-> ' + nickname.val() + '</b>');
+
     ToastApi.fire({
-        html: '해당 닉네임을 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + nickname.val() + '</b>',
+        html: question,
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -38,8 +48,12 @@ function nicknameDuplicateCheckApi() {
 
             axios.post('/api/user/duplicate-check', data)
                 .then(() => {
+                    let successHtml = (navigator.language === 'ko')
+                        ? ('<b>' + nickname.val() + '</b>은/는 사용 가능합니다')
+                        : ('<b>' + nickname.val() + '</b> is available');
+
                     ToastResponse.fire({
-                        html: '<b>[' + nickname.val() + ']</b>은/는 사용 가능합니다',
+                        html: successHtml,
                         icon: 'success'
                     }).then(() => {
                         nicknameVerificationButton.attr("disabled", true);
@@ -48,14 +62,26 @@ function nicknameDuplicateCheckApi() {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
+
+                    let errorText;
+                    if (jsonData['message'] === '중복된 닉네임입니다') {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('This is a duplicate nickname');
+                    } else {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('An error occurred on the server');
+                    }
+
                     ToastResponse.fire({
                         color: '#FF0000',
-                        text: jsonData['message'],
+                        text: errorText,
                         icon: 'error'
                     }).then(() => {
                         nicknameVerificationToken.val('fail');
                         nickname.focus();
-                    })
+                    });
                 });
         }
     });
@@ -68,10 +94,12 @@ function idDuplicateCheckApi() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -80,8 +108,12 @@ function idDuplicateCheckApi() {
     let idVerificationToken = $('#idVerificationToken');
 
     if (loginId.val().trim() === '') {
+        let idValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your ID again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: idValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             loginId.focus();
@@ -89,8 +121,12 @@ function idDuplicateCheckApi() {
         return false;
     }
 
+    let question = (navigator.language === 'ko')
+        ? ('해당 아이디를 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + loginId.val())
+        : ('Would you like to use that ID?<br><b style="font-size: 20px;">-> ' + loginId.val());
+
     ToastApi.fire({
-        html: '해당 아이디를 사용하시겠습니까?<br><b style="font-size: 20px;">-> ' + loginId.val() + '</b>',
+        html: question,
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -101,8 +137,12 @@ function idDuplicateCheckApi() {
 
             axios.post('/api/user/duplicate-check', data)
                 .then(() => {
+                    let successHtml = (navigator.language === 'ko')
+                        ? ('<b>' + loginId.val() + '</b>은/는 사용 가능합니다')
+                        : ('<b>' + loginId.val() + '</b> is available');
+
                     ToastResponse.fire({
-                        html: '<b>[' + loginId.val() + ']</b>은/는 사용 가능합니다',
+                        html: successHtml,
                         icon: 'success'
                     }).then(() => {
                         idVerificationButton.attr("disabled", true);
@@ -111,9 +151,21 @@ function idDuplicateCheckApi() {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
+
+                    let errorText;
+                    if (jsonData['message'] === '중복된 로그인 아이디입니다') {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('This is a duplicate login ID');
+                    } else {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('An error occurred on the server');
+                    }
+
                     ToastResponse.fire({
                         color: '#FF0000',
-                        text: jsonData['message'],
+                        text: errorText,
                         icon: 'error'
                     }).then(() => {
                         idVerificationToken.val('fail');
@@ -136,16 +188,24 @@ function enableEmailVerificationWithSignUp() {
     let reg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/; // regExp
 
     if (email.val().trim() === '') {
+        let emailValidationFailHtml1 = (navigator.language === 'ko')
+            ? ('<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your email again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: emailValidationFailHtml1,
             icon: 'warning'
         }).then(() => {
             email.focus();
         })
         return false;
     } else if (!reg.test(email.val())) {
+        let emailValidationFailHtml2 = (navigator.language === 'ko')
+            ? ('<b>이메일을 다시 확인해주세요</b><br><small>- 이메일 형식에 맞춰서 입력해주세요</small>')
+            : ('<b>Please check your email again</b><br><small>- Please enter in the email format</small>');
+
         ToastResponse.fire({
-            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 이메일 형식에 맞춰서 입력해주세요</small>',
+            html: emailValidationFailHtml2,
             icon: 'warning'
         }).then(() => {
             email.focus();
@@ -153,15 +213,21 @@ function enableEmailVerificationWithSignUp() {
         return false;
     }
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
+    let question = (navigator.language === 'ko')
+        ? ('<b>' + email.val() + '</b>을 사용하시겠습니까?<br><small>- 인증번호가 발송되면 변경이 불가능합니다</small>')
+        : ('Would you like to use <b>' + email.val() + '</b>?<br><small>- Once the verification number has been sent, it cannot be changed.</small>');
+
     ToastApi.fire({
-        html: '<b>' + email.val() + '</b>을 사용하시겠습니까?<br><small>- 인증번호가 발송되면 변경이 불가능합니다</small>',
+        html: question,
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -182,9 +248,21 @@ function enableEmailVerificationWithSignUp() {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
+
+                    let errorText;
+                    if (jsonData['message'] === '중복된 이메일입니다') {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('This is a duplicate email');
+                    } else {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('An error occurred on the server');
+                    }
+
                     ToastResponse.fire({
                         color: '#FF0000',
-                        text: jsonData['message'],
+                        text: errorText,
                         icon: 'error'
                     })
                 });
@@ -206,11 +284,14 @@ function emailVerificationApiProcess(emailCode) {
                 "font-size": "15px"
             })
 
-            explainEmailCheck.html('인증번호가 잘못되었습니다');
             explainEmailCheck.css({
                 "color": "#FA3E3E",
                 "font-size": "13px"
             })
+            let failHtml = (navigator.language === 'ko')
+                ? ('인증번호가 일치하지 않습니다')
+                : ('Verification number does not match');
+            explainEmailCheck.html(failHtml);
 
             $('#emailAuthenticationToken').val('fail');
         } else {
@@ -221,12 +302,14 @@ function emailVerificationApiProcess(emailCode) {
                 "font-size": "15px"
             })
 
-            let explainEmailCheck = $('#explainEmailCheck');
-            explainEmailCheck.html('인증번호가 일치합니다');
             explainEmailCheck.css({
                 "color": "#0D6EFD",
                 "font-size": "13px"
             })
+            let successHtml = (navigator.language === 'ko')
+                ? ('인증번호가 일치합니다')
+                : ('Verification number matches');
+            explainEmailCheck.html(successHtml);
 
             $('#emailAuthenticationToken').val('success');
         }

@@ -10,7 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class Study {
     private String description;
 
     @Column(name = "recruit_deadline", nullable = false)
-    private LocalDate recruitDeadLine;
+    private LocalDateTime recruitDeadLine;
 
     @CreatedDate
     @Column(name = "register_date")
@@ -55,7 +54,7 @@ public class Study {
     @OneToMany(mappedBy = "study", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true) // QueryDSL
     private List<StudyTag> studyTagList = new ArrayList<>();
 
-    private Study(String name, Integer maxMember, String briefDescription, String description, LocalDate recruitDeadLine) {
+    private Study(String name, Integer maxMember, String briefDescription, String description, LocalDateTime recruitDeadLine) {
         this.name = name;
         this.maxMember = maxMember;
         this.briefDescription = briefDescription;
@@ -63,7 +62,7 @@ public class Study {
         this.recruitDeadLine = recruitDeadLine;
     }
 
-    public static Study createStudy(String name, Integer maxMember, String briefDescription, String description, LocalDate recruitDeadLine) {
+    public static Study createStudy(String name, Integer maxMember, String briefDescription, String description, LocalDateTime recruitDeadLine) {
         return new Study(name, maxMember, briefDescription, description, recruitDeadLine);
     }
 
@@ -79,7 +78,7 @@ public class Study {
         this.description = description;
     }
 
-    public void changeRecruitDeadLine(LocalDate recruitDeadLine) {
+    public void changeRecruitDeadLine(LocalDateTime recruitDeadLine) {
         this.recruitDeadLine = recruitDeadLine;
     }
 

@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
 <head>
-    <title>Studyholic</title>
+    <title><spring:message code="title"/></title>
     <%@ include file="../util/resources.jsp" %>
     <link rel="stylesheet" href="https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css"/>
@@ -28,21 +30,21 @@
                 </c:forEach>
             </div>
             <div style="margin-bottom: 10px; text-align: right">
-                등록 날짜 | ${studyDetail.basicStudy.registerDate}
+                <spring:message code="study.detail.register.date"/> | ${studyDetail.basicStudy.registerDate}
             </div>
             <div style="margin-bottom: 10px; text-align: right">
-                모집 마감일 | ${studyDetail.basicStudy.recruitDeadline}
+                <spring:message code="study.detail.recruit.deadline"/> | ${studyDetail.basicStudy.recruitDeadline}
             </div>
             <div style="margin-bottom: 10px; text-align: right;">
-                최종 수정 날짜 | ${studyDetail.basicStudy.lastModifiedDate}
+                <spring:message code="study.detail.last.modified.date"/> | ${studyDetail.basicStudy.lastModifiedDate}
             </div>
             <div style="text-align: right">
                 <sec:authorize access="isAuthenticated()">
                     <c:choose>
                         <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id == studyDetail.studyLeaderId}">
-                            <button type="button" class="btn btn-secondary" style="margin: 5px;" onclick="moveToStudyEditPage(${studyDetail.basicStudy.id})">수정하기</button>
+                            <button type="button" class="btn btn-secondary" style="margin: 5px;" onclick="moveToStudyEditPage(${studyDetail.basicStudy.id})"><spring:message code="study.detail.edit"/></button>
                             <button type="button" class="btn btn-danger" style="margin: 5px;"
-                                    onclick="deleteStudy('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">삭제하기
+                                    onclick="deleteStudy('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')"><spring:message code="study.detail.delete"/>
                             </button>
                         </c:when>
                         <c:when test="${
@@ -50,7 +52,7 @@
                                 !studyDetail.participateUserList.stream().map(user -> user.id).toList().contains(sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id)}"
                         >
                             <button type="button" class="btn btn-primary" style="margin: 5px;"
-                                    onclick="participate('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">참여하기
+                                    onclick="participate('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')"><spring:message code="study.detail.participate"/>
                             </button>
                         </c:when>
                         <c:when test="${
@@ -58,7 +60,7 @@
                                 studyDetail.participateUserList.stream().map(user -> user.id).toList().contains(sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id)}"
                         >
                             <button type="button" class="btn btn-danger" style="margin: 5px;"
-                                    onclick="participateCancle('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">참여취소
+                                    onclick="participateCancle('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')"><spring:message code="study.detail.participate.cancel"/>
                             </button>
                         </c:when>
                     </c:choose>
@@ -70,10 +72,10 @@
                 <img src="<c:out value="/images/utils/participate.png"/>" alt="test" width="80" height="80" style="border-radius: 25%; margin: 3px;"/>
                 <c:choose>
                     <c:when test="${studyDetail.basicStudy.currentMemberCount == studyDetail.basicStudy.maxMemberCount}">
-                        <span style="color: red; margin: 10px;">참여 인원 | <small style="font-size: 20px;">${studyDetail.basicStudy.currentMemberCount} / ${studyDetail.basicStudy.maxMemberCount}</small></span>
+                        <span style="color: red; margin: 10px;"><spring:message code="study.detail.member.count"/> | <small style="font-size: 20px;">${studyDetail.basicStudy.currentMemberCount} / ${studyDetail.basicStudy.maxMemberCount}</small></span>
                     </c:when>
                     <c:when test="${studyDetail.basicStudy.currentMemberCount != studyDetail.basicStudy.maxMemberCount}">
-                        <span style="margin: 10px;">참여 인원 | <small style="font-size: 20px;">${studyDetail.basicStudy.currentMemberCount} / ${studyDetail.basicStudy.maxMemberCount}</small></span>
+                        <span style="margin: 10px;"><spring:message code="study.detail.member.count"/> | <small style="font-size: 20px;">${studyDetail.basicStudy.currentMemberCount} / ${studyDetail.basicStudy.maxMemberCount}</small></span>
                     </c:when>
                 </c:choose>
             </h2>
@@ -81,7 +83,7 @@
                 <div style="margin: 20px;">
                     <c:if test="${user.teamLeader == true}">
                         <img src="<c:out value="/images/user/${user.profileImage}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
-                        <span style="font-size: 1.2rem; margin: 5px;">${user.nickname} (리더)</span>
+                        <span style="font-size: 1.2rem; margin: 5px;">${user.nickname} <spring:message code="study.detail.leader"/></span>
                     </c:if>
                     <c:if test="${user.teamLeader == false}">
                         <img src="<c:out value="/images/user/${user.profileImage}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
@@ -96,7 +98,7 @@
 
             <h2>
                 <img src="<c:out value="/images/utils/description.png"/>" alt="test" width="80" height="80" style="border-radius: 25%; margin: 3px;"/>
-                <span style="margin: 10px;">스터디 설명</span>
+                <span style="margin: 10px;"><spring:message code="study.detail.description"/></span>
                 <input type="hidden" id="descriptionValue" value="${studyDetail.basicStudy.description}"/>
             </h2>
             <div id="viewer"></div>
@@ -108,7 +110,7 @@
 
             <h2>
                 <img src="<c:out value="/images/utils/call.png"/>" alt="test" width="80" height="80" style="border-radius: 25%; margin-bottom: 10px;"/>
-                <span style="margin: 10px;">스터디 리더 이메일</span>
+                <span style="margin: 10px;"><spring:message code="study.detail.leader.email"/></span>
             </h2>
             <c:forEach var="user" items="${studyDetail.participateUserList}">
                 <c:if test="${user.teamLeader == true}">

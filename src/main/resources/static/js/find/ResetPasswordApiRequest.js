@@ -11,8 +11,12 @@ function enableEmailVerificationInResetPasswordProcess() {
     let emailVerificationButton = $('#emailVerificationButton');
 
     if (name.val().trim() === '') {
+        let nameValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your name again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: nameValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             name.focus();
@@ -21,8 +25,12 @@ function enableEmailVerificationInResetPasswordProcess() {
     }
 
     if (loginId.val().trim() === '') {
+        let idValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your ID again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>아이디를 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: idValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             loginId.focus();
@@ -31,8 +39,12 @@ function enableEmailVerificationInResetPasswordProcess() {
     }
 
     if (email.val().trim() === '') {
+        let emailValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your email again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: emailValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             email.focus();
@@ -40,15 +52,21 @@ function enableEmailVerificationInResetPasswordProcess() {
         return false;
     }
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
+    let question = (navigator.language === 'ko')
+        ? ('<b>' + email.val() + '</b>이 본인 소유의 이메일이 맞습니까?')
+        : ('Is <b>' + email.val() + '</b> your own email?');
+
     ToastApi.fire({
-        html: '<b>' + email.val() + '</b>이 본인 소유의 이메일이 맞습니까?',
+        html: question,
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -69,9 +87,21 @@ function enableEmailVerificationInResetPasswordProcess() {
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
+
+                    let errorText;
+                    if (jsonData['message'] === '인증내역이 없는 이메일입니다') {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('This email has no verification history');
+                    } else {
+                        errorText = (navigator.language === 'ko')
+                            ? (jsonData['message'])
+                            : ('An error occurred on the server');
+                    }
+
                     ToastResponse.fire({
                         color: '#FF0000',
-                        text: jsonData['message'],
+                        text: errorText,
                         icon: 'error'
                     })
                 });
@@ -95,11 +125,14 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "15px"
             })
 
-            explainEmailCheck.html('인증번호가 일치하지 않습니다');
             explainEmailCheck.css({
                 "color": "#FA3E3E",
                 "font-size": "13px"
             })
+            let failHtml = (navigator.language === 'ko')
+                ? ('인증번호가 일치하지 않습니다')
+                : ('Verification number does not match');
+            explainEmailCheck.html(failHtml);
 
             $('#emailAuthenticationToken').val('fail');
             ResetPasswordButton.attr("disabled", true);
@@ -111,11 +144,14 @@ function checkEmailConfirm(emailCode) {
                 "font-size": "15px"
             })
 
-            explainEmailCheck.html('인증번호가 일치합니다');
             explainEmailCheck.css({
                 "color": "#0D6EFD",
                 "font-size": "13px"
             })
+            let successHtml = (navigator.language === 'ko')
+                ? ('인증번호가 일치합니다')
+                : ('Verification number matches');
+            explainEmailCheck.html(successHtml);
 
             $('#emailAuthenticationToken').val('success');
             ResetPasswordButton.attr("disabled", false);

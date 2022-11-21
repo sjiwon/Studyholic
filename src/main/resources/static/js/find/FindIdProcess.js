@@ -6,8 +6,12 @@ function findIdProcess() {
 
     let name = $('#name');
     if (validationName(name) === false) {
+        let nameValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your name again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>이름을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: nameValidationFailHtml,
             icon: 'warning'
         }).then(() => {
             name.focus();
@@ -18,16 +22,24 @@ function findIdProcess() {
     let email = $('#email');
     let emailAuthenticationToken = $('#emailAuthenticationToken');
     if (validationEmail(email, emailAuthenticationToken) === 'fail1') {
+        let emailValidationFailHtml1 = (navigator.language === 'ko')
+            ? ('<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check your email again</b><br><small>- Empty value exists</small>');
+
         ToastResponse.fire({
-            html: '<b>이메일을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>',
+            html: emailValidationFailHtml1,
             icon: 'warning'
         }).then(() => {
             email.focus();
         })
         return false;
     } else if (validationEmail(email, emailAuthenticationToken) === 'fail2') {
+        let emailValidationFailHtml2 = (navigator.language === 'ko')
+            ? ('<b>이메일 인증을 진행해주세요</b>')
+            : ('<b>Please proceed with email verification</b>');
+
         ToastResponse.fire({
-            html: '<b>이메일 인증을 진행해주세요</b>',
+            html: emailValidationFailHtml2,
             icon: 'warning'
         }).then(() => {
             emailAuthenticationToken.focus();
@@ -42,8 +54,12 @@ function findIdProcess() {
 
     axios.post('/api/user/find/login-id', data)
         .then((res) => {
+            let successHtml = (navigator.language === 'ko')
+                ? ('아이디는 <b>' + res['data'] + '</b>입니다.<br>로그인 페이지로 이동합니다')
+                : ('ID is <b>' + res['data'] + '</b><br>Go to the login page');
+
             ToastResponse.fire({
-                html: '아이디는 <b>' + res['data'] + '</b>입니다.<br>로그인 페이지로 이동합니다',
+                html: successHtml,
                 icon: 'success'
             }).then(() => {
                 location.href = '/login';
@@ -51,9 +67,13 @@ function findIdProcess() {
         })
         .catch(error => {
             let jsonData = error.response.data;
+            let failHtml = (navigator.language === 'ko')
+                ? (jsonData['message'])
+                : ('User information does not exist');
+
             ToastResponse.fire({
                 color: '#FF0000',
-                text: jsonData['message'],
+                text: failHtml,
                 icon: 'error'
             }).then(() => {
                 location.replace('/find-id');

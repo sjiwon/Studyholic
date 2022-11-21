@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ public class StudyDetailToEditInformation {
     private String studyBriefDescription;
     private String studyDescription;
     private Integer studyMaxMemberCount;
-    private LocalDate studyRecruitDeadLine;
+    private LocalDateTime studyRecruitDeadLine;
     private String studyTagList;
 
     public StudyDetailToEditInformation(BasicStudy information, List<String> studyTagList) {

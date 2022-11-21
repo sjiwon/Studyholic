@@ -6,6 +6,7 @@ import com.sjiwon.studyholic.domain.entity.study.service.dto.StudyLeaderDto;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 public class StudySimpleInformation {
@@ -13,8 +14,8 @@ public class StudySimpleInformation {
     private final List<String> studyTagList;
     private final StudyLeaderDto studyLeader;
 
-    public StudySimpleInformation(BasicStudy study, List<String> studyTagList, StudyLeaderDto studyLeader) {
-        this.basicStudy = new BasicStudyDto(study);
+    public StudySimpleInformation(BasicStudy study, List<String> studyTagList, StudyLeaderDto studyLeader, Locale locale) {
+        this.basicStudy = new BasicStudyDto(study, locale);
         this.studyTagList = studyTagList;
         this.studyLeader = studyLeader;
     }

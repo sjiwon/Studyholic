@@ -26,10 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.sjiwon.studyholic.exception.StudyholicErrorCode.*;
@@ -145,7 +142,7 @@ public class StudyService {
     /**
      * 메인 페이지 스터디 리스트
      */
-    public Page<StudySimpleInformation> getMainPageStudyList(Pageable pageable, String sort, @Nullable String keyword) {
+    public Page<StudySimpleInformation> getMainPageStudyList(Pageable pageable, String sort, @Nullable String keyword, Locale locale) {
         Page<BasicStudy> pagingStudyList = isRequestContainsKeyword(keyword)
                 ? studyRepository.getMainPageStudyListWithKeyword(pageable, sort, keyword)
                 : studyRepository.getMainPageStudyList(pageable, sort);
@@ -157,7 +154,8 @@ public class StudyService {
                 .map(basicStudyInformation -> new StudySimpleInformation(
                         basicStudyInformation,
                         getStudyTagList(studyTagList, basicStudyInformation),
-                        getStudyLeaderInformation(userStudyList, basicStudyInformation.getId())
+                        getStudyLeaderInformation(userStudyList, basicStudyInformation.getId()),
+                        locale
                 ))
                 .collect(Collectors.toList());
 
@@ -188,13 +186,14 @@ public class StudyService {
     /**
      * 특정 스터디 상세 정보
      */
-    public StudyDetailInformation getStudyDetailInformation(Long studyId) {
+    public StudyDetailInformation getStudyDetailInformation(Long studyId, Locale locale) {
         return new StudyDetailInformation(
                 studyRepository.getBasicStudyInformation(studyId)
                         .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
                 userStudyRepository.findStudyLeaderIdByStudyId(studyId),
                 studyTagRepository.findTagListByStudyId(studyId),
-                userStudyRepository.findParticipateUserListByStudyId(studyId)
+                userStudyRepository.findParticipateUserListByStudyId(studyId),
+                locale
         );
     }
 

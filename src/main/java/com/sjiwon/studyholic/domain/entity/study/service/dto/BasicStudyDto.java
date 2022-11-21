@@ -4,6 +4,8 @@ import com.sjiwon.studyholic.common.CommonDateTranslator;
 import com.sjiwon.studyholic.domain.entity.study.repository.dto.BasicStudy;
 import lombok.Getter;
 
+import java.util.Locale;
+
 @Getter
 public class BasicStudyDto {
     private final Long id; // 스터디 ID (PK)
@@ -17,17 +19,16 @@ public class BasicStudyDto {
     private final String recruitDeadline; // 스티더 모집 마감일
     private final String lastModifiedDate;
 
-    public BasicStudyDto(BasicStudy study) {
+    public BasicStudyDto(BasicStudy study, Locale locale) {
         this.id = study.getId();
         this.name = study.getName();
         this.briefDescription = study.getBriefDescription();
         this.description = study.getDescription();
         this.maxMemberCount = study.getMaxMember();
         this.currentMemberCount = study.getCurrentMemberCount();
-//        this.registerDate = study.getRegisterDate();
-        this.registerDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(study.getRegisterDate());
-        this.registerDateFromCurrentDate = CommonDateTranslator.translateRegisterDateFromCurrentDate(study.getRegisterDate());
-        this.recruitDeadline = CommonDateTranslator.translateLocalDateToString(study.getRecruitDeadLine());
-        this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getLastModifiedDate());
+        this.registerDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(study.getRegisterDate(), locale);
+        this.registerDateFromCurrentDate = CommonDateTranslator.translateRegisterDateFromCurrentDate(study.getRegisterDate(), locale);
+        this.recruitDeadline = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getRecruitDeadLine(), locale);
+        this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getLastModifiedDate(), locale);
     }
 }
