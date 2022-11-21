@@ -59,7 +59,7 @@ function studyRegister(userId, editor, tagify) {
     });
 
     ToastApi.fire({
-        html: '<b>[' + studyName.val() + ']</b>을 등록하시겠습니까?',
+        html: '<b>' + studyName.val() + '</b>을 등록하시겠습니까?',
         icon: 'question'
     }).then((result) => {
         if (result.isConfirmed) {

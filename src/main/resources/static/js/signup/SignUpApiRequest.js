@@ -47,8 +47,8 @@ function nicknameDuplicateCheckApi() {
             axios.post('/api/user/duplicate-check', data)
                 .then(() => {
                     let successHtml = (navigator.language === 'ko')
-                        ? ('<b>[' + nickname.val() + ']</b>은/는 사용 가능합니다')
-                        : ('<b>[' + nickname.val() + ']</b> is available');
+                        ? ('<b>' + nickname.val() + '</b>은/는 사용 가능합니다')
+                        : ('<b>' + nickname.val() + '</b> is available');
 
                     ToastResponse.fire({
                         html: successHtml,
@@ -134,8 +134,8 @@ function idDuplicateCheckApi() {
             axios.post('/api/user/duplicate-check', data)
                 .then(() => {
                     let successHtml = (navigator.language === 'ko')
-                        ? ('<b>[' + loginId.val() + ']</b>은/는 사용 가능합니다')
-                        : ('<b>[' + loginId.val() + ']</b> is available');
+                        ? ('<b>' + loginId.val() + '</b>은/는 사용 가능합니다')
+                        : ('<b>' + loginId.val() + '</b> is available');
 
                     ToastResponse.fire({
                         html: successHtml,

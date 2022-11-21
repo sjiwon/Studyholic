@@ -38,7 +38,7 @@ function studyNameDuplicateCheckApi() {
             axios.post('/api/study/register/duplicate-check', data)
                 .then(() => {
                     ToastResponse.fire({
-                        html: '<b>[' + studyName.val() + ']</b>은/는 사용 가능합니다',
+                        html: '<b>' + studyName.val() + '</b>은/는 사용 가능합니다',
                         icon: 'success'
                     }).then(() => {
                         studyNameDuplicateCheckButton.attr("disabled", true);
