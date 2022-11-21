@@ -17,19 +17,19 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h3 style="text-align: center">${study.basicStudy.name}</h3>
+                            <h3 style="text-align: center">[${study.basicStudy.name}]</h3>
+                            <p class="card-text" style="font-size: 20px; text-align: center">${study.basicStudy.briefDescription}</p>
                         </div>
 
                         <div class="card-body">
-                            <p class="card-text" style="font-size: 20px; font-weight: bold;">${study.basicStudy.briefDescription}</p>
-                            <p class="card-text"><spring:message code="main.study.leader"/> |
+                            <p class="card-text"><b><spring:message code="main.study.leader"/></b> |
                                 <span>
                                     <img src="<c:out value="/images/user/${study.studyLeader.storageName}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
                                     <b style="text-align: center; margin: 3px;">${study.studyLeader.nickname}</b>
                                 </span>
                             </p>
-                            <p class="card-text"><spring:message code="main.study.current.recruit"/> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}</p>
-                            <p class="card-text"><spring:message code="main.study.recruit.deadline"/> | ${study.basicStudy.recruitDeadline}</p>
+                            <p class="card-text"><b><spring:message code="main.study.current.recruit"/></b> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}</p>
+                            <p class="card-text"><b><spring:message code="main.study.recruit.deadline"/></b> | ${study.basicStudy.recruitDeadline}</p>
 
                             <c:forEach var="tag" items="${study.studyTagList}">
                                 <span class="tag" style="font-weight: bold"># ${tag}</span>
