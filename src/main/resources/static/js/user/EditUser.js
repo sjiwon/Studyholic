@@ -5,10 +5,12 @@ function editProfileToDefaultImage() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -75,10 +77,12 @@ function editProfileToCustomImage() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -183,10 +187,12 @@ function editNicknameProcess() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -274,10 +280,12 @@ function editNicknameProcess() {
 
 // 4. 비밀번호 재설정 페이지로 이동
 function moveToEditPasswordPage() {
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 

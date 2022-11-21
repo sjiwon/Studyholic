@@ -10,10 +10,12 @@ function participate(studyName, studyId, userId) {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -87,10 +89,12 @@ function participateCancle(studyName, studyId, userId) {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -140,10 +144,12 @@ function deleteStudy(studyName, studyId) {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 

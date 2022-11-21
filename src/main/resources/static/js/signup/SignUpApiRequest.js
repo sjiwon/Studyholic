@@ -5,10 +5,12 @@ function nicknameDuplicateCheckApi() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -92,10 +94,12 @@ function idDuplicateCheckApi() {
         returnFocus: false
     });
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
@@ -209,10 +213,12 @@ function enableEmailVerificationWithSignUp() {
         return false;
     }
 
+    let yes = (navigator.language === 'ko') ? ('네') : ('Yes');
+    let no = (navigator.language === 'ko') ? ('아니요') : ('No');
     const ToastApi = Swal.mixin({
-        confirmButtonText: '네',
+        confirmButtonText: yes,
         showCancelButton: true,
-        cancelButtonText: '아니요',
+        cancelButtonText: no,
         focusConfirm: false
     });
 
