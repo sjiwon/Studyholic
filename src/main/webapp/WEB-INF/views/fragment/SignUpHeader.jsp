@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
@@ -15,7 +16,7 @@
 
             <div class="text-end">
                 <button type="button" class="btn btn-secondary btn-rounded">
-                    <a href="/login"><b>로그인</b></a>
+                    <a href="/login"><spring:message code="header.login"/></a>
                 </button>
             </div>
         </div>

@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
 <head>
-    <title>Studyholic</title>
+    <title><spring:message code="title"/></title>
     <%@ include file="../util/resources.jsp" %>
     <script src="<c:url value="/js/paging/Paging.js"/>"></script>
 </head>
@@ -20,7 +22,7 @@
 <ul class="pagination justify-content-center pagination-circle">
     <c:if test="${pagination.prev}">
         <li class="page-item">
-            <button class="page-link" type="button" onclick="movePreviousRange()">Previous</button>
+            <button class="page-link" type="button" onclick="movePreviousRange()"><spring:message code="paging.previous"/></button>
         </li>
     </c:if>
 
@@ -32,7 +34,7 @@
 
     <c:if test="${pagination.next}">
         <li class="page-item">
-            <button class="page-link" type="button" onclick="moveNextRange()">Next</button>
+            <button class="page-link" type="button" onclick="moveNextRange()"><spring:message code="paging.next"/></button>
         </li>
     </c:if>
 </ul>
