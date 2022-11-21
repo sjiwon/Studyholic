@@ -110,7 +110,7 @@ function userVericiationAndApplyRandomPassword() {
                     } else {
                         errorText = (navigator.language === 'ko')
                             ? (jsonData['message'])
-                            : ('An error occurred on the server while sending the email');
+                            : ('An error occurred on the server');
                     }
 
                     ToastResponse.fire({
