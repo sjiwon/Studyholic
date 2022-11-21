@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +15,7 @@ public class UpdateStudyInformationRequestDto {
     private String name;
     private String briefDescription;
     private String description;
-    private LocalDate recruitDeadline;
+    private LocalDateTime recruitDeadline;
     private Integer maxMember;
     private List<String> tagList;
 }

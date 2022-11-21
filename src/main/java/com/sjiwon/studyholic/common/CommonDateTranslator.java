@@ -12,10 +12,15 @@ public class CommonDateTranslator {
     }
 
     public static String translateLocalDateTimeToStringVersion2(LocalDateTime date) {
+        String hour = String.valueOf(date.getHour());
+        while (hour.length() != 2) {
+            hour = "0" + hour;
+        }
+
         return date.getYear() + "년 " +
                 date.getMonth().getValue() + "월 " +
                 date.getDayOfMonth() + "일 " +
-                date.getHour() + "시 " +
+                hour + "시 " +
                 date.getMinute() + "분";
     }
 

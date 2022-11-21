@@ -47,7 +47,7 @@
 
             if (searchType.html() === '등록 날짜' || searchType.html() === 'Registration Date') {
                 detailSearch('registerDate', keyword.val());
-            } else if (searchType.html() === '참여 인원' || searchType.html() === 'Number Of Participants') {
+            } else if (searchType.html() === '참여 인원' || searchType.html() === 'Popularity') {
                 detailSearch('popularity', keyword.val());
             } else if (searchType.html() === '모집 마감일' || searchType.html() === 'Recruitment Deadline') {
                 detailSearch('recruitDeadline', keyword.val());

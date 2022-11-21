@@ -82,7 +82,7 @@
             <h4><spring:message code="study.edit.recruit.deadline"/></h4>
         </div>
         <div class="col-md-3">
-            <input id="studyRecruitDeadline" type="date" class="form-control" name="studyRecruitDeadline" value="${studyDetailToEdit.studyRecruitDeadLine}"/>
+            <input id="studyRecruitDeadline" type="datetime-local" class="form-control" name="studyRecruitDeadline" value="${studyDetailToEdit.studyRecruitDeadLine}"/>
         </div>
 
         <br><br>

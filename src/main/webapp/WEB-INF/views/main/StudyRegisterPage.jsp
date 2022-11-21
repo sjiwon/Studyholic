@@ -83,7 +83,7 @@
             <h4><spring:message code="study.register.recruit.deadline"/></h4>
         </div>
         <div class="col-md-3">
-            <input id="studyRecruitDeadline" type="date" class="form-control" name="studyRecruitDeadline" style="border-radius: 15px;" required/>
+            <input id="studyRecruitDeadline" type="datetime-local" class="form-control" name="studyRecruitDeadline" style="border-radius: 15px;" required/>
         </div>
 
         <br><br>

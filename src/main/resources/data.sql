@@ -14,17 +14,17 @@ VALUES
 
 INSERT INTO study(name, max_member, brief_description, description, recruit_deadline, register_date, last_modified_date)
 VALUES
-    ('이펙티브 자바 스터디', 7, '이펙티브 자바를 통해서 자바에 대해 더 자세히 공부해보실분 구합니다', '설명 1', ADDDATE(CURRENT_DATE, 4), SUBDATE(CURRENT_DATE, 3), now()),
-    ('코틀린 스터디', 5, '코틀린 같이 공부하실분~', '설명 2', ADDDATE(CURRENT_DATE, 10), SUBDATE(CURRENT_DATE, 2), now()),
-    ('스프링 스터디', 5, '자바 기반 웹 프레임워크인 스프링에 대해서 같이 공부하실분 모집합니다', '설명 3', ADDDATE(CURRENT_DATE, 12), '2022-07-21 21:13:00', now()),
-    ('JPA 스터디', 6, '자바 ORM 표준 JPA 같이 공부하실분~', '설명 4', ADDDATE(CURRENT_DATE, 15), SUBDATE(CURRENT_DATE, 1), now()),
-    ('QueryDSL 스터디', 6, '기존 JPQL의 동적 쿼리 문제를 해결하기 위한 QueryDSL 스터디 입니다', '설명 5', ADDDATE(CURRENT_DATE, 30), SUBDATE(CURRENT_DATE, 5), now()),
-    ('디자인 패턴 스터디', 5, '약 23개의 디자인 패턴 같이 공부하실분 모집합니다', '설명 6', ADDDATE(CURRENT_DATE, 16), SUBDATE(CURRENT_DATE, 10), now()),
-    ('JSP 스터디', 6, 'JSP 공부하실분', '설명 7', ADDDATE(CURRENT_DATE, 2), SUBDATE(CURRENT_DATE, 3), now()),
-    ('Spring Data JPA 스터디', 4, 'Spring Data JPA 스터디', '설명 8', ADDDATE(CURRENT_DATE, 7), SUBDATE(CURRENT_DATE, 8), now()),
-    ('SQLD 스터디', 5, '이 스터디는 SQLD 자격증을 위한 스터디로써 내년 1월 SQLD 시험을 목표로 합니다', '설명 9', ADDDATE(CURRENT_DATE, 1), SUBDATE(CURRENT_DATE, 7), now()),
-    ('Spring Security 스터디', 6, 'Spring Security 공부하실분 구합니다', '설명 10', ADDDATE(CURRENT_DATE, 24), SUBDATE(CURRENT_DATE, 4), now()),
-    ('Spring Batch 스터디', 4, 'Batch Job에 대한 수많은 API를 제공해주는 Spring Batch 공부하실분~', '설명 11', ADDDATE(CURRENT_DATE, 20), SUBDATE(CURRENT_DATE, 7), now());
+    ('이펙티브 자바 스터디', 7, '이펙티브 자바를 통해서 자바에 대해 더 자세히 공부해보실분 구합니다', '설명 1', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 4) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 3) HOUR), '%Y-%m-%d %H'), now()),
+    ('코틀린 스터디', 5, '코틀린 같이 공부하실분~', '설명 2', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 10) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 2) HOUR), '%Y-%m-%d %H'), now()),
+    ('스프링 스터디', 5, '자바 기반 웹 프레임워크인 스프링에 대해서 같이 공부하실분 모집합니다', '설명 3', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 12) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 15) HOUR), '%Y-%m-%d %H'), now()),
+    ('JPA 스터디', 6, '자바 ORM 표준 JPA 같이 공부하실분~', '설명 4', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 15) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 1) HOUR), '%Y-%m-%d %H'), now()),
+    ('QueryDSL 스터디', 6, '기존 JPQL의 동적 쿼리 문제를 해결하기 위한 QueryDSL 스터디 입니다', '설명 5', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 30) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 5) HOUR), '%Y-%m-%d %H'), now()),
+    ('디자인 패턴 스터디', 5, '약 23개의 디자인 패턴 같이 공부하실분 모집합니다', '설명 6', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 16) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 10) HOUR), '%Y-%m-%d %H'), now()),
+    ('JSP 스터디', 6, 'JSP 공부하실분', '설명 7', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 2) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 3) HOUR), '%Y-%m-%d %H'), now()),
+    ('Spring Data JPA 스터디', 4, 'Spring Data JPA 스터디', '설명 8', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 7) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 8) HOUR), '%Y-%m-%d %H'), now()),
+    ('SQLD 스터디', 5, '이 스터디는 SQLD 자격증을 위한 스터디로써 내년 1월 SQLD 시험을 목표로 합니다', '설명 9', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 1) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 7) HOUR), '%Y-%m-%d %H'), now()),
+    ('Spring Security 스터디', 6, 'Spring Security 공부하실분 구합니다', '설명 10', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 24) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 4) HOUR), '%Y-%m-%d %H'), now()),
+    ('Spring Batch 스터디', 4, 'Batch Job에 대한 수많은 API를 제공해주는 Spring Batch 공부하실분~', '설명 11', DATE_FORMAT(ADDDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 20) HOUR), '%Y-%m-%d %H'), DATE_FORMAT(SUBDATE(CURRENT_TIMESTAMP, INTERVAL (RAND() * 24 * 7) HOUR), '%Y-%m-%d %H'), now());
 
 INSERT INTO study_tag(study_id, tag)
 VALUES

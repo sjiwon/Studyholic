@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,9 +24,9 @@ public class UpdateStudyInformationRequest {
     @ApiModelProperty(value = "변경할 스터디 설명", example = "자세한 스터디 설명입니다")
     private String description;
 
-    @ApiModelProperty(value = "변경할 스터디 모집마감일", example = "2022-12-31")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate recruitDeadline;
+    @ApiModelProperty(value = "변경할 스터디 모집마감일", example = "2022-12-31 09:00:00")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime recruitDeadline;
 
     @ApiModelProperty(value = "변경할 스터디 최대 모집 인원수", example = "2")
     private Integer maxMember;

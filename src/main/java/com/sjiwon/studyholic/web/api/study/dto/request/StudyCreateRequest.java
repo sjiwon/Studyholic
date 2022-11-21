@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -30,9 +30,9 @@ public class StudyCreateRequest {
     @ApiModelProperty(value = "스터디 설명", example = "자세한 설명...", required = true)
     private String description;
 
-    @ApiModelProperty(value = "스터디 모집 마감일", example = "2022-12-31", required = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate recruitDeadline;
+    @ApiModelProperty(value = "스터디 모집 마감일", example = "2022-12-31 09:00:00", required = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime recruitDeadline;
 
     @ApiModelProperty(value = "스터디 태그 리스트")
     private List<String> tagList;

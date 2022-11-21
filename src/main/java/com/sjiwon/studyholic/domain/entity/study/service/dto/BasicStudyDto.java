@@ -24,10 +24,9 @@ public class BasicStudyDto {
         this.description = study.getDescription();
         this.maxMemberCount = study.getMaxMember();
         this.currentMemberCount = study.getCurrentMemberCount();
-//        this.registerDate = study.getRegisterDate();
         this.registerDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(study.getRegisterDate());
         this.registerDateFromCurrentDate = CommonDateTranslator.translateRegisterDateFromCurrentDate(study.getRegisterDate());
-        this.recruitDeadline = CommonDateTranslator.translateLocalDateToString(study.getRecruitDeadLine());
+        this.recruitDeadline = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getRecruitDeadLine());
         this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getLastModifiedDate());
     }
 }

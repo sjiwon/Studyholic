@@ -26,7 +26,7 @@ CREATE TABLE study(
     max_member INT NOT NULL COMMENT '스터디 최대 모집 멤버 수',
     brief_description VARCHAR(200) NOT NULL COMMENT '스터디 설명',
     description MEDIUMTEXT NOT NULL COMMENT '스터디 설명',
-    recruit_deadline DATE NOT NULL COMMENT '스터디 모집 마감일',
+    recruit_deadline DATETIME NOT NULL COMMENT '스터디 모집 마감일',
     register_date DATETIME NOT NULL COMMENT '스터디 등록 날짜',
     last_modified_date DATETIME NOT NULL COMMENT '마지막 스터디 팀 정보 수정 날짜',
 
