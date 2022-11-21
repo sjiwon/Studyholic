@@ -63,8 +63,14 @@ public class ViewController {
     }
 
     @GetMapping("/user/{userId}")
-    public String myPage(@PathVariable Long userId, @AuthenticationPrincipal UserPrincipal userPrincipal, HttpServletResponse response, Model model) throws IOException {
-        delegateIllegalUrlRequest(userId, userPrincipal, response);
+    public String myPage(
+            @PathVariable Long userId,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Locale locale,
+            HttpServletResponse response,
+            Model model
+    ) throws IOException {
+        delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
         model.addAttribute("userDetail", userService.getUserDetailInformation(userId));
         return "main/MyPage";
     }
@@ -76,19 +82,29 @@ public class ViewController {
     }
 
     @GetMapping("/user/{userId}/study")
-    public String userParticipateStudyPage(@PathVariable Long userId, @AuthenticationPrincipal UserPrincipal userPrincipal, HttpServletResponse response, Model model) throws IOException {
-        delegateIllegalUrlRequest(userId, userPrincipal, response);
+    public String userParticipateStudyPage(
+            @PathVariable Long userId,
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Locale locale,
+            HttpServletResponse response,
+            Model model
+    ) throws IOException {
+        delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
         model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userId));
         return "main/ParticipateStudyDetailPage";
     }
 
-    private void delegateIllegalUrlRequest(Long requestUserId, UserPrincipal userPrincipal, HttpServletResponse response) throws IOException {
+    private void delegateIllegalUrlRequest(Long requestUserId, UserPrincipal userPrincipal, Locale locale, HttpServletResponse response) throws IOException {
         Assert.notNull(userPrincipal, "인증이 되지 않았다면 ViewAuthenticationEntryPoint에 의해서 Request 제한");
 
         if (Objects.isNull(userPrincipal) || !Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter writer = response.getWriter();
-            writer.println("<script>alert('잘못된 접근입니다'); location.href = '/';</script>");
+            if (locale.getLanguage().equalsIgnoreCase(LOCALE_KOREA)) { // locale: ko
+                writer.println("<script>alert('잘못된 접근입니다'); location.href = '/';</script>");
+            } else { // locale: other
+                writer.println("<script>alert('Illegal Request'); location.href = '/';</script>");
+            }
             writer.flush();
         }
     }
