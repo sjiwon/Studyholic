@@ -25,8 +25,8 @@
                         <div class="col">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 style="text-align: center">[${study.basicStudy.name}]</h3>
-                                    <p class="card-text" style="font-size: 20px; text-align: center">${study.basicStudy.briefDescription}</p>
+                                    <h3 style="text-align: center">${study.basicStudy.name}</h3>
+                                    <p class="card-text" style="font-size: 16px; text-align: center">"${study.basicStudy.briefDescription}"</p>
                                 </div>
 
                                 <div class="card-body">
