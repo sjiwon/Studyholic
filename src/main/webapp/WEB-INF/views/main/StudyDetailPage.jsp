@@ -8,6 +8,7 @@
     <title><spring:message code="title"/></title>
     <%@ include file="../util/resources.jsp" %>
     <script src="<c:url value="/js/study/AboutStudy.js"/>"></script>
+    <link rel="stylesheet" href="<c:out value="/css/tag.css"/>"/>
     <style>
         .ck-editor__editable[role="textbox"] {
             /* editing area */
@@ -26,6 +27,11 @@
 
 <div class="container col-md-8">
     <h1 style="text-align: center">${studyDetail.basicStudy.name}</h1>
+    <div class="text-center">
+        <c:forEach var="tag" items="${studyDetail.studyTagList}">
+            <span class="tag" style="font-weight: bold;"># ${tag}</span>
+        </c:forEach>
+    </div>
     <div class="col-md-12">
         <div class="col-md-12">
             <div style="margin-bottom: 10px; text-align: right">
