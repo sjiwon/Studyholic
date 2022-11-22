@@ -30,22 +30,26 @@
 <jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container">
-    <h1 style="text-align: center"><spring:message code="study.register.title"/></h1>
+    <h1 style="text-align: center">
+        <spring:message code="study.register.title"/>
+    </h1>
     <hr>
 
     <div class="col-md-12">
         <div class="col-md-6">
-            <h4><spring:message code="study.register.name"/></h4>
+            <h4>
+                <spring:message code="study.register.name"/>
+            </h4>
         </div>
         <div class="col-md-9 row">
             <div class="col-md-6" style="margin-bottom: 10px;">
-                <input id="studyName" type="text" class="form-control custom-input" name="studyName" onkeyup="trackingStudyName()" style="border-radius: 15px;"
-                       max="20" placeholder="<spring:message code="study.register.name.placeholder"/>" required/>
+                <input id="studyName" type="text" class="form-control custom-input" name="studyName" onkeyup="trackingStudyName()" style="border-radius: 15px;" max="20" placeholder="<spring:message code="study.register.name.placeholder"/>" required/>
             </div>
             <br>
             <div class="col-md-4">
-                <button class="btn btn-secondary" type="button" id="studyNameDuplicateCheckButton" onclick="studyNameDuplicateCheckApi()"><spring:message
-                        code="study.register.name.duplicate.check"/></button>
+                <button class="btn btn-secondary" type="button" id="studyNameDuplicateCheckButton" onclick="studyNameDuplicateCheckApi()">
+                    <spring:message code="study.register.name.duplicate.check"/>
+                </button>
             </div>
             <input type="hidden" id="studyNameVerificationToken" value="fail"/> <%--스터디 이름 기입 여부 체크--%>
         </div>
@@ -53,18 +57,21 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.register.brief.description"/></h4>
+            <h4>
+                <spring:message code="study.register.brief.description"/>
+            </h4>
         </div>
         <div class="col-md-6">
-            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" style="border-radius: 15px;"
-                   maxlength="50" placeholder="<spring:message code="study.register.brief.description.placeholder"/>" required/>
+            <input id="studyBriefDescription" type="text" class="form-control" name="studyBriefDescription" style="border-radius: 15px;" maxlength="50" placeholder="<spring:message code="study.register.brief.description.placeholder"/>" required/>
             <input type="hidden" id="studyBriefDescriptionVerificationToken" value="fail"/> <%--스터디 간단 설명 기입 여부 체크--%>
         </div>
 
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.register.description"/></h4>
+            <h4>
+                <spring:message code="study.register.description"/>
+            </h4>
         </div>
         <div id="editor"></div>
         <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/super-build/ckeditor.js"></script>
@@ -72,7 +79,9 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.register.max.member"/></h4>
+            <h4>
+                <spring:message code="study.register.max.member"/>
+            </h4>
         </div>
         <div class="col-md-3">
             <input id="studyMaxMember" type="number" class="form-control" name="studyMaxMember" min="2" max="10" style="border-radius: 15px;" required/>
@@ -81,7 +90,9 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.register.recruit.deadline"/></h4>
+            <h4>
+                <spring:message code="study.register.recruit.deadline"/>
+            </h4>
         </div>
         <div class="col-md-3">
             <input id="studyRecruitDeadline" type="datetime-local" class="form-control" name="studyRecruitDeadline" style="border-radius: 15px;" required/>
@@ -90,7 +101,9 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.register.tag"/></h4>
+            <h4>
+                <spring:message code="study.register.tag"/>
+            </h4>
         </div>
         <div class="col-md-6">
             <input name="tag" class="form-control" placeholder="<spring:message code="study.register.tag.input.message"/>"/>

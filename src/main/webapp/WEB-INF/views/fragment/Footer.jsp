@@ -5,7 +5,9 @@
 
 <footer class="bg-light text-center text-white">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0);">
-        <a class="text-black" href="https://github.com/sjiwon"><spring:message code="footer.copyright"/></a><br>
+        <a class="text-black" href="https://github.com/sjiwon">
+            <spring:message code="footer.copyright"/>
+        </a><br>
         <a class="btn text-white btn-floating m-1" style="background-color: #ac2bac;" href="https://www.instagram.com/sjiwon_/" role="button">
             <i class="fab fa-instagram"></i>
         </a>

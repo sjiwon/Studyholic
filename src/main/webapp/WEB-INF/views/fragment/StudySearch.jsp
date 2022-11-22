@@ -11,23 +11,30 @@
 <div class="d-flex justify-content-center align-items-center flex-row">
     <div>
         <div class="input-group mb-3">
-            <button id="searchType" type="button" class="btn btn-outline-primary"><%=searchType%>
-            </button>
+            <button id="searchType" type="button" class="btn btn-outline-primary"><%=searchType%></button>
             <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="visually-hidden"></span>
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <button id="registerDate" class="dropdown-item" type="button" value="registerDate" onclick="selectDate()"><spring:message code="search.register.date"/></button>
+                    <button id="registerDate" class="dropdown-item" type="button" value="registerDate" onclick="selectDate()">
+                        <spring:message code="search.register.date"/>
+                    </button>
                 </li>
                 <li>
-                    <button id="popularity" class="dropdown-item" type="button" value="popularity" onclick="selectPopularity()"><spring:message code="search.current.member"/></button>
+                    <button id="popularity" class="dropdown-item" type="button" value="popularity" onclick="selectPopularity()">
+                        <spring:message code="search.current.member"/>
+                    </button>
                 </li>
                 <li>
-                    <button id="recruitDeadLine" class="dropdown-item" type="button" value="recruitDeadline" onclick="selectRecruitDeadLine()"><spring:message code="search.recruit.deadline"/></button>
+                    <button id="recruitDeadLine" class="dropdown-item" type="button" value="recruitDeadline" onclick="selectRecruitDeadLine()">
+                        <spring:message code="search.recruit.deadline"/>
+                    </button>
                 </li>
                 <li>
-                    <button id="maxMember" class="dropdown-item" type="button" value="maxMember" onclick="selectMaxMember()"><spring:message code="search.max.member"/></button>
+                    <button id="maxMember" class="dropdown-item" type="button" value="maxMember" onclick="selectMaxMember()">
+                        <spring:message code="search.max.member"/>
+                    </button>
                 </li>
             </ul>
             <input id="keyword" type="text" class="form-control" placeholder="Search... Enter" value="<%=keyword%>"/>

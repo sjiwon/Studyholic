@@ -30,14 +30,19 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <p class="card-text"><b><spring:message code="participate.study.studyLeader"/></b> |
+                                    <p class="card-text">
+                                        <b><spring:message code="participate.study.studyLeader"/></b> |
                                         <span>
                                             <img src="<c:out value="/images/user/${study.studyLeader.storageName}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
                                             <b style="text-align: center; margin: 3px;">${study.studyLeader.nickname}</b>
                                         </span>
                                     </p>
-                                    <p class="card-text"><b><spring:message code="participate.study.current.recruit"/></b> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}</p>
-                                    <p class="card-text"><b><spring:message code="participate.study.recruit.deadline"/></b> | ${study.basicStudy.recruitDeadline}</p>
+                                    <p class="card-text">
+                                        <b><spring:message code="participate.study.current.recruit"/></b> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}
+                                    </p>
+                                    <p class="card-text">
+                                        <b><spring:message code="participate.study.recruit.deadline"/></b> | ${study.basicStudy.recruitDeadline}
+                                    </p>
 
                                     <c:forEach var="tag" items="${study.studyTagList}">
                                         <span class="tag" style="font-weight: bold"># ${tag}</span>
@@ -47,24 +52,25 @@
                                 <div class="card-footer">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.basicStudy.id}')"><spring:message
-                                                    code="participate.study.detail"/></button>
+                                            <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.basicStudy.id}')">
+                                                <spring:message code="participate.study.detail"/>
+                                            </button>
                                             <c:choose>
                                                 <c:when test="${study.studyLeader.id == sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
-                                                    <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="deleteStudy('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">
+                                                    <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;" onclick="deleteStudy('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">
                                                         <spring:message code="participate.study.delete"/>
                                                     </button>
                                                 </c:when>
                                                 <c:when test="${study.studyLeader.id != sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}">
-                                                    <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;"
-                                                            onclick="participateCancle('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">
+                                                    <button type="button" class="btn btn-sm btn-danger" style="margin: 2px;" onclick="participateCancle('${study.basicStudy.name}', '${study.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">
                                                         <spring:message code="participate.study.cancel"/>
                                                     </button>
                                                 </c:when>
                                             </c:choose>
                                         </div>
-                                        <small class="text-muted" style="font-size: 12px;"><spring:message code="participate.study.register.date"/> | ${study.basicStudy.registerDateFromCurrentDate}</small>
+                                        <small class="text-muted" style="font-size: 12px;">
+                                            <spring:message code="participate.study.register.date"/> | ${study.basicStudy.registerDateFromCurrentDate}
+                                        </small>
                                     </div>
                                 </div>
                             </div>

@@ -30,21 +30,25 @@
 <jsp:include page="../fragment/Header.jsp"/>
 
 <div class="container">
-    <h1 style="text-align: center"><spring:message code="study.edit.title"/></h1>
+    <h1 style="text-align: center">
+        <spring:message code="study.edit.title"/>
+    </h1>
     <hr>
 
     <div class="col-md-12">
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.name"/></h4>
+            <h4>
+                <spring:message code="study.edit.name"/>
+            </h4>
         </div>
         <div class="col-md-9 row">
             <div class="col-md-6" style="margin-bottom: 10px;">
-                <input id="studyName" type="text" class="form-control custom-input" name="studyName" style="border-radius: 15px;"
-                       onkeyup="trackingStudyName('${studyDetailToEdit.studyName}')" max="20" value="${studyDetailToEdit.studyName}"/>
+                <input id="studyName" type="text" class="form-control custom-input" name="studyName" style="border-radius: 15px;" onkeyup="trackingStudyName('${studyDetailToEdit.studyName}')" max="20" value="${studyDetailToEdit.studyName}"/>
             </div>
             <div class="col-md-2">
-                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button"
-                        onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')" disabled><spring:message code="study.edit.name.duplicate.check"/></button>
+                <button id="studyNameDuplicateCheckButton" class="btn btn-danger btn-sm" type="button" onclick="studyNameDuplicateCheckInEdit('${studyDetailToEdit.studyId}')" disabled>
+                    <spring:message code="study.edit.name.duplicate.check"/>
+                </button>
             </div>
             <input type="hidden" id="studyNameVerificationToken" value="success"/>
         </div>
@@ -52,17 +56,20 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.brief.description"/></h4>
+            <h4>
+                <spring:message code="study.edit.brief.description"/>
+            </h4>
         </div>
         <div class="col-md-6">
-            <input id="studyBriefDescription" type="text" class="form-control custom-input" name="studyBriefDescription" style="border-radius: 15px;"
-                   maxlength="50" value="${studyDetailToEdit.studyBriefDescription}"/>
+            <input id="studyBriefDescription" type="text" class="form-control custom-input" name="studyBriefDescription" style="border-radius: 15px;" maxlength="50" value="${studyDetailToEdit.studyBriefDescription}"/>
         </div>
 
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.description"/></h4>
+            <h4>
+                <spring:message code="study.edit.description"/>
+            </h4>
         </div>
         <div id="editor">${studyDetailToEdit.studyDescription}</div>
         <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/super-build/ckeditor.js"></script>
@@ -70,17 +77,20 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.max.member"/></h4>
+            <h4>
+                <spring:message code="study.edit.max.member"/>
+            </h4>
         </div>
         <div class="col-md-3">
-            <input id="studyMaxMember" type="number" class="form-control custom-input" name="studyMaxMember" style="border-radius: 15px;"
-                   min="2" max="10" value="${studyDetailToEdit.studyMaxMemberCount}"/>
+            <input id="studyMaxMember" type="number" class="form-control custom-input" name="studyMaxMember" style="border-radius: 15px;" min="2" max="10" value="${studyDetailToEdit.studyMaxMemberCount}"/>
         </div>
 
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.recruit.deadline"/></h4>
+            <h4>
+                <spring:message code="study.edit.recruit.deadline"/>
+            </h4>
         </div>
         <div class="col-md-3">
             <input id="studyRecruitDeadline" type="datetime-local" class="form-control" name="studyRecruitDeadline" value="${studyDetailToEdit.studyRecruitDeadLine}"/>
@@ -89,7 +99,9 @@
         <br><br>
 
         <div class="col-md-6">
-            <h4><spring:message code="study.edit.tag"/></h4>
+            <h4>
+                <spring:message code="study.edit.tag"/>
+            </h4>
         </div>
         <div class="col-md-6">
             <input name="tag" class="form-control" placeholder="<spring:message code="study.edit.tag.input.message"/>" value="<c:out value='${studyDetailToEdit.studyTagList}'/>"/>

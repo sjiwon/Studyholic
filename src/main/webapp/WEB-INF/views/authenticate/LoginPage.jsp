@@ -30,7 +30,9 @@
         <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
         <label for="loginPassword">Password</label>
     </div>
-    <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()"><spring:message code="login.page.login"/></button>
+    <button id="login" class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">
+        <spring:message code="login.page.login"/>
+    </button>
     <div class="form-floating mt-3">
         <a class="link-color-black" href="/find-id"><spring:message code="login.page.find.id"/></a> |
         <a class="link-color-black" href="/reset-password"><spring:message code="login.page.reset.password"/></a> |

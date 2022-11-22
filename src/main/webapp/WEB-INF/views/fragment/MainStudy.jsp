@@ -22,14 +22,19 @@
                         </div>
 
                         <div class="card-body">
-                            <p class="card-text"><b><spring:message code="main.study.leader"/></b> |
+                            <p class="card-text">
+                                <b><spring:message code="main.study.leader"/></b> |
                                 <span>
                                     <img src="<c:out value="/images/user/${study.studyLeader.storageName}"/>" alt="test" width="30" height="30" style="border-radius: 25%; margin: 3px;"/>
                                     <b style="text-align: center; margin: 3px;">${study.studyLeader.nickname}</b>
                                 </span>
                             </p>
-                            <p class="card-text"><b><spring:message code="main.study.current.recruit"/></b> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}</p>
-                            <p class="card-text"><b><spring:message code="main.study.recruit.deadline"/></b> | ${study.basicStudy.recruitDeadline}</p>
+                            <p class="card-text">
+                                <b><spring:message code="main.study.current.recruit"/></b> | ${study.basicStudy.currentMemberCount} / ${study.basicStudy.maxMemberCount}
+                            </p>
+                            <p class="card-text">
+                                <b><spring:message code="main.study.recruit.deadline"/></b> | ${study.basicStudy.recruitDeadline}
+                            </p>
 
                             <c:forEach var="tag" items="${study.studyTagList}">
                                 <span class="tag" style="font-weight: bold"># ${tag}</span>
@@ -39,9 +44,13 @@
                         <div class="card-footer">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage(${study.basicStudy.id})"><spring:message code="main.study.detail"/></button>
+                                    <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage(${study.basicStudy.id})">
+                                        <spring:message code="main.study.detail"/>
+                                    </button>
                                 </div>
-                                <small class="text-muted" style="font-size: 12px;"><spring:message code="main.study.register"/> | ${study.basicStudy.registerDateFromCurrentDate}</small>
+                                <small class="text-muted" style="font-size: 12px;">
+                                    <spring:message code="main.study.register"/> | ${study.basicStudy.registerDateFromCurrentDate}
+                                </small>
                             </div>
                         </div>
                     </div>

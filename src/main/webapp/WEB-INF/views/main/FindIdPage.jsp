@@ -23,20 +23,26 @@
 
     <div class="col-md-4 row mx-auto">
         <div class="col-md-12">
-            <label for="name" class="form-label"><spring:message code="find.id.name"/></label>
+            <label for="name" class="form-label">
+                <spring:message code="find.id.name"/>
+            </label>
             <input type="text" class="form-control custom-input" id="name" style="border-radius: 15px;" required>
         </div>
     </div>
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <label for="email" class="form-label"><spring:message code="find.id.email"/></label>
+        <label for="email" class="form-label">
+            <spring:message code="find.id.email"/>
+        </label>
         <div class="col-md-8" style="margin-bottom: 10px;">
             <input type="text" class="form-control custom-input" id="email" style="border-radius: 15px;" required>
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationInFindIdProcess()"><spring:message code="find.id.email.authenticate"/></button>
+            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationInFindIdProcess()">
+                <spring:message code="find.id.email.authenticate"/>
+            </button>
         </div>
     </div>
 
@@ -45,7 +51,9 @@
             <input type="text" class="form-control" id="checkEmail" placeholder="<spring:message code="find.id.email.code.input"/>" style="border-radius: 15px; display: none" required/>
 
             <div style="margin-top: 5px;">
-                <span id="explainEmailCheck" style="font-size: 13px; display: none;"><spring:message code="find.id.email.process.message"/></span>
+                <span id="explainEmailCheck" style="font-size: 13px; display: none;">
+                    <spring:message code="find.id.email.process.message"/>
+                </span>
             </div>
         </div>
         <input type="hidden" value="fail" id="emailAuthenticationToken"/> <%-- 이메일 인증 완료 여부 체크 --%>
@@ -53,7 +61,9 @@
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button id="findIdButton" disabled class="btn btn-primary btn-lg btn-block" type="button" onclick="findIdProcess()"><spring:message code="find.id.process"/></button>
+        <button id="findIdButton" disabled class="btn btn-primary btn-lg btn-block" type="button" onclick="findIdProcess()">
+            <spring:message code="find.id.process"/>
+        </button>
     </div>
     <br>
 </div>
