@@ -139,6 +139,20 @@
             ],
             shouldNotGroupWhenFull: true
         },
+        codeBlock: {
+            languages: [
+                { language: 'plaintext', label: 'Plain text' }, // The default language.
+                { language: 'c', label: 'C', class: 'C++' },
+                { language: 'java', label: 'Java', class: 'Java' },
+                { language: 'kotlin', label: 'Kotlin', class: 'Kotlin' },
+                { language: 'javascript', label: 'JavaScript', class: 'JavaScript' },
+                { language: 'typescript', label: 'TypeScript', class: 'TypeScript' },
+                { language: 'python', label: 'Python', class: 'Python' },
+                { language: 'html', label: 'HTML', class: 'HTML' },
+                { language: 'css', label: 'CSS', class: 'CSS' },
+                { language: 'xml', label: 'XML', class: 'XML' }
+            ]
+        },
         language: navigator.language,
         list: {
             properties: {
