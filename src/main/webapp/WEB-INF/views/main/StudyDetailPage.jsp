@@ -118,7 +118,6 @@
                 <span style="margin: 10px;">
                     <spring:message code="study.detail.description"/>
                 </span>
-                <input type="hidden" id="descriptionValue" value="${studyDetail.basicStudy.description}"/>
             </h2>
             <div id="editor">${studyDetail.basicStudy.description}</div>
             <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/super-build/ckeditor.js"></script>
