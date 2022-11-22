@@ -48,8 +48,9 @@
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button"
-                onclick="changePasswordProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')"><spring:message code="change.password.process"/></button>
+        <button id="findPasswordButton" class="btn btn-primary btn-lg btn-block" type="button" onclick="changePasswordProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}')">
+            <spring:message code="change.password.process"/>
+        </button>
     </div>
     <br>
 </div>

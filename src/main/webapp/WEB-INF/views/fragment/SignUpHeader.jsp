@@ -11,12 +11,18 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 link-dark"><span style="font-style: italic; font-size: 30px;">Studyholic</span></a></li>
+                <li>
+                    <a href="/" class="nav-link px-2 link-dark">
+                        <span style="font-style: italic; font-size: 30px;">Studyholic</span>
+                    </a>
+                </li>
             </ul>
 
             <div class="text-end">
                 <button type="button" class="btn btn-secondary btn-rounded">
-                    <a href="/login"><spring:message code="header.login"/></a>
+                    <a href="/login">
+                        <spring:message code="header.login"/>
+                    </a>
                 </button>
             </div>
         </div>

@@ -37,7 +37,9 @@
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="nicknameVerificationButton" onclick="nicknameDuplicateCheckApi()"><spring:message code="signup.page.duplicate.axios"/></button>
+            <button class="btn btn-secondary" type="button" id="nicknameVerificationButton" onclick="nicknameDuplicateCheckApi()">
+                <spring:message code="signup.page.duplicate.axios"/>
+            </button>
         </div>
         <input type="hidden" value="fail" id="nicknameVerificationToken"/> <%-- 닉네임 중복 체크 성공 여부 체크 --%>
     </div>
@@ -50,7 +52,9 @@
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="idVerificationButton" onclick="idDuplicateCheckApi()"><spring:message code="signup.page.duplicate.axios"/></button>
+            <button class="btn btn-secondary" type="button" id="idVerificationButton" onclick="idDuplicateCheckApi()">
+                <spring:message code="signup.page.duplicate.axios"/>
+            </button>
         </div>
         <input type="hidden" value="fail" id="idVerificationToken"/> <%-- 아이디 중복 체크 성공 여부 체크 --%>
     </div>
@@ -81,7 +85,9 @@
         </div>
         <br>
         <div class="col-md-4">
-            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationWithSignUp()"><spring:message code="signup.page.email.authenticate"/></button>
+            <button class="btn btn-secondary" type="button" id="emailVerificationButton" onclick="enableEmailVerificationWithSignUp()">
+                <spring:message code="signup.page.email.authenticate"/>
+            </button>
         </div>
     </div>
 
@@ -90,7 +96,9 @@
             <input type="text" class="form-control" id="checkEmail" placeholder="<spring:message code="signup.page.email.code.input"/>" style="border-radius: 15px; display: none" required/>
 
             <div style="margin-top: 5px;">
-                <span id="explainEmailCheck" style="font-size: 13px; display: none;"><spring:message code="signup.page.email.process.message"/></span>
+                <span id="explainEmailCheck" style="font-size: 13px; display: none;">
+                    <spring:message code="signup.page.email.process.message"/>
+                </span>
             </div>
         </div>
         <input type="hidden" value="fail" id="emailAuthenticationToken"/> <%-- 이메일 인증 완료 여부 체크 --%>
@@ -110,14 +118,18 @@
             <label for="image" class="form-label"><spring:message code="signup.page.profile"/></label>
             <input class="form-control" type="file" id="image" style="border-radius: 15px;">
             <div style="margin-top: 5px;">
-                <span style="font-size: 13px;"><spring:message code="signup.page.profile.replace"/></span>
+                <span style="font-size: 13px;">
+                    <spring:message code="signup.page.profile.replace"/>
+                </span>
             </div>
         </div>
     </div>
     <br>
 
     <div class="col-md-4 row mx-auto">
-        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="signUpProcess()"><spring:message code="signup.page.signup"/></button>
+        <button class="btn btn-primary btn-lg btn-block" type="button" onclick="signUpProcess()">
+            <spring:message code="signup.page.signup"/>
+        </button>
     </div>
     <br>
 

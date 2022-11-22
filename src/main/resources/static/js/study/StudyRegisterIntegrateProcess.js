@@ -45,9 +45,21 @@ function studyRegister(userId, editor, tagify) {
         return false;
     }
 
-    let studyDescription = editor.getHTML(); // 스터디 상세 설명
+    let studyDescription = editor.getData(); // 스터디 상세 설명
+    if (validationDescription(studyDescription) === false) {
+        let descriptionValidationFailHtml = (navigator.language === 'ko')
+            ? ('<b>스터디 설명을 다시 확인해주세요</b><br><small>- 빈 값입니다</small>')
+            : ('<b>Please check the study description again</b><br><small>- Empty value exists</small>');
+
+        ToastResponse.fire({
+            html: descriptionValidationFailHtml,
+            icon: 'warning'
+        })
+        return false;
+    }
+
     let studyMaxMember = $('#studyMaxMember'); // 스터디 모집 회원 수
-    if (validationStudyMaxMember(studyMaxMember)) {
+    if (validationStudyMaxMember(studyMaxMember) === false) {
         let maxMemberValidationFailHtml = (navigator.language === 'ko')
             ? ('<b>스터디 최대 인원수를 다시 확인해주세요</b><br><small>- 최소 2명, 최대 10명까지 가능합니다</small>')
             : ('<b>Please double check the maximum number of study participants.</b><br><small>- Minimum of 2 people, maximum of 10 people</small>');
@@ -142,6 +154,12 @@ function validateionStudyName(studyName, studyNameToken) {
 
 function validationStudyBriefDescription(studyBriefDescription) {
     if (studyBriefDescription.val().trim() === '') {
+        return false;
+    }
+}
+
+function validationDescription(description) {
+    if (description.trim() === '') {
         return false;
     }
 }

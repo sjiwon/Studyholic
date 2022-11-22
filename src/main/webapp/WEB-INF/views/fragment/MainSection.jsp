@@ -6,8 +6,12 @@
 <section class="py-3 text-center container">
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light"><spring:message code="main.section.title"/></h1>
-            <p><spring:message code="main.section.description"/></p>
+            <h1 class="fw-light">
+                <spring:message code="main.section.title"/>
+            </h1>
+            <p>
+                <spring:message code="main.section.description"/>
+            </p>
         </div>
     </div>
 </section>
