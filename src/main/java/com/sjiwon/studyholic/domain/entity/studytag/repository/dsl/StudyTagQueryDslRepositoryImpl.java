@@ -37,12 +37,12 @@ public class StudyTagQueryDslRepositoryImpl implements StudyTagQueryDslRepositor
     }
 
     @Override
-    public List<String> findTagListByStudyId(Long studyId) {
+    public List<String> findTagListByStudyRandomSequence(String randomSequence) {
         return query
                 .select(studyTag.tag)
                 .from(studyTag)
                 .innerJoin(studyTag.study, study)
-                .where(studyIdEq(studyId))
+                .where(studyRandomSequenceEq(randomSequence))
                 .fetch();
     }
 
@@ -50,5 +50,11 @@ public class StudyTagQueryDslRepositoryImpl implements StudyTagQueryDslRepositor
         return Objects.isNull(studyId)
                 ? null
                 : study.id.eq(studyId);
+    }
+
+    private BooleanExpression studyRandomSequenceEq(String randomSequence) {
+        return Objects.isNull(randomSequence)
+                ? null
+                : study.randomSequence.eq(randomSequence);
     }
 }

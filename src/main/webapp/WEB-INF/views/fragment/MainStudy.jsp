@@ -44,7 +44,7 @@
                         <div class="card-footer">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage(${study.basicStudy.id})">
+                                    <button type="button" class="btn btn-sm btn-primary" style="margin: 2px;" onclick="moveToStudyDetailPage('${study.basicStudy.randomSequence}')">
                                         <spring:message code="main.study.detail"/>
                                     </button>
                                 </div>

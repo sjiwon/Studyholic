@@ -109,7 +109,7 @@
 
         <br><br>
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="editProcess('${studyDetailToEdit.studyId}')">
+        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="editProcess('${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id}', '${studyDetailToEdit.studyId}', '${studyDetailToEdit.randomSequence}')">
             <spring:message code="study.edit.process"/>
         </button>
     </div>
@@ -242,8 +242,8 @@
     const input = document.querySelector('input[name=tag]');
     let tagify = new Tagify(input);
 
-    function editProcess(studyId) {
-        studyEdit(studyId, editor, tagify);
+    function editProcess(userId, studyId, studyRandomSequence) {
+        studyEdit(userId, studyId, studyRandomSequence, editor, tagify);
     }
 </script>
 </html>

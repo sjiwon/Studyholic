@@ -20,15 +20,17 @@ public class StudyDetailToEditInformation {
     private String studyDescription;
     private Integer studyMaxMemberCount;
     private LocalDateTime studyRecruitDeadLine;
+    private String randomSequence; // 스터디 UUID (조회를 위한 Sequence)
     private String studyTagList;
 
-    public StudyDetailToEditInformation(BasicStudy information, List<String> studyTagList) {
-        this.studyId = information.getId();
-        this.studyName = information.getName();
-        this.studyBriefDescription = information.getBriefDescription();
-        this.studyDescription = information.getDescription();
-        this.studyMaxMemberCount = information.getMaxMember();
-        this.studyRecruitDeadLine = information.getRecruitDeadLine();
+    public StudyDetailToEditInformation(BasicStudy study, List<String> studyTagList) {
+        this.studyId = study.getId();
+        this.studyName = study.getName();
+        this.studyBriefDescription = study.getBriefDescription();
+        this.studyDescription = study.getDescription();
+        this.studyMaxMemberCount = study.getMaxMember();
+        this.studyRecruitDeadLine = study.getRecruitDeadLine();
+        this.randomSequence = study.getRandomSequence();
         this.studyTagList = studyTagList.stream().collect(Collectors.joining(", "));
     }
 }

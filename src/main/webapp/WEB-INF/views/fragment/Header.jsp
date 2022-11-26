@@ -52,12 +52,12 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/user/<sec:authentication property="principal.user.id"/>/study">
+                            <a class="dropdown-item" href="/mypage/study">
                                 <spring:message code="header.dropdown.partipate.study"/>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/user/<sec:authentication property="principal.user.id"/>">
+                            <a class="dropdown-item" href="/mypage">
                                 <spring:message code="header.dropdown.mypage"/>
                             </a>
                         </li>

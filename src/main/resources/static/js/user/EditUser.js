@@ -35,7 +35,7 @@ function editProfileToDefaultImage() {
                         text: successText,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId.val();
+                        location.href = '/mypage';
                     })
                 })
                 .catch(error => {
@@ -95,7 +95,7 @@ function editProfileToCustomImage() {
             : ('Upload the file and press the change button');
 
         ToastResponse.fire({
-            text: '파일을 업로드하고 변경 버튼을 눌러주세요',
+            text: fileUploadFailText,
             icon: 'warning'
         })
         return false;
@@ -130,7 +130,7 @@ function editProfileToCustomImage() {
                         text: successText,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId.val();
+                        location.href = '/mypage';
                     })
                 })
                 .catch(error => {
@@ -235,7 +235,7 @@ function editNicknameProcess() {
                         text: successText,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId.val();
+                        location.href = '/mypage';
                     })
                 })
                 .catch(error => {

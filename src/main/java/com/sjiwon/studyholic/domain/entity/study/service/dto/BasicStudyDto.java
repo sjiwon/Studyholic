@@ -16,6 +16,7 @@ public class BasicStudyDto {
     private final Integer currentMemberCount; // 스터디 현재 참가 인원 수
     private final String registerDate; // 스터디 등록 날짜
     private final String registerDateFromCurrentDate; // 현재 날짜로부터 얼마 전에 올렸는지
+    private final String randomSequence; // 스터디 UUID (조회를 위한 Sequence)
     private final String recruitDeadline; // 스티더 모집 마감일
     private final String lastModifiedDate;
 
@@ -28,6 +29,7 @@ public class BasicStudyDto {
         this.currentMemberCount = study.getCurrentMemberCount();
         this.registerDate = CommonDateTranslator.translateLocalDateTimeToStringVersion1(study.getRegisterDate(), locale);
         this.registerDateFromCurrentDate = CommonDateTranslator.translateRegisterDateFromCurrentDate(study.getRegisterDate(), locale);
+        this.randomSequence = study.getRandomSequence();
         this.recruitDeadline = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getRecruitDeadLine(), locale);
         this.lastModifiedDate = CommonDateTranslator.translateLocalDateTimeToStringVersion2(study.getLastModifiedDate(), locale);
     }

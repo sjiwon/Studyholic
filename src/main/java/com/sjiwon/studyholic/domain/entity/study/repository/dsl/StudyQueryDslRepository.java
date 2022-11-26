@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudyQueryDslRepository {
-    Optional<BasicStudy> getBasicStudyInformation(Long studyId);
+    Optional<BasicStudy> getBasicStudyInformation(String randomSequence);
     Page<BasicStudy> getMainPageStudyList(Pageable pageRequest, String sort);
     Page<BasicStudy> getMainPageStudyListWithKeyword(Pageable pageRequest, String sort, String keyword);
     List<BasicStudy> getUserParticipateStudyInformation(Long userId);

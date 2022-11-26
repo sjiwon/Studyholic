@@ -1,6 +1,6 @@
 // 1. 특정 스터디로 페이지 이동
-function moveToStudyDetailPage(studyId) {
-    location.href = '/study/' + Number(studyId);
+function moveToStudyDetailPage(studyRandomSequence) {
+    location.href = '/study/' + String(studyRandomSequence);
 }
 
 // 2. 스터디 참여
@@ -43,7 +43,7 @@ function participate(studyName, studyId, userId) {
                         html: successHtml,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId + '/study';
+                        location.href = '/mypage/study';
                     })
                 })
                 .catch((error) => {
@@ -122,7 +122,7 @@ function participateCancle(studyName, studyId, userId) {
                         html: successHtml,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId + '/study';
+                        location.href = '/mypage/study';
                     })
                 })
                 .catch((error) => {
@@ -204,6 +204,6 @@ function deleteStudy(studyName, studyId) {
 }
 
 // 5-1. 스터디 수정 페이지로 이동
-function moveToStudyEditPage(studyId) {
-    location.href = '/study/' + Number(studyId) + '/edit';
+function moveToStudyEditPage(studyRandomSequence) {
+    location.href = '/study/edit?seq=' + String(studyRandomSequence);
 }

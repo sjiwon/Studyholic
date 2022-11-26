@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,6 +41,9 @@ public class Study {
     @Column(name = "recruit_deadline", nullable = false)
     private LocalDateTime recruitDeadLine;
 
+    @Column(name = "random_sequence", nullable = false, unique = true)
+    private String randomSequence;
+
     @CreatedDate
     @Column(name = "register_date")
     private LocalDateTime registerDate;
@@ -60,6 +64,7 @@ public class Study {
         this.briefDescription = briefDescription;
         this.description = description;
         this.recruitDeadLine = recruitDeadLine;
+        this.randomSequence = UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     public static Study createStudy(String name, Integer maxMember, String briefDescription, String description, LocalDateTime recruitDeadLine) {
