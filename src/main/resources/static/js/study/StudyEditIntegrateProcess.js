@@ -1,5 +1,5 @@
 // 스터디 수정 프로세스
-function studyEdit(studyId, studyRandomSequence,  editor, tagify) {
+function studyEdit(userId, studyId, studyRandomSequence,  editor, tagify) {
     const ToastResponse = Swal.mixin({
         focusConfirm: false,
         returnFocus: false
@@ -107,27 +107,50 @@ function studyEdit(studyId, studyRandomSequence,  editor, tagify) {
                 'tagList': list
             };
 
-            axios.patch('/api/study/' + Number(studyId), data)
+            axios.post('/api/study/' + Number(studyId) + '/validate/' + Number(userId))
                 .then(() => {
-                    let successText = (navigator.language === 'ko')
-                        ? ('스터디 수정이 완료되었습니다')
-                        : ('Study modification is complete');
+                    axios.patch('/api/study/' + Number(studyId), data)
+                        .then(() => {
+                            let successText = (navigator.language === 'ko')
+                                ? ('스터디 수정이 완료되었습니다')
+                                : ('Study modification is complete');
 
-                    ToastResponse.fire({
-                        text: successText,
-                        icon: 'success'
-                    }).then(() => {
-                        location.href = '/study/' + String(studyRandomSequence);
-                    })
+                            ToastResponse.fire({
+                                text: successText,
+                                icon: 'success'
+                            }).then(() => {
+                                location.href = '/study/' + String(studyRandomSequence);
+                            })
+                        })
+                        .catch(error => {
+                            let jsonData = error.response.data;
+
+                            let errorText;
+                            if (jsonData['message'] === '사용자 정보가 존재하지 않습니다') {
+                                errorText = (navigator.language === 'ko')
+                                    ? (jsonData['message'])
+                                    : ('User information does not exist');
+                            } else {
+                                errorText = (navigator.language === 'ko')
+                                    ? (jsonData['message'])
+                                    : ('An error occurred on the server');
+                            }
+
+                            ToastResponse.fire({
+                                color: '#FF0000',
+                                text: errorText,
+                                icon: 'error'
+                            });
+                        });
                 })
                 .catch(error => {
                     let jsonData = error.response.data;
 
                     let errorText;
-                    if (jsonData['message'] === '사용자 정보가 존재하지 않습니다') {
+                    if (jsonData['message'] === '접근 권한이 없습니다') {
                         errorText = (navigator.language === 'ko')
                             ? (jsonData['message'])
-                            : ('User information does not exist');
+                            : ('You do not have access');
                     } else {
                         errorText = (navigator.language === 'ko')
                             ? (jsonData['message'])

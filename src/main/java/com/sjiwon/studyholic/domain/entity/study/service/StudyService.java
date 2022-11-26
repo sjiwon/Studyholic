@@ -139,6 +139,16 @@ public class StudyService {
         }
     }
 
+    public void validateUserEditRequest(Long studyId, Long userId) {
+        boolean flag = userStudyRepository.findByStudyIdWithFetchUserAndStudy(studyId)
+                .stream()
+                .anyMatch(userStudy -> userStudy.getUser().getId().equals(userId) && userStudy.isTeamLeader());
+
+        if (!flag) {
+            throw StudyholicException.type(REQUEST_FORBIDDEN);
+        }
+    }
+
     /**
      * 메인 페이지 스터디 리스트
      */

@@ -6,6 +6,7 @@ import com.sjiwon.studyholic.domain.entity.userstudy.repository.dto.ParticipateU
 import java.util.List;
 
 public interface UserStudyQueryDslRepository {
+    List<UserStudy> findByStudyIdWithFetchUserAndStudy(Long studyId);
     List<UserStudy> findAllWithFetchUserAndStudy();
     Long deleteInBatchByStudyId(Long studyId);
     Long findStudyLeaderIdByStudyRandomSequence(String randomSequence);

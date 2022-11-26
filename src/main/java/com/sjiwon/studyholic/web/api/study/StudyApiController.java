@@ -35,6 +35,13 @@ public class StudyApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/study/{studyId}/validate/{userId}")
+    @ApiOperation(value = "스터디 정보 수정 간 Request 유효성 검증 API", notes = "현재 Edit Page는 열려있기 때문에 마지막 수정 단계에서 해당 유저가 수정 권한이 있는지 판별하기 위한 API")
+    public ResponseEntity<Void> validateUserEditRequest(@PathVariable Long studyId, @PathVariable Long userId) {
+        studyService.validateUserEditRequest(studyId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/study/{studyId}")
     @ApiOperation(value = "스터디 삭제 API", notes = "스터디를 삭제하는 API")
     public ResponseEntity<Void> deleteStudy(@PathVariable Long studyId, @AuthenticationPrincipal UserPrincipal userPrincipal) {

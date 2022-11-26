@@ -21,6 +21,17 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
     private final JPAQueryFactory query;
 
     @Override
+    public List<UserStudy> findByStudyIdWithFetchUserAndStudy(Long studyId) {
+        return query
+                .select(userStudy)
+                .from(userStudy)
+                .innerJoin(userStudy.user, user).fetchJoin()
+                .innerJoin(userStudy.study, study).fetchJoin()
+                .where(studyIdEq(studyId))
+                .fetch();
+    }
+
+    @Override
     public List<UserStudy> findAllWithFetchUserAndStudy() {
         return query
                 .select(userStudy)
