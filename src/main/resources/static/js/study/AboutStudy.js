@@ -43,7 +43,7 @@ function participate(studyName, studyId, userId) {
                         html: successHtml,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId + '/study';
+                        location.href = '/mypage/study';
                     })
                 })
                 .catch((error) => {
@@ -122,7 +122,7 @@ function participateCancle(studyName, studyId, userId) {
                         html: successHtml,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId + '/study';
+                        location.href = '/mypage/study';
                     })
                 })
                 .catch((error) => {

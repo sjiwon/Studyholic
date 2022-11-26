@@ -117,7 +117,7 @@ function studyRegister(userId, editor, tagify) {
                         text: successText,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/user/' + userId + '/study';
+                        location.href = '/mypage/study';
                     })
                 })
                 .catch(error => {
@@ -145,7 +145,7 @@ function studyRegister(userId, editor, tagify) {
 }
 
 function validateionStudyName(studyName, studyNameToken) {
-    if (studyName.val().trim() == '') {
+    if (studyName.val().trim() === '') {
         return "fail1";
     } else if (studyNameToken.val() === 'fail') {
         return "fail2";

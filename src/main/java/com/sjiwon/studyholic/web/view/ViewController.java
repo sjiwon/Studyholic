@@ -11,16 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Locale;
-import java.util.Objects;
 
 import static com.sjiwon.studyholic.common.VariableFactory.*;
 
@@ -68,38 +63,16 @@ public class ViewController {
         return "main/MyPage";
     }
 
+    @GetMapping("/mypage/study")
+    public String userParticipateStudyPage(@AuthenticationPrincipal UserPrincipal userPrincipal, Locale locale, Model model) {
+        model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userPrincipal.getUser().getId(), locale));
+        return "main/ParticipateStudyDetailPage";
+    }
+
     @GetMapping("/study/{studyId}")
     public String studyDetailPage(@PathVariable Long studyId, Locale locale, Model model) {
         model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId, locale));
         return "main/StudyDetailPage";
-    }
-
-    @GetMapping("/user/{userId}/study")
-    public String userParticipateStudyPage(
-            @PathVariable Long userId,
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Locale locale,
-            HttpServletResponse response,
-            Model model
-    ) throws IOException {
-        delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
-        model.addAttribute("participateStudyDetail", userService.getUserParticipateStudyInformation(userId, locale));
-        return "main/ParticipateStudyDetailPage";
-    }
-
-    private void delegateIllegalUrlRequest(Long requestUserId, UserPrincipal userPrincipal, Locale locale, HttpServletResponse response) throws IOException {
-        Assert.notNull(userPrincipal, "인증이 되지 않았다면 ViewAuthenticationEntryPoint에 의해서 Request 제한");
-
-        if (Objects.isNull(userPrincipal) || !Objects.equals(userPrincipal.getUser().getId(), requestUserId)) {
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter writer = response.getWriter();
-            if (locale.getLanguage().equalsIgnoreCase(LOCALE_KOREA)) { // locale: ko
-                writer.println("<script>alert('잘못된 접근입니다'); location.href = '/';</script>");
-            } else { // locale: other
-                writer.println("<script>alert('Illegal Request'); location.href = '/';</script>");
-            }
-            writer.flush();
-        }
     }
 
     @GetMapping("/study/post")
