@@ -46,15 +46,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Long saveUser(User user, @Nullable MultipartFile profile) {
+    public void saveUser(User user, @Nullable MultipartFile profile) {
         if (Objects.isNull(profile)) {
             user.applyDefaultImage();
         } else {
             fileUploadService.uploadProfileImage(profile, user);
         }
         user.encodePassword(passwordEncoder.encode(user.getLoginPassword())); // Encoding
-
-        return userRepository.save(user).getId();
+        userRepository.save(user);
     }
 
     public void hasDuplicateNickname(String nickname) {

@@ -13,7 +13,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api")
@@ -26,15 +25,15 @@ public class UserApiController {
     @PostMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "회원가입 API - Version 1", notes = "회원가입을 위한 API (사용자가 업로드한 이미지로 프로필 적용)")
     public ResponseEntity<Void> joinUser(@ModelAttribute UserJoinRequest request) {
-        Long joinUserId = userService.saveUser(request.toEntity(), request.getProfile());
-        return ResponseEntity.created(URI.create("/user/" + joinUserId)).build();
+        userService.saveUser(request.toEntity(), request.getProfile());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/user/default-profile")
     @ApiOperation(value = "회원가입 API - Version 2", notes = "회원가입을 위한 API (사용자 프로필 이미지 = 서버 기본 제공 이미지)")
     public ResponseEntity<Void> joinUserWithDefaultProfile(@ModelAttribute UserJoinRequestWithDefaultProfile request) {
-        Long joinUserId = userService.saveUser(request.toEntity(), null);
-        return ResponseEntity.created(URI.create("/user/" + joinUserId)).build();
+        userService.saveUser(request.toEntity(), null);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping(value = "/user/change-profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
