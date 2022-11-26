@@ -62,16 +62,9 @@ public class ViewController {
         return "authenticate/SignUpPage";
     }
 
-    @GetMapping("/user/{userId}")
-    public String myPage(
-            @PathVariable Long userId,
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Locale locale,
-            HttpServletResponse response,
-            Model model
-    ) throws IOException {
-        delegateIllegalUrlRequest(userId, userPrincipal, locale, response);
-        model.addAttribute("userDetail", userService.getUserDetailInformation(userId, locale));
+    @GetMapping("/mypage")
+    public String myPage(@AuthenticationPrincipal UserPrincipal userPrincipal, Locale locale, Model model) {
+        model.addAttribute("userDetail", userService.getUserDetailInformation(userPrincipal.getUser().getId(), locale));
         return "main/MyPage";
     }
 

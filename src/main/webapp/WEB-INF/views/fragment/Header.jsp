@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/user/<sec:authentication property="principal.user.id"/>">
+                            <a class="dropdown-item" href="/mypage">
                                 <spring:message code="header.dropdown.mypage"/>
                             </a>
                         </li>
