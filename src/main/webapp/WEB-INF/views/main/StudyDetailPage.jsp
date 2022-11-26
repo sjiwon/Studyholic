@@ -55,7 +55,7 @@
                 <sec:authorize access="isAuthenticated()">
                     <c:choose>
                         <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.user.id == studyDetail.studyLeaderId}">
-                            <button type="button" class="btn btn-secondary" style="margin: 5px;" onclick="moveToStudyEditPage(${studyDetail.basicStudy.randomSequence})">
+                            <button type="button" class="btn btn-secondary" style="margin: 5px;" onclick="moveToStudyEditPage('${studyDetail.basicStudy.randomSequence}')">
                                 <spring:message code="study.detail.edit"/>
                             </button>
                             <button type="button" class="btn btn-danger" style="margin: 5px;" onclick="deleteStudy('${studyDetail.basicStudy.name}', '${studyDetail.basicStudy.id}', '<sec:authentication property="principal.user.id"/>')">

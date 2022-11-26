@@ -205,5 +205,5 @@ function deleteStudy(studyName, studyId) {
 
 // 5-1. 스터디 수정 페이지로 이동
 function moveToStudyEditPage(studyRandomSequence) {
-    location.href = '/study/' + String(studyRandomSequence) + '/edit';
+    location.href = '/study/edit?seq=' + String(studyRandomSequence);
 }

@@ -80,8 +80,8 @@ public class ViewController {
         return "main/StudyRegisterPage";
     }
 
-    @GetMapping("/study/{randomSequence}/edit")
-    public String studyEditPage(@PathVariable String randomSequence, Model model) {
+    @GetMapping("/study/edit")
+    public String studyEditPage(@RequestParam(name = "seq") String randomSequence, Model model) {
         model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(randomSequence));
         return "main/StudyEditPage";
     }
