@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserStudyQueryDslRepository {
     List<UserStudy> findAllWithFetchUserAndStudy();
     Long deleteInBatchByStudyId(Long studyId);
-    Long findStudyLeaderIdByStudyId(Long studyId);
-    List<ParticipateUser> findParticipateUserListByStudyId(Long studyId);
+    Long findStudyLeaderIdByStudyRandomSequence(String randomSequence);
+    List<ParticipateUser> findParticipateUserListByStudyRandomSequence(String randomSequence);
 }

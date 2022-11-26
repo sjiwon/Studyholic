@@ -69,9 +69,9 @@ public class ViewController {
         return "main/ParticipateStudyDetailPage";
     }
 
-    @GetMapping("/study/{studyId}")
-    public String studyDetailPage(@PathVariable Long studyId, Locale locale, Model model) {
-        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(studyId, locale));
+    @GetMapping("/study/{randomSequence}")
+    public String studyDetailPage(@PathVariable String randomSequence, Locale locale, Model model) {
+        model.addAttribute("studyDetail", studyService.getStudyDetailInformation(randomSequence, locale));
         return "main/StudyDetailPage";
     }
 
@@ -80,9 +80,9 @@ public class ViewController {
         return "main/StudyRegisterPage";
     }
 
-    @GetMapping("/study/{studyId}/edit")
-    public String studyEditPage(@PathVariable Long studyId, Model model) {
-        model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(studyId));
+    @GetMapping("/study/{randomSequence}/edit")
+    public String studyEditPage(@PathVariable String randomSequence, Model model) {
+        model.addAttribute("studyDetailToEdit", studyService.getStudyDefailtToEditInformation(randomSequence));
         return "main/StudyEditPage";
     }
 

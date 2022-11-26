@@ -27,7 +27,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
     private final JPAQueryFactory query;
 
     @Override
-    public Optional<BasicStudy> getBasicStudyInformation(Long studyId) {
+    public Optional<BasicStudy> getBasicStudyInformation(String randomSequence) {
         return Optional.ofNullable(
                 query
                         .select(new QBasicStudy(
@@ -43,7 +43,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                                 study.userStudyList.size()
                         ))
                         .from(study)
-                        .where(studyIdEq(studyId))
+                        .where(studyRandomSequenceEq(randomSequence))
                         .fetchFirst()
         );
     }
@@ -180,6 +180,12 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
         return Objects.isNull(keyword)
                 ? null
                 : studyTag.tag.contains(keyword);
+    }
+
+    private BooleanExpression studyRandomSequenceEq(String randomSequence) {
+        return Objects.isNull(randomSequence)
+                ? null
+                : study.randomSequence.eq(randomSequence);
     }
 
     private BooleanExpression studyIdEq(Long studyId) {

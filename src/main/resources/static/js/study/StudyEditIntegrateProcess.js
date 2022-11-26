@@ -1,5 +1,5 @@
 // 스터디 수정 프로세스
-function studyEdit(studyId, editor, tagify) {
+function studyEdit(studyId, studyRandomSequence,  editor, tagify) {
     const ToastResponse = Swal.mixin({
         focusConfirm: false,
         returnFocus: false
@@ -117,7 +117,7 @@ function studyEdit(studyId, editor, tagify) {
                         text: successText,
                         icon: 'success'
                     }).then(() => {
-                        location.href = '/study/' + Number(studyId);
+                        location.href = '/study/' + String(studyRandomSequence);
                     })
                 })
                 .catch(error => {
@@ -145,7 +145,7 @@ function studyEdit(studyId, editor, tagify) {
 }
 
 function validateionStudyName(studyName, studyNameToken) {
-    if (studyName.val().trim() == '') {
+    if (studyName.val().trim() === '') {
         return "fail1";
     } else if (studyNameToken.val() === 'fail') {
         return "fail2";

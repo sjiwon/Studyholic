@@ -67,7 +67,9 @@ function studyRegister(userId, editor, tagify) {
         ToastResponse.fire({
             html: maxMemberValidationFailHtml,
             icon: 'warning'
-        })
+        }).then(() => {
+            studyMaxMember.focus();
+        });
         return false;
     }
 
@@ -165,7 +167,7 @@ function validationDescription(description) {
 }
 
 function validationStudyMaxMember(maxMember) {
-    if (Number(maxMember) < 2 || Number(maxMember) > 10) {
+    if (Number(maxMember.val()) < 2 || Number(maxMember.val()) > 10) {
         return false;
     }
 }

@@ -186,13 +186,13 @@ public class StudyService {
     /**
      * 특정 스터디 상세 정보
      */
-    public StudyDetailInformation getStudyDetailInformation(Long studyId, Locale locale) {
+    public StudyDetailInformation getStudyDetailInformation(String randomSequence, Locale locale) {
         return new StudyDetailInformation(
-                studyRepository.getBasicStudyInformation(studyId)
+                studyRepository.getBasicStudyInformation(randomSequence)
                         .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
-                userStudyRepository.findStudyLeaderIdByStudyId(studyId),
-                studyTagRepository.findTagListByStudyId(studyId),
-                userStudyRepository.findParticipateUserListByStudyId(studyId),
+                userStudyRepository.findStudyLeaderIdByStudyRandomSequence(randomSequence),
+                studyTagRepository.findTagListByStudyRandomSequence(randomSequence),
+                userStudyRepository.findParticipateUserListByStudyRandomSequence(randomSequence),
                 locale
         );
     }
@@ -200,11 +200,11 @@ public class StudyService {
     /**
      * 스터디 수정 간 필요한 정보
      */
-    public StudyDetailToEditInformation getStudyDefailtToEditInformation(Long studyId) {
+    public StudyDetailToEditInformation getStudyDefailtToEditInformation(String randomSequence) {
         return new StudyDetailToEditInformation(
-                studyRepository.getBasicStudyInformation(studyId)
+                studyRepository.getBasicStudyInformation(randomSequence)
                         .orElseThrow(() -> StudyholicException.type(STUDY_NOT_FOUND)),
-                studyTagRepository.findTagListByStudyId(studyId)
+                studyTagRepository.findTagListByStudyRandomSequence(randomSequence)
         );
     }
 }

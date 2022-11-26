@@ -40,18 +40,18 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
     }
 
     @Override
-    public Long findStudyLeaderIdByStudyId(Long studyId) {
+    public Long findStudyLeaderIdByStudyRandomSequence(String randomSequence) {
         return query
                 .select(user.id)
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
-                .where(studyIdEq(studyId), isStudyLeader())
+                .where(studyRandomSequenceEq(randomSequence), isStudyLeader())
                 .fetchFirst();
     }
 
     @Override
-    public List<ParticipateUser> findParticipateUserListByStudyId(Long studyId) {
+    public List<ParticipateUser> findParticipateUserListByStudyRandomSequence(String randomSequence) {
         return query
                 .select(new QParticipateUser(
                         user.id,
@@ -64,7 +64,7 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
                 .from(userStudy)
                 .innerJoin(userStudy.user, user)
                 .innerJoin(userStudy.study, study)
-                .where(studyIdEq(studyId))
+                .where(studyRandomSequenceEq(randomSequence))
                 .fetch();
     }
 
@@ -76,5 +76,11 @@ public class UserStudyQueryDslRepositoryImpl implements UserStudyQueryDslReposit
 
     private BooleanExpression isStudyLeader() {
         return userStudy.teamLeader.eq(Boolean.TRUE);
+    }
+
+    private BooleanExpression studyRandomSequenceEq(String randomSequence) {
+        return Objects.isNull(randomSequence)
+                ? null
+                : study.randomSequence.eq(randomSequence);
     }
 }

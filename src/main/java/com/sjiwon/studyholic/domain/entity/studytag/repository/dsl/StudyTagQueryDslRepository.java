@@ -7,5 +7,5 @@ import java.util.List;
 public interface StudyTagQueryDslRepository {
     List<StudyTag> findAllWithFetchStudy();
     Long deleteInBatchByStudyId(Long studyId);
-    List<String> findTagListByStudyId(Long studyId);
+    List<String> findTagListByStudyRandomSequence(String randomSequence);
 }
