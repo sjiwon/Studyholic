@@ -13,12 +13,13 @@ public class BasicStudy {
     private final String description;
     private final Integer maxMember;
     private final LocalDateTime registerDate;
+    private final String randomSequence;
     private final LocalDateTime recruitDeadLine;
     private final LocalDateTime lastModifiedDate;
     private final Integer currentMemberCount; // Sub Query
 
     @QueryProjection
-    public BasicStudy(Long id, String name, String briefDescription, String description, Integer maxMember, LocalDateTime registerDate, LocalDateTime recruitDeadLine, LocalDateTime lastModifiedDate, Integer currentMemberCount) {
+    public BasicStudy(Long id, String name, String briefDescription, String description, Integer maxMember, LocalDateTime registerDate, String randomSequence, LocalDateTime recruitDeadLine, LocalDateTime lastModifiedDate, Integer currentMemberCount) {
         this.id = id;
         this.name = name;
         this.briefDescription = briefDescription;
@@ -26,6 +27,7 @@ public class BasicStudy {
         this.maxMember = maxMember;
         this.currentMemberCount = currentMemberCount;
         this.registerDate = registerDate;
+        this.randomSequence = randomSequence;
         this.recruitDeadLine = recruitDeadLine;
         this.lastModifiedDate = lastModifiedDate;
     }

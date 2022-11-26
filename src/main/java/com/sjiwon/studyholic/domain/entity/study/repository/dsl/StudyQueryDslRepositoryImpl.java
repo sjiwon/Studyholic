@@ -37,6 +37,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                                 study.description,
                                 study.maxMember,
                                 study.registerDate,
+                                study.randomSequence,
                                 study.recruitDeadLine,
                                 study.lastModifiedDate,
                                 study.userStudyList.size()
@@ -57,6 +58,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                         study.description,
                         study.maxMember,
                         study.registerDate,
+                        study.randomSequence,
                         study.recruitDeadLine,
                         study.lastModifiedDate,
                         study.userStudyList.size()
@@ -102,6 +104,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                         study.description,
                         study.maxMember,
                         study.registerDate,
+                        study.randomSequence,
                         study.recruitDeadLine,
                         study.lastModifiedDate,
                         study.userStudyList.size()
@@ -151,6 +154,7 @@ public class StudyQueryDslRepositoryImpl implements StudyQueryDslRepository {
                         study.description,
                         study.maxMember,
                         study.registerDate,
+                        study.randomSequence,
                         study.recruitDeadLine,
                         study.lastModifiedDate,
                         study.userStudyList.size())

@@ -27,6 +27,7 @@ CREATE TABLE study(
     brief_description VARCHAR(200) NOT NULL COMMENT '스터디 설명',
     description MEDIUMTEXT NOT NULL COMMENT '스터디 설명',
     recruit_deadline DATETIME NOT NULL COMMENT '스터디 모집 마감일',
+    random_sequence VARCHAR(40) NOT NULL UNIQUE COMMENT '스터디 고유 ID (UUID)',
     register_date DATETIME NOT NULL COMMENT '스터디 등록 날짜',
     last_modified_date DATETIME NOT NULL COMMENT '마지막 스터디 팀 정보 수정 날짜',
 
