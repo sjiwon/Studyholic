@@ -1,0 +1,9 @@
+.tag {
+    border-radius: 10%;
+    background: beige;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: bold;
+    margin: 2px;
+    padding: 2px;
+}
