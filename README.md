@@ -2,9 +2,9 @@
 
 > 자유롭게 스터디를 만들고 여러 사람들과 스터디를 진행하기 위한 웹 애플리케이션 서비스
 
-- [스터디 설명 영상 바로가기](https://www.canva.com/design/DAFS9EAmuT0/XOB5PHaDTQaXCiGU7j6CFQ/watch?utm_content=DAFS9EAmuT0&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel)
-- [스프링 스터디 문제 해설 바로가기](문제%20해설/스프링%20문제%20해설.md)
-- [실행 가이드 바로가기](리드미%20추가%20자료/docs/실행%20가이드.md)
+- [스터디 설명 영상 바로가기](https://www.canva.com/design/DAFS9EAmuT0/XOB5PHaDTQaXCiGU7j6CFQ/watch?utm_content=DAFS9EAmuT0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+- [스프링 스터디 문제 해설 바로가기](https://github.com/sjiwon/Studyholic/blob/main/%EC%8A%A4%ED%94%84%EB%A7%81%20%EB%AC%B8%EC%A0%9C%20%ED%95%B4%EC%84%A4.md)
+- [실행 가이드 바로가기](https://github.com/sjiwon/Studyholic/blob/main/%EC%8B%A4%ED%96%89%20%EA%B0%80%EC%9D%B4%EB%93%9C.md)
 
 <br>
 <hr>
