@@ -13,7 +13,8 @@
 
 ### Version 1
 
-![](리드미%20추가%20자료/images/기술%20스택.png)
+![기술 스택](https://user-images.githubusercontent.com/51479381/204522481-42d58110-45e9-4d1f-8234-3edb108cada9.png)
+
 
 <br>
 <hr>
